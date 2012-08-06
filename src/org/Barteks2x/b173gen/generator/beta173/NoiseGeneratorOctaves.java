@@ -1,13 +1,6 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) braces deadcode 
-
 package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
-
-// Referenced classes of package net.minecraft.src:
-//            NoiseGenerator, NoiseGeneratorPerlin
 
 public class NoiseGeneratorOctaves extends NoiseGenerator {
 
