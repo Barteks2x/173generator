@@ -73,14 +73,6 @@ public class Wcm extends net.minecraft.server.WorldChunkManager {
 	    ad[ii] = (float) ad2[ii];
 	}
 	return ad;
-	/*getBiomeData(b, c, d, e);
-
-	float[] tempTemp = new float[this.rain.length];
-	for (int x = 0; x < this.rain.length; ++x) {
-	    tempTemp[x] = (float) this.rain[x];
-	}
-
-	return tempTemp;*/
     }
 
     @Override
@@ -123,14 +115,6 @@ public class Wcm extends net.minecraft.server.WorldChunkManager {
 	}
 	this.temperature = ad2;
 	return ad;
-	/*getBiomeData(b, c, d, e);
-
-	float[] tempTemp = new float[this.temperature.length];
-	for (int x = 0; x < this.temperature.length; ++x) {
-	    tempTemp[x] = (float) this.temperature[x];
-	}
-
-	return tempTemp;*/
     }
 
     @Override
@@ -227,7 +211,6 @@ public class Wcm extends net.minecraft.server.WorldChunkManager {
     public double		  c[];
     public BiomeGenBase	    dx[];
 
-    // ////////////////////////
 
     @Override
     public BiomeGenBase[] a(BiomeBase[] arg0, int arg1, int arg2, int arg3, int arg4, boolean arg5) {
@@ -243,12 +226,14 @@ public class Wcm extends net.minecraft.server.WorldChunkManager {
     @SuppressWarnings("rawtypes")
     @Override
     public ChunkPosition a(int par1, int par2, int par3, List par4List, Random par5Random) {
-	return new ChunkPosition(0, 0, 0);//TODO
+    //TODO
+	return new ChunkPosition(0, 0, 0);
     }
 
     @Override
     @SuppressWarnings("rawtypes")
-    public List a() {//getBiomesToSpawnIn
+    public List a() {
+    	//getBiomesToSpawnIn
 	return this.biomesToSpawn;
     }
 }
