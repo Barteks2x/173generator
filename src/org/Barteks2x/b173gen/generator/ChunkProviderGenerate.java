@@ -36,12 +36,12 @@ import org.Barteks2x.b173gen.generator.beta173.WorldGenMinable;
 import org.Barteks2x.b173gen.generator.beta173.WorldGenPumpkin;
 import org.Barteks2x.b173gen.generator.beta173.WorldGenReed;
 import org.Barteks2x.b173gen.generator.beta173.WorldGenTallGrass;
+import org.Barteks2x.b173gen.plugin.Generator;
+import org.Barteks2x.b173gen.plugin.WorldConfig;
 import org.bukkit.World;
 
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.generator.ChunkGenerator;
-import org.orangecloud00.ptmbukkit.PTMPlugin;
-import org.orangecloud00.ptmbukkit.WorldConfig;
 
 
 // Referenced classes of package net.minecraft.src:
@@ -80,7 +80,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
     private Wcm			wcm;
     private List<org.bukkit.generator.BlockPopulator>       populatorList;
     private WorldConfig		worldSettings;
-    private PTMPlugin plugin;
+    private Generator plugin;
     
     @Override
     public List<org.bukkit.generator.BlockPopulator> getDefaultPopulators(World world){
@@ -106,7 +106,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public ChunkProviderGenerate(WorldConfig worldSettings, PTMPlugin plugin) {
+    public ChunkProviderGenerate(WorldConfig worldSettings, Generator plugin) {
 	this.plugin = plugin;
 	this.worldSettings = worldSettings;
 	this.worldSettings.chunkProvider = this;

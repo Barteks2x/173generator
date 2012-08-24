@@ -8,14 +8,14 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.orangecloud00.ptmbukkit.PTMPlugin;
+import org.Barteks2x.b173gen.plugin.Generator;
 
 public class VersionTracker {
     private File versionFile;
-    private PTMPlugin plugin;
+    private Generator plugin;
     
     
-    public VersionTracker(PTMPlugin plugin){
+    public VersionTracker(Generator plugin){
 	this.plugin = plugin;
 	this.versionFile = new File(plugin.getDataFolder() + File.separator + "VERSION");
     }

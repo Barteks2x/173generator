@@ -1,4 +1,4 @@
-package org.orangecloud00.ptmbukkit;
+package org.Barteks2x.b173gen.plugin;
 
 import java.util.HashMap;
 
@@ -12,7 +12,7 @@ import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class PTMPlugin extends JavaPlugin {
+public class Generator extends JavaPlugin {
     private final HashMap<String, WorldConfig> worldsSettings = new HashMap<String, WorldConfig>();
     private Beta173GenListener	     listener  = new Beta173GenListener(this);
     private VersionTracker vTracker;

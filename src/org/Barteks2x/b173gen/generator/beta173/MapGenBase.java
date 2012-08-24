@@ -15,7 +15,7 @@ public class MapGenBase
     }
 
     @SuppressWarnings("cast")
-    public void func_867_a(@SuppressWarnings("unused") IChunkProvider chunkProviderGenerate, World world, int i, int j, byte abyte0[])
+    public void func_867_a(IChunkProvider chunkProviderGenerate, World world, int i, int j, byte abyte0[])
     {
         int k = field_1306_a;
         rand.setSeed(world.getSeed());
@@ -33,7 +33,6 @@ public class MapGenBase
 
     }
 
-    @SuppressWarnings("unused")
     protected void func_868_a(World world, int i, int j, int k, int l, byte abyte0[])
     {
     }
