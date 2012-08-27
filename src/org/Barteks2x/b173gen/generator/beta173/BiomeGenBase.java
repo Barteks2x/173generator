@@ -21,7 +21,6 @@ public class BiomeGenBase extends BiomeBase
     public static final BiomeGenBase   plains	   = new BiomeGenDesert(1, false).b(16767248).a("Plains");
     public static final BiomeGenBase   iceDesert	= new BiomeGenDesert(2, true).b(16772499).a("Ice Desert").b().a(12899129);
     public static final BiomeGenBase   tundra	   = new BiomeGenBase(5).b(5762041).a("Tundra").b().a(12899129);
-    public static final BiomeGenBase   hell	     = new BiomeGenHell(8).b(16711680).a("Hell").m();
 
     private static BiomeBase[]	 biomeLookupTable = new BiomeGenBase[4096];
 
