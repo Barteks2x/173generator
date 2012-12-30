@@ -13,59 +13,65 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Generator extends JavaPlugin {
-    private final HashMap<String, WorldConfig> worldsSettings = new HashMap<String, WorldConfig>();
-    private Beta173GenListener	     listener  = new Beta173GenListener(this);
-    private VersionTracker vTracker;
+	private final HashMap<String, WorldConfig> worldsSettings = new HashMap<String, WorldConfig>();
+	private Beta173GenListener listener = new Beta173GenListener(this);
+	private VersionTracker vTracker;
 
-    @Override
-    public void onDisable() {
-	this.getLogger().info(getDescription().getFullName() + " is now disabled");
-    }
-
-    @Override
-    public void onEnable() {
-	this.RegisterEvents();
-	this.getLogger().info(getDescription().getFullName() + " is now enabled");
-	vTracker = new VersionTracker(this);
-	vTracker.init();
-    }
-
-    @Override
-    public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
-	if (worldsSettings.containsKey(worldName)) {
-	    return worldsSettings.get(worldName).chunkProvider;
+	@Override
+	public void onDisable() {
+		this.getLogger().info(
+				getDescription().getFullName() + " is now disabled");
 	}
 
-	WorldConfig worldSetting = new WorldConfig(this);
-	worldsSettings.put(worldName, worldSetting);
-
-	ChunkProviderGenerate prov = new ChunkProviderGenerate(worldSetting, this);
-
-	return prov;
-
-    }
-
-    public void WorldInit(World world) {
-	if (!(this.worldsSettings.containsKey(world.getName()))){
-	    return;
+	@Override
+	public void onEnable() {
+		this.RegisterEvents();
+		this.getLogger().info(
+				getDescription().getFullName() + " is now enabled");
+		vTracker = new VersionTracker(this);
+		vTracker.init();
 	}
 
-	WorldConfig worldSetting = this.worldsSettings.get(world.getName());
-	if (worldSetting.isInit) {
-	    return;
+	@Override
+	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+		if (worldsSettings.containsKey(worldName)) {
+			return worldsSettings.get(worldName).chunkProvider;
+		}
+
+		WorldConfig worldSetting = new WorldConfig(this);
+		worldsSettings.put(worldName, worldSetting);
+
+		ChunkProviderGenerate prov = new ChunkProviderGenerate(worldSetting,
+				this);
+
+		return prov;
+
 	}
-	net.minecraft.server.v1_4_6.World workWorld = ((CraftWorld) world).getHandle();
 
-	Wcm wcm = new Wcm(workWorld.getSeed());
-	workWorld.worldProvider.d = wcm;
-	worldSetting.chunkProvider.init(workWorld, wcm, workWorld.getSeed());
-	worldSetting.isInit = true;
+	public void WorldInit(World world) {
+		if (!(this.worldsSettings.containsKey(world.getName()))) {
+			return;
+		}
 
-	this.getLogger().info("Beta 173 world generator enabled for " + world.getName() + ", world seed: " + workWorld.getSeed());
-    }
+		WorldConfig worldSetting = this.worldsSettings.get(world.getName());
+		if (worldSetting.isInit) {
+			return;
+		}
+		net.minecraft.server.v1_4_6.World workWorld = ((CraftWorld) world)
+				.getHandle();
 
-    private void RegisterEvents() {
-	PluginManager pm = this.getServer().getPluginManager();
-	pm.registerEvents(listener, this);
-    }
+		Wcm wcm = new Wcm(workWorld.getSeed());
+		workWorld.worldProvider.d = wcm;
+		worldSetting.chunkProvider.init(workWorld, wcm, workWorld.getSeed());
+		worldSetting.isInit = true;
+
+		this.getLogger().info(
+				"Beta 173 world generator enabled for " + world.getName()
+						+ ", world seed: " + workWorld.getSeed());
+	}
+
+	private void RegisterEvents() {
+		PluginManager pm = this.getServer().getPluginManager();
+		pm.registerEvents(listener, this);
+	}
 }

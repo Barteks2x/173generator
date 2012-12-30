@@ -12,12 +12,12 @@ import org.Barteks2x.b173gen.plugin.Generator;
 
 public class VersionTracker {
 	private File versionFile;
-	private File configDirectory;
 	private Generator plugin;
 
 	public VersionTracker(Generator plugin) {
 		this.plugin = plugin;
-		this.versionFile = new File(plugin.getDataFolder() + File.separator + "VERSION");
+		this.versionFile = new File(plugin.getDataFolder() + File.separator
+				+ "VERSION");
 	}
 
 	public void init() {
@@ -30,7 +30,8 @@ public class VersionTracker {
 		try {
 			plugin.getDataFolder().mkdirs();
 			versionFile.createNewFile();
-			BufferedWriter writer = new BufferedWriter(new FileWriter(versionFile));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(
+					versionFile));
 			writer.write(plugin.getDescription().getVersion());
 			writer.close();
 		} catch (IOException e) {

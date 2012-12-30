@@ -8,30 +8,27 @@ import net.minecraft.server.v1_4_6.Material;
 import net.minecraft.server.v1_4_6.World;
 import net.minecraft.server.v1_4_6.WorldGenerator;
 
-public class WorldGenFlowers extends WorldGenerator
-{
+public class WorldGenFlowers extends WorldGenerator {
 
-    public WorldGenFlowers(int i)
-    {
-        plantBlockId = i;
-    }
+	public WorldGenFlowers(int i) {
+		plantBlockId = i;
+	}
 
-    @Override
-	public boolean a(World world, Random random, int i, int j, int k)
-    {
-        for(int l = 0; l < 64; l++)
-        {
-            int i1 = (i + random.nextInt(8)) - random.nextInt(8);
-            int j1 = (j + random.nextInt(4)) - random.nextInt(4);
-            int k1 = (k + random.nextInt(8)) - random.nextInt(8);
-            if(world.getMaterial(i1, j1, k1)==Material.AIR && ((BlockFlower)Block.byId[plantBlockId]).canPlace(world, i1, j1, k1))
-            {
-                world.setRawTypeId(i1, j1, k1, plantBlockId);
-            }
-        }
+	@Override
+	public boolean a(World world, Random random, int i, int j, int k) {
+		for (int l = 0; l < 64; l++) {
+			int i1 = (i + random.nextInt(8)) - random.nextInt(8);
+			int j1 = (j + random.nextInt(4)) - random.nextInt(4);
+			int k1 = (k + random.nextInt(8)) - random.nextInt(8);
+			if (world.getMaterial(i1, j1, k1) == Material.AIR
+					&& ((BlockFlower) Block.byId[plantBlockId]).canPlace(world,
+							i1, j1, k1)) {
+				world.setRawTypeId(i1, j1, k1, plantBlockId);
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    private int plantBlockId;
+	private int plantBlockId;
 }

@@ -4,21 +4,17 @@ import java.util.Random;
 
 import net.minecraft.server.v1_4_6.WorldGenerator;
 
-public class BiomeGenRainforest extends BiomeGenBase
-{
+public class BiomeGenRainforest extends BiomeGenBase {
 
-    public BiomeGenRainforest(int i)
-    {
-	super(i);
-    }
-
-    @Override
-    public WorldGenerator a(Random random)
-    {
-	if (random.nextInt(3) == 0)
-	{
-	    return new WorldGenBigTree();
+	public BiomeGenRainforest(int i) {
+		super(i);
 	}
-	return new WorldGenTrees();
-    }
+
+	@Override
+	public WorldGenerator a(Random random) {
+		if (random.nextInt(3) == 0) {
+			return new WorldGenBigTree();
+		}
+		return new WorldGenTrees();
+	}
 }
