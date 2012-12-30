@@ -3,9 +3,9 @@ package org.Barteks2x.b173gen.generator.beta173;
 import java.util.Random;
 
 
-import net.minecraft.server.Block;
-import net.minecraft.server.World;
-import net.minecraft.server.WorldGenerator;
+import net.minecraft.server.v1_4_6.Block;
+import net.minecraft.server.v1_4_6.World;
+import net.minecraft.server.v1_4_6.WorldGenerator;
 
 public class WorldGenTaiga1 extends WorldGenerator
 {
@@ -76,7 +76,7 @@ public class WorldGenTaiga1 extends WorldGenerator
                 for(int l4 = k - k2; l4 <= k + k2; l4++)
                 {
                     int i5 = l4 - k;
-                    if((Math.abs(k4) != k2 || Math.abs(i5) != k2 || k2 <= 0) && !Block.n[world.getTypeId(l3, i3, l4)])
+                    if((Math.abs(k4) != k2 || Math.abs(i5) != k2 || k2 <= 0) && !Block.q[world.getTypeId(l3, i3, l4)])
                     {
                         world.setRawTypeIdAndData(l3, i3, l4, Block.LEAVES.id, 1);
                     }

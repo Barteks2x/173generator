@@ -2,10 +2,10 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.List;
 import java.util.Random;
-import net.minecraft.server.BiomeBase;
-import net.minecraft.server.Block;
-import net.minecraft.server.EnumCreatureType;
-import net.minecraft.server.WorldGenerator;
+import net.minecraft.server.v1_4_6.BiomeBase;
+import net.minecraft.server.v1_4_6.Block;
+import net.minecraft.server.v1_4_6.EnumCreatureType;
+import net.minecraft.server.v1_4_6.WorldGenerator;
 
 public class BiomeGenBase extends BiomeBase
 {

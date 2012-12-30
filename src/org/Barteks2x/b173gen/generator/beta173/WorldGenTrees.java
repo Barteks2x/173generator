@@ -2,9 +2,9 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.Block;
-import net.minecraft.server.World;
-import net.minecraft.server.WorldGenerator;
+import net.minecraft.server.v1_4_6.Block;
+import net.minecraft.server.v1_4_6.World;
+import net.minecraft.server.v1_4_6.WorldGenerator;
 
 public class WorldGenTrees extends WorldGenerator
 {
@@ -74,7 +74,7 @@ public class WorldGenTrees extends WorldGenerator
 		for (int i4 = k - i3; i4 <= k + i3; i4++)
 		{
 		    int j4 = i4 - k;
-		    if ((Math.abs(l3) != i3 || Math.abs(j4) != i3 || random.nextInt(2) != 0 && j2 != 0) && !Block.n[world.getTypeId(k3, k1, i4)])
+		    if ((Math.abs(l3) != i3 || Math.abs(j4) != i3 || random.nextInt(2) != 0 && j2 != 0) && !Block.q[world.getTypeId(k3, k1, i4)])
 		    {
 			world.setRawTypeId(k3, k1, i4, Block.LEAVES.id);
 		    }

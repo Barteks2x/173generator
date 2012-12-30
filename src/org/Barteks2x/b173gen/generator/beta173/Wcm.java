@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.server.BiomeBase;
-import net.minecraft.server.ChunkPosition;
+import net.minecraft.server.v1_4_6.BiomeBase;
+import net.minecraft.server.v1_4_6.ChunkPosition;
 
-public class Wcm extends net.minecraft.server.WorldChunkManager {
+public class Wcm extends net.minecraft.server.v1_4_6.WorldChunkManager {
     @SuppressWarnings("rawtypes")
     private List biomesToSpawn;
 

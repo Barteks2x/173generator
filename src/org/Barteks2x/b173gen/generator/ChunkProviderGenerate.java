@@ -8,17 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.server.BiomeBase;
-import net.minecraft.server.Block;
-import net.minecraft.server.BlockSand;
-import net.minecraft.server.Chunk;
-import net.minecraft.server.ChunkPosition;
-import net.minecraft.server.EnumCreatureType;
-import net.minecraft.server.IChunkProvider;
-import net.minecraft.server.IProgressUpdate;
-import net.minecraft.server.Material;
-import net.minecraft.server.WorldGenStronghold;
-import net.minecraft.server.WorldGenerator;
+import net.minecraft.server.v1_4_6.BiomeBase;
+import net.minecraft.server.v1_4_6.Block;
+import net.minecraft.server.v1_4_6.BlockSand;
+import net.minecraft.server.v1_4_6.Chunk;
+import net.minecraft.server.v1_4_6.ChunkPosition;
+import net.minecraft.server.v1_4_6.EnumCreatureType;
+import net.minecraft.server.v1_4_6.IChunkProvider;
+import net.minecraft.server.v1_4_6.IProgressUpdate;
+import net.minecraft.server.v1_4_6.Material;
+import net.minecraft.server.v1_4_6.WorldGenStronghold;
+import net.minecraft.server.v1_4_6.WorldGenerator;
 
 import org.Barteks2x.b173gen.generator.beta173.BiomeGenBase;
 import org.Barteks2x.b173gen.generator.beta173.MapGenBase;
@@ -40,7 +40,7 @@ import org.Barteks2x.b173gen.plugin.Generator;
 import org.Barteks2x.b173gen.plugin.WorldConfig;
 import org.bukkit.World;
 
-import org.bukkit.craftbukkit.CraftWorld;
+import org.bukkit.craftbukkit.v1_4_6.CraftWorld;
 import org.bukkit.generator.ChunkGenerator;
 
 
@@ -63,7 +63,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
     public NoiseGeneratorOctaves       noiseOctaves6;
     public NoiseGeneratorOctaves       noiseOctaves7;
     public NoiseGeneratorOctaves       mobSpawnerNoise;
-    private net.minecraft.server.World worldObj;
+    private net.minecraft.server.v1_4_6.World worldObj;
     private double		     noiseArray[];
     private double		     sandNoise[]     = new double[256];
     private double		     gravelNoise[]   = new double[256];
@@ -87,7 +87,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 	return populatorList;
 	
     }
-    public void init(net.minecraft.server.World workWorld, Wcm wcm1, long seed) {
+    public void init(net.minecraft.server.v1_4_6.World workWorld, Wcm wcm1, long seed) {
 
 	worldObj = workWorld;
 	this.wcm = wcm1;
@@ -222,9 +222,9 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 	try {
 	    blockArray = generate(x, z);
 	} catch (java.lang.NullPointerException e) {
-	    net.minecraft.server.World workWorld = ((CraftWorld) world).getHandle();
+	    net.minecraft.server.v1_4_6.World workWorld = ((CraftWorld) world).getHandle();
 	    Wcm wcm1 = new Wcm(workWorld.getSeed());
-	    workWorld.worldProvider.c = wcm1;
+	    workWorld.worldProvider.d = wcm1;
 	    this.init(workWorld, wcm1, workWorld.getSeed());
 	    blockArray = generate(x, z);
 	}
@@ -715,7 +715,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
     }
     
     private final WorldGenStronghold strongholdGen = new WorldGenStronghold();
-    public ChunkPosition findNearestMapFeature(net.minecraft.server.World world, String type, int x, int y, int z) {
+    public ChunkPosition findNearestMapFeature(net.minecraft.server.v1_4_6.World world, String type, int x, int y, int z) {
 	return ((("Stronghold".equals(type)) && (this.strongholdGen != null)) ? this.strongholdGen.getNearestGeneratedFeature(world, x, y, z) : null);
     }
     public int getLoadedChunks() {
@@ -725,4 +725,8 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
     public String getName() {
 	return plugin.getDescription().getName();
     }
+	public void recreateStructures(int arg0, int arg1) {
+		// TODO Auto-generated method stub
+		
+	}
 }

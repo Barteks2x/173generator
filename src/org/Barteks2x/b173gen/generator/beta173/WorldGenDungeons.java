@@ -2,14 +2,14 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.Block;
-import net.minecraft.server.Item;
-import net.minecraft.server.ItemStack;
-import net.minecraft.server.Material;
-import net.minecraft.server.TileEntityChest;
-import net.minecraft.server.TileEntityMobSpawner;
-import net.minecraft.server.World;
-import net.minecraft.server.WorldGenerator;
+import net.minecraft.server.v1_4_6.Block;
+import net.minecraft.server.v1_4_6.Item;
+import net.minecraft.server.v1_4_6.ItemStack;
+import net.minecraft.server.v1_4_6.Material;
+import net.minecraft.server.v1_4_6.TileEntityChest;
+import net.minecraft.server.v1_4_6.TileEntityMobSpawner;
+import net.minecraft.server.v1_4_6.World;
+import net.minecraft.server.v1_4_6.WorldGenerator;
 
 public class WorldGenDungeons extends WorldGenerator
 {
