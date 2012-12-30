@@ -47,6 +47,7 @@ public class VersionTracker {
 		try {
 			f = new BufferedInputStream(new FileInputStream(versionFile));
 			f.read(version);
+			f.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
