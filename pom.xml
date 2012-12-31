@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.barteks2x.b173gen.plugin</groupId>
 	<artifactId>Generator</artifactId>
-	<version>1.3.1-SNAPSHOT</version>
+	<version>1.4.1-SNAPSHOT</version>
 	<name>173generator</name>
 	<description>Bate 1.7.3 world generator for bukkit</description>
 	<dependencies>
