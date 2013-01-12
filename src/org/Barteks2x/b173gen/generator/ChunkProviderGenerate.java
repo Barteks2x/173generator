@@ -737,7 +737,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements
 			for (int j22 = l + 8; j22 < l + 8 + 16; j22++) {
 				int i24 = j19 - (k + 8);
 				int j25 = j22 - (l + 8);
-				int k25 = worldObj.g(j19, j22);
+				int k25 = worldObj.getHighestBlockYAt(j19, j22);
 				double d1 = generatedTemperatures[i24 * 16 + j25]
 						- ((double) (k25 - 64) / 64D) * 0.29999999999999999D;
 				if (d1 < 0.5D
