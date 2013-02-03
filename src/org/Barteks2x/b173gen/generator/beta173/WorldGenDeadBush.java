@@ -2,10 +2,10 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_4_6.Block;
-import net.minecraft.server.v1_4_6.BlockFlower;
-import net.minecraft.server.v1_4_6.World;
-import net.minecraft.server.v1_4_6.WorldGenerator;
+import net.minecraft.server.v1_4_R1.Block;
+import net.minecraft.server.v1_4_R1.BlockFlower;
+import net.minecraft.server.v1_4_R1.World;
+import net.minecraft.server.v1_4_R1.WorldGenerator;
 
 public class WorldGenDeadBush extends WorldGenerator {
 

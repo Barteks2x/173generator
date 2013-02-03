@@ -1,6 +1,6 @@
 package org.Barteks2x.b173gen.generator.beta173;
 
-import net.minecraft.server.v1_4_6.BiomeMeta;
+import net.minecraft.server.v1_4_R1.BiomeMeta;
 
 public class BiomeGenHell extends BiomeGenBase {
 
@@ -10,9 +10,9 @@ public class BiomeGenHell extends BiomeGenBase {
 		J.clear();
 		K.clear();
 		L.clear();
-		J.add(new BiomeMeta(net.minecraft.server.v1_4_6.EntityGhast.class, 10,
+		J.add(new BiomeMeta(net.minecraft.server.v1_4_R1.EntityGhast.class, 10,
 				4, 4));
-		J.add(new BiomeMeta(net.minecraft.server.v1_4_6.EntityPigZombie.class,
+		J.add(new BiomeMeta(net.minecraft.server.v1_4_R1.EntityPigZombie.class,
 				10, 4, 4));
 	}
 }

@@ -2,8 +2,8 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_4_6.IChunkProvider;
-import net.minecraft.server.v1_4_6.World;
+import net.minecraft.server.v1_4_R1.IChunkProvider;
+import net.minecraft.server.v1_4_R1.World;
 
 public class MapGenBase {
 

@@ -3,10 +3,10 @@ package org.Barteks2x.b173gen.generator.beta173;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.server.v1_4_6.BiomeBase;
-import net.minecraft.server.v1_4_6.Block;
-import net.minecraft.server.v1_4_6.EnumCreatureType;
-import net.minecraft.server.v1_4_6.WorldGenerator;
+import net.minecraft.server.v1_4_R1.BiomeBase;
+import net.minecraft.server.v1_4_R1.Block;
+import net.minecraft.server.v1_4_R1.EnumCreatureType;
+import net.minecraft.server.v1_4_R1.WorldGenerator;
 
 public class BiomeGenBase extends BiomeBase {
 	public static final BiomeGenBase[] biomeList = new BiomeGenBase[256];
@@ -41,7 +41,6 @@ public class BiomeGenBase extends BiomeBase {
 
 	protected BiomeGenBase(int i) {
 		super(i);
-		biomeList[i] = this;
 	}
 
 	public static void generateBiomeLookup() {
