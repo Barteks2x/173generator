@@ -3,14 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.barteks2x.b173gen.plugin</groupId>
 	<artifactId>Generator</artifactId>
-	<version>1.4.1-SNAPSHOT</version>
+	<version>1.4.2</version>
 	<name>173generator</name>
-	<description>Bate 1.7.3 world generator for bukkit</description>
+	<description>Beta 1.7.3 world generator for bukkit</description>
 	<dependencies>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>1.4.6-R0.1</version>
+			<version>1.4.7-R0.1</version>
 		</dependency>
 	</dependencies>
 	<build>
