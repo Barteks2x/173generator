@@ -26,6 +26,7 @@ public class Generator extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
+		this.getLogger().log(Level.INFO, this.getServer().getVersion());
 		this.RegisterEvents();
 		this.getLogger().log(
 				Level.INFO, "{0} is now enabled", getDescription().getFullName());
@@ -46,7 +47,6 @@ public class Generator extends JavaPlugin {
 				this);
 
 		return prov;
-
 	}
 
 	public void WorldInit(World world) {

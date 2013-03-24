@@ -57,11 +57,10 @@ public class WorldGenForest extends WorldGenerator173 {
 				int l3 = k3 - i;
 				for (int i4 = k - i3; i4 <= k + i3; i4++) {
 					int j4 = i4 - k;
-					if ((Math.abs(l3) != i3 || Math.abs(j4) != i3 || random
-							.nextInt(2) != 0 && j2 != 0)
-							/**&& !Block.q[world.getTypeId(k3, k1, i4)]**/) {//TODO WorldGenForest
+					if ((Math.abs(l3) != i3 || Math.abs(j4) != i3 || random.
+						nextInt(2) != 0 && j2 != 0)) {
 						world.setTypeIdAndData(k3, k1, i4, Block.LEAVES.id,
-								2, 2);
+							2, 2);
 					}
 				}
 

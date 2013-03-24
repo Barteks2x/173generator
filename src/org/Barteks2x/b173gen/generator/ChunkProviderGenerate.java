@@ -16,38 +16,25 @@ import net.minecraft.server.v1_5_R1.EnumCreatureType;
 import net.minecraft.server.v1_5_R1.IChunkProvider;
 import net.minecraft.server.v1_5_R1.IProgressUpdate;
 import net.minecraft.server.v1_5_R1.Material;
+import net.minecraft.server.v1_5_R1.WorldGenCactus;
+import net.minecraft.server.v1_5_R1.WorldGenDeadBush;
+import net.minecraft.server.v1_5_R1.WorldGenDungeons;
+import net.minecraft.server.v1_5_R1.WorldGenFlowers;
+import net.minecraft.server.v1_5_R1.WorldGenGrass;
+import net.minecraft.server.v1_5_R1.WorldGenLiquids;
+import net.minecraft.server.v1_5_R1.WorldGenMinable;
+import net.minecraft.server.v1_5_R1.WorldGenPumpkin;
+import net.minecraft.server.v1_5_R1.WorldGenReed;
 import net.minecraft.server.v1_5_R1.WorldGenStronghold;
+import net.minecraft.server.v1_5_R1.WorldGenerator;
 
-import org.Barteks2x.b173gen.generator.beta173.BiomeGenBase;
-import org.Barteks2x.b173gen.generator.beta173.MapGenBase;
-import org.Barteks2x.b173gen.generator.beta173.MapGenCaves;
-import org.Barteks2x.b173gen.generator.beta173.NoiseGeneratorOctaves;
-import org.Barteks2x.b173gen.generator.beta173.Wcm;
-import org.Barteks2x.b173gen.generator.beta173.WorldGenCactus;
-import org.Barteks2x.b173gen.generator.beta173.WorldGenClay;
-import org.Barteks2x.b173gen.generator.beta173.WorldGenDeadBush;
-import org.Barteks2x.b173gen.generator.beta173.WorldGenDungeons;
-import org.Barteks2x.b173gen.generator.beta173.WorldGenFlowers;
-import org.Barteks2x.b173gen.generator.beta173.WorldGenLakes;
-import org.Barteks2x.b173gen.generator.beta173.WorldGenLiquids;
-import org.Barteks2x.b173gen.generator.beta173.WorldGenMinable;
-import org.Barteks2x.b173gen.generator.beta173.WorldGenPumpkin;
-import org.Barteks2x.b173gen.generator.beta173.WorldGenReed;
-import org.Barteks2x.b173gen.generator.beta173.WorldGenTallGrass;
+import org.Barteks2x.b173gen.generator.beta173.*;
 import org.Barteks2x.b173gen.plugin.Generator;
 import org.Barteks2x.b173gen.plugin.WorldConfig;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_5_R1.CraftWorld;
 import org.bukkit.generator.ChunkGenerator;
 
-// Referenced classes of package net.minecraft.src:
-//            IChunkProvider, MapGenCaves, NoiseGeneratorOctaves, Block, 
-//            BiomeGenBase, Chunk, World, WorldChunkManager, 
-//            MapGenBase, BlockSand, WorldGenLakes, WorldGenDungeons, 
-//            WorldGenClay, WorldGenMinable, WorldGenerator, WorldGenFlowers, 
-//            BlockFlower, WorldGenTallGrass, BlockTallGrass, WorldGenDeadBush, 
-//            BlockDeadBush, WorldGenReed, WorldGenPumpkin, WorldGenCactus, 
-//            WorldGenLiquids, Material, IProgressUpdate
 public class ChunkProviderGenerate extends ChunkGenerator implements
 	IChunkProvider {
 
@@ -236,7 +223,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements
 		double ad[] = this.wcm.temperature;
 		generateTerrain(x, z, abyte, ad);
 		replaceBlocksForBiome(x, z, abyte, biomesForGeneration);
-		caves.func_867_a(this, worldObj, x, z, abyte);// caves
+		caves.a(this, worldObj, x, z, abyte);// caves
 		chunk.initLighting();
 		return abyte;
 	}
@@ -406,8 +393,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements
 					if (j1 == 0 && fillerBlock ==
 						Block.SAND.id) {
 						j1 = rand.nextInt(4);
-						fillerBlock =
-							(byte) Block.SANDSTONE.id;
+						fillerBlock = (byte) Block.SANDSTONE.id;
 					}
 				}
 
@@ -422,18 +408,15 @@ public class ChunkProviderGenerate extends ChunkGenerator implements
 
 	@SuppressWarnings("cast")
 	public Chunk getOrCreateChunk(int i, int j) {
-		rand.
-			setSeed((long) i * 0x4f9939f508L + (long) j *
-			0x1ef1565bd5L);
+		rand.setSeed((long) i * 0x4f9939f508L + (long) j * 0x1ef1565bd5L);
 		byte abyte0[] = new byte[32768];
 		Chunk chunk = new Chunk(worldObj, abyte0, i, j);
 		biomesForGeneration = this.wcm.
-			getBiomeBlock(biomesForGeneration,
-			i * 16, j * 16, 16, 16);
+			getBiomeBlock(biomesForGeneration, i * 16, j * 16, 16, 16);
 		double ad[] = this.wcm.temperature;
 		generateTerrain(i, j, abyte0, ad);
 		replaceBlocksForBiome(i, j, abyte0, biomesForGeneration);
-		caves.func_867_a(this, worldObj, i, j, abyte0);
+		caves.a(this, worldObj, i, j, abyte0);
 		chunk.initLighting();
 		return chunk;
 	}
@@ -572,88 +555,78 @@ public class ChunkProviderGenerate extends ChunkGenerator implements
 			int j5 = k + rand.nextInt(16) + 8;
 			int k8 = rand.nextInt(128);
 			int j11 = l + rand.nextInt(16) + 8;
-			(new WorldGenDungeons()).
-				generate(worldObj, rand, j5, k8, j11);
+			(new WorldGenDungeons()).a(worldObj, rand, j5, k8, j11);
 		}
 
 		for (int i2 = 0; i2 < 10; i2++) {
 			int k5 = k + rand.nextInt(16);
 			int l8 = rand.nextInt(128);
 			int k11 = l + rand.nextInt(16);
-			(new WorldGenClay(32)).generate(worldObj, rand, k5, l8,
-				k11);
+			(new WorldGenClay(32)).generate(worldObj, rand, k5, l8, k11);
 		}
 
 		for (int j2 = 0; j2 < 20; j2++) {
 			int l5 = k + rand.nextInt(16);
 			int i9 = rand.nextInt(128);
 			int l11 = l + rand.nextInt(16);
-			(new WorldGenMinable(Block.DIRT.id, 32)).generate(
-				worldObj, rand, l5, i9,
-				l11);
+			(new WorldGenMinable(Block.DIRT.id, 32)).a(
+				worldObj, rand, l5, i9, l11);
 		}
 
 		for (int k2 = 0; k2 < 10; k2++) {
 			int i6 = k + rand.nextInt(16);
 			int j9 = rand.nextInt(128);
 			int i12 = l + rand.nextInt(16);
-			(new WorldGenMinable(Block.GRAVEL.id, 32)).generate(
-				worldObj, rand, i6,
-				j9, i12);
+			(new WorldGenMinable(Block.GRAVEL.id, 32)).a(
+				worldObj, rand, i6, j9, i12);
 		}
 
 		for (int i3 = 0; i3 < 20; i3++) {
 			int j6 = k + rand.nextInt(16);
 			int k9 = rand.nextInt(128);
 			int j12 = l + rand.nextInt(16);
-			(new WorldGenMinable(Block.COAL_ORE.id, 16)).generate(
-				worldObj, rand, j6,
-				k9, j12);
+			(new WorldGenMinable(Block.COAL_ORE.id, 16)).a(
+				worldObj, rand, j6, k9, j12);
 		}
 
 		for (int j3 = 0; j3 < 20; j3++) {
 			int k6 = k + rand.nextInt(16);
 			int l9 = rand.nextInt(64);
 			int k12 = l + rand.nextInt(16);
-			(new WorldGenMinable(Block.IRON_ORE.id, 8)).generate(
-				worldObj, rand, k6,
-				l9, k12);
+			(new WorldGenMinable(Block.IRON_ORE.id, 8)).a(
+				worldObj, rand, k6, l9, k12);
 		}
 
 		for (int k3 = 0; k3 < 2; k3++) {
 			int l6 = k + rand.nextInt(16);
 			int i10 = rand.nextInt(32);
 			int l12 = l + rand.nextInt(16);
-			(new WorldGenMinable(Block.GOLD_ORE.id, 8)).generate(
-				worldObj, rand, l6,
-				i10, l12);
+			(new WorldGenMinable(Block.GOLD_ORE.id, 8)).a(
+				worldObj, rand, l6, i10, l12);
 		}
 
 		for (int l3 = 0; l3 < 8; l3++) {
 			int i7 = k + rand.nextInt(16);
 			int j10 = rand.nextInt(16);
 			int i13 = l + rand.nextInt(16);
-			(new WorldGenMinable(Block.REDSTONE_ORE.id, 7)).
-				generate(worldObj, rand,
-				i7, j10, i13);
+			(new WorldGenMinable(Block.REDSTONE_ORE.id, 7)).a(
+				worldObj, rand, i7, j10, i13);
 		}
 
 		for (int i4 = 0; i4 < 1; i4++) {
 			int j7 = k + rand.nextInt(16);
 			int k10 = rand.nextInt(16);
 			int j13 = l + rand.nextInt(16);
-			(new WorldGenMinable(Block.DIAMOND_ORE.id, 7)).generate(
-				worldObj, rand,
-				j7, k10, j13);
+			(new WorldGenMinable(Block.DIAMOND_ORE.id, 7)).a(
+				worldObj, rand, j7, k10, j13);
 		}
 
 		for (int j4 = 0; j4 < 1; j4++) {
 			int k7 = k + rand.nextInt(16);
 			int l10 = rand.nextInt(16) + rand.nextInt(16);
 			int k13 = l + rand.nextInt(16);
-			(new WorldGenMinable(Block.LAPIS_ORE.id, 6)).generate(
-				worldObj, rand, k7,
-				l10, k13);
+			(new WorldGenMinable(Block.LAPIS_ORE.id, 6)).a(
+				worldObj, rand, k7, l10, k13);
 		}
 
 		d = 0.5D;
@@ -689,9 +662,9 @@ public class ChunkProviderGenerate extends ChunkGenerator implements
 		for (int i11 = 0; i11 < l7; i11++) {
 			int l13 = k + rand.nextInt(16) + 8;
 			int j14 = l + rand.nextInt(16) + 8;
-			WorldGenerator173 worldgenerator = biomegenbase.a(rand);
+			WorldGenerator worldgenerator = biomegenbase.a(rand);
 			worldgenerator.a(1.0D, 1.0D, 1.0D);
-			worldgenerator.generate(worldObj, rand, l13,
+			worldgenerator.a(worldObj, rand, l13,
 				worldObj.getHighestBlockYAt(l13, j14), j14);
 		}
 
@@ -712,7 +685,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements
 			int k14 = k + rand.nextInt(16) + 8;
 			int l16 = rand.nextInt(128);
 			int k19 = l + rand.nextInt(16) + 8;
-			(new WorldGenFlowers(Block.YELLOW_FLOWER.id)).generate(
+			(new WorldGenFlowers(Block.YELLOW_FLOWER.id)).a(
 				worldObj, rand,
 				k14, l16, k19);
 		}
@@ -742,9 +715,8 @@ public class ChunkProviderGenerate extends ChunkGenerator implements
 			int l19 = k + rand.nextInt(16) + 8;
 			int k22 = rand.nextInt(128);
 			int j24 = l + rand.nextInt(16) + 8;
-			(new WorldGenTallGrass(Block.LONG_GRASS.id, byte2)).
-				generate(worldObj,
-				rand, l19, k22, j24);
+			(new WorldGenGrass(Block.LONG_GRASS.id, byte2)).a(
+				worldObj, rand, l19, k22, j24);
 		}
 
 		byte1 = 0;
@@ -755,7 +727,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements
 			int i17 = k + rand.nextInt(16) + 8;
 			int i20 = rand.nextInt(128);
 			int l22 = l + rand.nextInt(16) + 8;
-			(new WorldGenDeadBush(Block.DEAD_BUSH.id)).generate(
+			(new WorldGenDeadBush(Block.DEAD_BUSH.id)).a(
 				worldObj, rand, i17,
 				i20, l22);
 		}
@@ -764,7 +736,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements
 			int j15 = k + rand.nextInt(16) + 8;
 			int j17 = rand.nextInt(128);
 			int j20 = l + rand.nextInt(16) + 8;
-			(new WorldGenFlowers(Block.RED_ROSE.id)).generate(
+			(new WorldGenFlowers(Block.RED_ROSE.id)).a(
 				worldObj, rand, j15,
 				j17, j20);
 		}
@@ -772,7 +744,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements
 			int k15 = k + rand.nextInt(16) + 8;
 			int k17 = rand.nextInt(128);
 			int k20 = l + rand.nextInt(16) + 8;
-			(new WorldGenFlowers(Block.BROWN_MUSHROOM.id)).generate(
+			(new WorldGenFlowers(Block.BROWN_MUSHROOM.id)).a(
 				worldObj, rand,
 				k15, k17, k20);
 		}
@@ -780,7 +752,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements
 			int l15 = k + rand.nextInt(16) + 8;
 			int l17 = rand.nextInt(128);
 			int l20 = l + rand.nextInt(16) + 8;
-			(new WorldGenFlowers(Block.RED_MUSHROOM.id)).generate(
+			(new WorldGenFlowers(Block.RED_MUSHROOM.id)).a(
 				worldObj, rand, l15,
 				l17, l20);
 		}
@@ -788,16 +760,14 @@ public class ChunkProviderGenerate extends ChunkGenerator implements
 			int i18 = k + rand.nextInt(16) + 8;
 			int i21 = rand.nextInt(128);
 			int i23 = l + rand.nextInt(16) + 8;
-			(new WorldGenReed()).generate(worldObj, rand, i18, i21,
-				i23);
+			(new WorldGenReed()).a(worldObj, rand, i18, i21, i23);
 		}
 
 		if (rand.nextInt(32) == 0) {
 			int j16 = k + rand.nextInt(16) + 8;
 			int j18 = rand.nextInt(128);
 			int j21 = l + rand.nextInt(16) + 8;
-			(new WorldGenPumpkin()).generate(worldObj, rand, j16,
-				j18, j21);
+			(new WorldGenPumpkin()).a(worldObj, rand, j16, j18, j21);
 		}
 		int k16 = 0;
 		if (biomegenbase == BiomeGenBase.desert) {
@@ -807,17 +777,15 @@ public class ChunkProviderGenerate extends ChunkGenerator implements
 			int k21 = k + rand.nextInt(16) + 8;
 			int j23 = rand.nextInt(128);
 			int k24 = l + rand.nextInt(16) + 8;
-			(new WorldGenCactus()).
-				generate(worldObj, rand, k21, j23, k24);
+			(new WorldGenCactus()).a(worldObj, rand, k21, j23, k24);
 		}
 
 		for (int l18 = 0; l18 < 50; l18++) {
 			int l21 = k + rand.nextInt(16) + 8;
 			int k23 = rand.nextInt(rand.nextInt(120) + 8);
 			int l24 = l + rand.nextInt(16) + 8;
-			(new WorldGenLiquids(Block.WATER.id)).generate(worldObj,
-				rand, l21, k23,
-				l24);
+			(new WorldGenLiquids(Block.WATER.id)).a(worldObj,
+				rand, l21, k23, l24);
 		}
 
 		for (int i19 = 0; i19 < 20; i19++) {
@@ -825,9 +793,8 @@ public class ChunkProviderGenerate extends ChunkGenerator implements
 			int l23 = rand.nextInt(rand.nextInt(rand.nextInt(112) +
 				8) + 8);
 			int i25 = l + rand.nextInt(16) + 8;
-			(new WorldGenLiquids(Block.LAVA.id)).generate(worldObj,
-				rand, i22, l23,
-				i25);
+			(new WorldGenLiquids(Block.LAVA.id)).a(worldObj,
+				rand, i22, l23, i25);
 		}
 
 		generatedTemperatures = this.wcm.getTemperatures(
@@ -897,7 +864,6 @@ public class ChunkProviderGenerate extends ChunkGenerator implements
 	}
 
 	public int getLoadedChunks() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

@@ -10,14 +10,14 @@ public class MapGenCaves extends MapGenBase {
 	public MapGenCaves() {
 	}
 
-	protected void func_870_a(int i, int j, byte abyte0[], double d, double d1,
+	protected void a(int i, int j, byte abyte0[], double d, double d1,
 			double d2) {
-		releaseEntitySkin(i, j, abyte0, d, d1, d2,
+		a(i, j, abyte0, d, d1, d2,
 				1.0F + rand.nextFloat() * 6F, 0.0F, 0.0F, -1, -1, 0.5D);
 	}
 
 	@SuppressWarnings("cast")
-	protected void releaseEntitySkin(int i, int j, byte abyte0[], double d,
+	protected void a(int i, int j, byte abyte0[], double d,
 			double d1, double d2, float f, float f1, float f2, int k, int l,
 			double d3) {
 		double d4 = i * 16 + 8;
@@ -60,10 +60,10 @@ public class MapGenCaves extends MapGenBase {
 			f3 += (random.nextFloat() - random.nextFloat())
 					* random.nextFloat() * 4F;
 			if (!flag && k == j1 && f > 1.0F) {
-				releaseEntitySkin(i, j, abyte0, d, d1, d2,
+				a(i, j, abyte0, d, d1, d2,
 						random.nextFloat() * 0.5F + 0.5F, f1 - 1.570796F,
 						f2 / 3F, k, l, 1.0D);
-				releaseEntitySkin(i, j, abyte0, d, d1, d2,
+				a(i, j, abyte0, d, d1, d2,
 						random.nextFloat() * 0.5F + 0.5F, f1 + 1.570796F,
 						f2 / 3F, k, l, 1.0D);
 				return;
@@ -181,7 +181,7 @@ public class MapGenCaves extends MapGenBase {
 	}
 
 	@Override
-	protected void func_868_a(World world, int i, int j, int k, int l,
+	protected void a(World world, int i, int j, int k, int l,
 			byte abyte0[]) {
 		int i1 = rand.nextInt(rand.nextInt(rand.nextInt(40) + 1) + 1);
 		if (rand.nextInt(15) != 0) {
@@ -193,15 +193,14 @@ public class MapGenCaves extends MapGenBase {
 			double d2 = j * 16 + rand.nextInt(16);
 			int k1 = 1;
 			if (rand.nextInt(4) == 0) {
-				func_870_a(k, l, abyte0, d, d1, d2);
+				a(k, l, abyte0, d, d1, d2);
 				k1 += rand.nextInt(4);
 			}
 			for (int l1 = 0; l1 < k1; l1++) {
 				float f = rand.nextFloat() * 3.141593F * 2.0F;
 				float f1 = ((rand.nextFloat() - 0.5F) * 2.0F) / 8F;
 				float f2 = rand.nextFloat() * 2.0F + rand.nextFloat();
-				releaseEntitySkin(k, l, abyte0, d, d1, d2, f2, f, f1, 0, 0,
-						1.0D);
+				a(k, l, abyte0, d, d1, d2, f2, f, f1, 0, 0, 1.0D);
 			}
 
 		}

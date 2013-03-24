@@ -4,7 +4,9 @@ import java.util.Random;
 
 import net.minecraft.server.v1_5_R1.BiomeMeta;
 import net.minecraft.server.v1_5_R1.EntityWolf;
-import org.Barteks2x.b173gen.generator.WorldGenerator173;
+import net.minecraft.server.v1_5_R1.WorldGenTaiga1;
+import net.minecraft.server.v1_5_R1.WorldGenTaiga2;
+import net.minecraft.server.v1_5_R1.WorldGenerator;
 
 public class BiomeGenTaiga extends BiomeGenBase {
 
@@ -15,10 +17,10 @@ public class BiomeGenTaiga extends BiomeGenBase {
 	}
 
 	@Override
-	public WorldGenerator173 a(Random random) {
+	public WorldGenerator a(Random random) {
 		if (random.nextInt(3) == 0) {
 			return new WorldGenTaiga1();
 		}
-		return new WorldGenTaiga2();
+		return new WorldGenTaiga2(true);
 	}
 }

@@ -6,6 +6,7 @@ import java.util.Random;
 import net.minecraft.server.v1_5_R1.BiomeBase;
 import net.minecraft.server.v1_5_R1.Block;
 import net.minecraft.server.v1_5_R1.EnumCreatureType;
+import net.minecraft.server.v1_5_R1.WorldGenerator;
 import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
 public class BiomeGenBase extends BiomeBase {
@@ -56,7 +57,7 @@ public class BiomeGenBase extends BiomeBase {
 	}
 
 	@Override
-	public WorldGenerator173 a(Random random) {
+	public WorldGenerator a(Random random) {
 		if (random.nextInt(10) == 0) {
 			return new WorldGenBigTree();
 		}

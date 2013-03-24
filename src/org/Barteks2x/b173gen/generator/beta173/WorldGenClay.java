@@ -32,10 +32,10 @@ public class WorldGenClay extends WorldGenerator173 {
 			double d7 = d4 + ((d5 - d4) * l) / numberOfBlocks;
 			double d8 = d2 + ((d3 - d2) * l) / numberOfBlocks;
 			double d9 = (random.nextDouble() * numberOfBlocks) / 16D;
-			double d10 = (MathHelper.sin((l * 3.141593F) / numberOfBlocks) + 1.0F)
-					* d9 + 1.0D;
-			double d11 = (MathHelper.sin((l * 3.141593F) / numberOfBlocks) + 1.0F)
-					* d9 + 1.0D;
+			double d10 = (MathHelper.sin((l * 3.141593F) / numberOfBlocks) + 1.0F) *
+				 d9 + 1.0D;
+			double d11 = (MathHelper.sin((l * 3.141593F) / numberOfBlocks) + 1.0F) *
+				 d9 + 1.0D;
 			int i1 = MathHelper.floor(d6 - d10 / 2D);
 			int j1 = MathHelper.floor(d6 + d10 / 2D);
 			int k1 = MathHelper.floor(d7 - d11 / 2D);
@@ -53,7 +53,8 @@ public class WorldGenClay extends WorldGenerator173 {
 						}
 						int j3 = world.getTypeId(k2, l2, i3);
 						if (j3 == Block.SAND.id) {
-							world.setTypeIdAndData(k2, l2, i3, clayBlockId, 0, 2);
+							world.setTypeIdAndData(k2, l2, i3,
+								clayBlockId, 0, 2);
 						}
 					}
 
@@ -65,7 +66,6 @@ public class WorldGenClay extends WorldGenerator173 {
 
 		return true;
 	}
-
 	private int clayBlockId;
 	private int numberOfBlocks;
 }

@@ -50,28 +50,29 @@ public class WorldGenLakes extends WorldGenerator173 {
 		for (int j1 = 0; j1 < 16; j1++) {
 			for (int j2 = 0; j2 < 16; j2++) {
 				for (int j3 = 0; j3 < 8; j3++) {
-					boolean flag = !aflag[(j1 * 16 + j2) * 8 + j3]
-							&& (j1 < 15 && aflag[((j1 + 1) * 16 + j2) * 8 + j3]
-									|| j1 > 0
-									&& aflag[((j1 - 1) * 16 + j2) * 8 + j3]
-									|| j2 < 15
-									&& aflag[(j1 * 16 + (j2 + 1)) * 8 + j3]
-									|| j2 > 0
-									&& aflag[(j1 * 16 + (j2 - 1)) * 8 + j3]
-									|| j3 < 7
-									&& aflag[(j1 * 16 + j2) * 8 + (j3 + 1)] || j3 > 0
-									&& aflag[(j1 * 16 + j2) * 8 + (j3 - 1)]);
+					boolean flag = !aflag[(j1 * 16 + j2) * 8 + j3] &&
+						 (j1 < 15 && aflag[((j1 + 1) * 16 + j2) * 8 + j3] ||
+						 j1 > 0 &&
+						 aflag[((j1 - 1) * 16 + j2) * 8 + j3] ||
+						 j2 < 15 &&
+						 aflag[(j1 * 16 + (j2 + 1)) * 8 + j3] ||
+						 j2 > 0 &&
+						 aflag[(j1 * 16 + (j2 - 1)) * 8 + j3] ||
+						 j3 < 7 &&
+						 aflag[(j1 * 16 + j2) * 8 + (j3 + 1)] || j3 > 0 &&
+						 aflag[(j1 * 16 + j2) * 8 + (j3 - 1)]);
 					if (!flag) {
 						continue;
 					}
-					Material material = world.getMaterial(i + j1, j + j3, k
-							+ j2);
+					Material material = world.getMaterial(i + j1, j + j3, k +
+						 j2);
 					if (j3 >= 4 && material.isLiquid()) {
 						return false;
 					}
-					if (j3 < 4
-							&& !material.isSolid()
-							&& world.getTypeId(i + j1, j + j3, k + j2) != field_15235_a) {
+					if (j3 < 4 &&
+						 !material.isSolid() &&
+						 world.getTypeId(i + j1, j + j3, k + j2) !=
+						field_15235_a) {
 						return false;
 					}
 				}
@@ -85,7 +86,7 @@ public class WorldGenLakes extends WorldGenerator173 {
 				for (int k3 = 0; k3 < 8; k3++) {
 					if (aflag[(k1 * 16 + k2) * 8 + k3]) {
 						world.setTypeIdAndData(i + k1, j + k3, k + k2,
-								k3 < 4 ? field_15235_a : 0, 0, 2);
+							k3 < 4 ? field_15235_a : 0, 0, 2);
 					}
 				}
 
@@ -96,11 +97,13 @@ public class WorldGenLakes extends WorldGenerator173 {
 		for (int l1 = 0; l1 < 16; l1++) {
 			for (int l2 = 0; l2 < 16; l2++) {
 				for (int l3 = 4; l3 < 8; l3++) {
-					if (aflag[(l1 * 16 + l2) * 8 + l3]
-							&& world.getTypeId(i + l1, (j + l3) - 1, k + l2) == Block.DIRT.id
-							&& world.b(EnumSkyBlock.SKY, i + l1, j + l3, k + l2) > 0) {
+					if (aflag[(l1 * 16 + l2) * 8 + l3] &&
+						 world.getTypeId(i + l1, (j + l3) - 1, k + l2) ==
+						Block.DIRT.id &&
+						 world.b(EnumSkyBlock.SKY, i + l1, j + l3, k + l2) >
+						0) {
 						world.setTypeIdAndData(i + l1, (j + l3) - 1, k + l2,
-								Block.GRASS.id, 0, 2);
+							Block.GRASS.id, 0, 2);
 					}
 				}
 
@@ -112,24 +115,26 @@ public class WorldGenLakes extends WorldGenerator173 {
 			for (int i2 = 0; i2 < 16; i2++) {
 				for (int i3 = 0; i3 < 16; i3++) {
 					for (int i4 = 0; i4 < 8; i4++) {
-						boolean flag1 = !aflag[(i2 * 16 + i3) * 8 + i4]
-								&& (i2 < 15
-										&& aflag[((i2 + 1) * 16 + i3) * 8 + i4]
-										|| i2 > 0
-										&& aflag[((i2 - 1) * 16 + i3) * 8 + i4]
-										|| i3 < 15
-										&& aflag[(i2 * 16 + (i3 + 1)) * 8 + i4]
-										|| i3 > 0
-										&& aflag[(i2 * 16 + (i3 - 1)) * 8 + i4]
-										|| i4 < 7
-										&& aflag[(i2 * 16 + i3) * 8 + (i4 + 1)] || i4 > 0
-										&& aflag[(i2 * 16 + i3) * 8 + (i4 - 1)]);
-						if (flag1
-								&& (i4 < 4 || random.nextInt(2) != 0)
-								&& world.getMaterial(i + i2, j + i4, k + i3)
-										.isSolid()) {
-							world.setTypeIdAndData(i + i2, j + i4, k + i3,
-									Block.STONE.id, 0, 2);
+						boolean flag1 = !aflag[(i2 * 16 + i3) * 8 + i4] &&
+							 (i2 < 15 &&
+							 aflag[((i2 + 1) * 16 + i3) * 8 + i4] ||
+							 i2 > 0 &&
+							 aflag[((i2 - 1) * 16 + i3) * 8 + i4] ||
+							 i3 < 15 &&
+							 aflag[(i2 * 16 + (i3 + 1)) * 8 + i4] ||
+							 i3 > 0 &&
+							 aflag[(i2 * 16 + (i3 - 1)) * 8 + i4] ||
+							 i4 < 7 &&
+							 aflag[(i2 * 16 + i3) * 8 + (i4 + 1)] ||
+							i4 > 0 &&
+							 aflag[(i2 * 16 + i3) * 8 + (i4 - 1)]);
+						if (flag1 &&
+							 (i4 < 4 || random.nextInt(2) != 0) &&
+							 world.getMaterial(i + i2, j + i4, k + i3)
+							.isSolid()) {
+							world.setTypeIdAndData(i + i2, j + i4, k +
+								i3,
+								Block.STONE.id, 0, 2);
 						}
 					}
 
@@ -140,6 +145,5 @@ public class WorldGenLakes extends WorldGenerator173 {
 		}
 		return true;
 	}
-
 	private int field_15235_a;
 }

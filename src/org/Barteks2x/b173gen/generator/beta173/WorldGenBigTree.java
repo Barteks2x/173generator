@@ -27,7 +27,7 @@ public class WorldGenBigTree extends WorldGenerator173 {
 			height = field_878_e - 1;
 		}
 		int i = (int) (1.3819999999999999D + Math.pow(
-				(field_872_k * (double) field_878_e) / 13D, 2D));
+			(field_872_k * (double) field_878_e) / 13D, 2D));
 		if (i < 1) {
 			i = 1;
 		}
@@ -50,22 +50,24 @@ public class WorldGenBigTree extends WorldGenerator173 {
 			} else {
 				double d = 0.5D;
 				for (; j1 < i; j1++) {
-					double d1 = field_873_j
-							* ((double) f * ((double) field_881_b.nextFloat() + 0.32800000000000001D));
-					double d2 = (double) field_881_b.nextFloat() * 2D * 3.1415899999999999D;
-					int k1 = MathHelper.floor_double(d1 * Math.sin(d2)
-							+ (double) basePos[0] + d);
-					int l1 = MathHelper.floor_double(d1 * Math.cos(d2)
-							+ (double) basePos[2] + d);
-					int ai1[] = { k1, j, l1 };
-					int ai2[] = { k1, j + field_869_n, l1 };
+					double d1 = field_873_j *
+						 ((double) f * ((double) field_881_b.nextFloat() +
+						0.32800000000000001D));
+					double d2 = (double) field_881_b.nextFloat() * 2D *
+						3.1415899999999999D;
+					int k1 = MathHelper.floor_double(d1 * Math.sin(d2) +
+						 (double) basePos[0] + d);
+					int l1 = MathHelper.floor_double(d1 * Math.cos(d2) +
+						 (double) basePos[2] + d);
+					int ai1[] = {k1, j, l1};
+					int ai2[] = {k1, j + field_869_n, l1};
 					if (func_524_a(ai1, ai2) != -1) {
 						continue;
 					}
-					int ai3[] = { basePos[0], basePos[1], basePos[2] };
+					int ai3[] = {basePos[0], basePos[1], basePos[2]};
 					double d3 = Math.sqrt(Math.pow(
-							Math.abs(basePos[0] - ai1[0]), 2D)
-							+ Math.pow(Math.abs(basePos[2] - ai1[2]), 2D));
+						Math.abs(basePos[0] - ai1[0]), 2D) +
+						 Math.pow(Math.abs(basePos[2] - ai1[2]), 2D));
 					double d4 = d3 * field_874_i;
 					if ((double) ai1[1] - d4 > (double) l) {
 						ai3[1] = l;
@@ -94,8 +96,8 @@ public class WorldGenBigTree extends WorldGenerator173 {
 		int i1 = (int) ((double) f + 0.61799999999999999D);
 		byte byte1 = field_882_a[byte0];
 		byte byte2 = field_882_a[byte0 + 3];
-		int ai[] = { i, j, k };
-		int ai1[] = { 0, 0, 0 };
+		int ai[] = {i, j, k};
+		int ai1[] = {0, 0, 0};
 		int j1 = -i1;
 		@SuppressWarnings("unused")
 		int k1 = -i1;
@@ -103,8 +105,8 @@ public class WorldGenBigTree extends WorldGenerator173 {
 		for (; j1 <= i1; j1++) {
 			ai1[byte1] = ai[byte1] + j1;
 			for (int l1 = -i1; l1 <= i1;) {
-				double d = Math.sqrt(Math.pow((double) Math.abs(j1) + 0.5D, 2D)
-						+ Math.pow((double) Math.abs(l1) + 0.5D, 2D));
+				double d = Math.sqrt(Math.pow((double) Math.abs(j1) + 0.5D, 2D) +
+					 Math.pow((double) Math.abs(l1) + 0.5D, 2D));
 				if (d > (double) f) {
 					l1++;
 				} else {
@@ -113,7 +115,8 @@ public class WorldGenBigTree extends WorldGenerator173 {
 					if (i2 != 0 && i2 != 18) {
 						l1++;
 					} else {
-						worldObj.setTypeIdUpdate(ai1[0], ai1[1], ai1[2], l);
+						worldObj.setTypeIdAndData(ai1[0], ai1[1], ai1[2], l,
+							0, 2);
 						l1++;
 					}
 				}
@@ -136,8 +139,8 @@ public class WorldGenBigTree extends WorldGenerator173 {
 		} else if (Math.abs(f1) >= f) {
 			f2 = 0.0F;
 		} else {
-			f2 = (float) Math.sqrt(Math.pow(Math.abs(f), 2D)
-					- Math.pow(Math.abs(f1), 2D));
+			f2 = (float) Math.sqrt(Math.pow(Math.abs(f), 2D) -
+				 Math.pow(Math.abs(f1), 2D));
 		}
 		f2 *= 0.5F;
 		return f2;
@@ -161,7 +164,7 @@ public class WorldGenBigTree extends WorldGenerator173 {
 
 	@SuppressWarnings("cast")
 	void func_522_a(int ai[], int ai1[], int i) {
-		int ai2[] = { 0, 0, 0 };
+		int ai2[] = {0, 0, 0};
 		byte byte0 = 0;
 		int j = 0;
 		for (; byte0 < 3; byte0++) {
@@ -184,15 +187,15 @@ public class WorldGenBigTree extends WorldGenerator173 {
 		}
 		double d = (double) ai2[byte1] / (double) ai2[j];
 		double d1 = (double) ai2[byte2] / (double) ai2[j];
-		int ai3[] = { 0, 0, 0 };
+		int ai3[] = {0, 0, 0};
 		int k = 0;
 		for (int l = ai2[j] + byte3; k != l; k += byte3) {
 			ai3[j] = MathHelper.floor_double((double) (ai[j] + k) + 0.5D);
-			ai3[byte1] = MathHelper.floor_double((double) ai[byte1]
-					+ (double) k * d + 0.5D);
-			ai3[byte2] = MathHelper.floor_double((double) ai[byte2]
-					+ (double) k * d1 + 0.5D);
-			worldObj.setTypeIdUpdate(ai3[0], ai3[1], ai3[2], i);
+			ai3[byte1] = MathHelper.floor_double((double) ai[byte1] +
+				 (double) k * d + 0.5D);
+			ai3[byte2] = MathHelper.floor_double((double) ai[byte2] +
+				 (double) k * d1 + 0.5D);
+			worldObj.setTypeIdAndData(ai3[0], ai3[1], ai3[2], i, 0, 2);
 		}
 
 	}
@@ -218,8 +221,8 @@ public class WorldGenBigTree extends WorldGenerator173 {
 		int j = basePos[1];
 		int k = basePos[1] + height;
 		int l = basePos[2];
-		int ai[] = { i, j, l };
-		int ai1[] = { i, k, l };
+		int ai[] = {i, j, l};
+		int ai1[] = {i, k, l};
 		func_522_a(ai, ai1, 17);
 		if (field_871_l == 2) {
 			ai[0]++;
@@ -237,10 +240,10 @@ public class WorldGenBigTree extends WorldGenerator173 {
 	void func_525_d() {
 		int i = 0;
 		int j = field_868_o.length;
-		int ai[] = { basePos[0], basePos[1], basePos[2] };
+		int ai[] = {basePos[0], basePos[1], basePos[2]};
 		for (; i < j; i++) {
 			int ai1[] = field_868_o[i];
-			int ai2[] = { ai1[0], ai1[1], ai1[2] };
+			int ai2[] = {ai1[0], ai1[1], ai1[2]};
 			ai[1] = ai1[3];
 			int k = ai[1] - basePos[1];
 			if (func_527_c(k)) {
@@ -251,7 +254,7 @@ public class WorldGenBigTree extends WorldGenerator173 {
 	}
 
 	int func_524_a(int ai[], int ai1[]) {
-		int ai2[] = { 0, 0, 0 };
+		int ai2[] = {0, 0, 0};
 		byte byte0 = 0;
 		int i = 0;
 		for (; byte0 < 3; byte0++) {
@@ -274,7 +277,7 @@ public class WorldGenBigTree extends WorldGenerator173 {
 		}
 		double d = (double) ai2[byte1] / (double) ai2[i];
 		double d1 = (double) ai2[byte2] / (double) ai2[i];
-		int ai3[] = { 0, 0, 0 };
+		int ai3[] = {0, 0, 0};
 		int j = 0;
 		int k = ai2[i] + byte3;
 		do {
@@ -282,10 +285,10 @@ public class WorldGenBigTree extends WorldGenerator173 {
 				break;
 			}
 			ai3[i] = ai[i] + j;
-			ai3[byte1] = MathHelper.floor_double((double) ai[byte1]
-					+ (double) j * d);
-			ai3[byte2] = MathHelper.floor_double((double) ai[byte2]
-					+ (double) j * d1);
+			ai3[byte1] = MathHelper.floor_double((double) ai[byte1] +
+				 (double) j * d);
+			ai3[byte2] = MathHelper.floor_double((double) ai[byte2] +
+				 (double) j * d1);
 			int l = worldObj.getTypeId(ai3[0], ai3[1], ai3[2]);
 			if (l != 0 && l != 18) {
 				break;
@@ -299,8 +302,8 @@ public class WorldGenBigTree extends WorldGenerator173 {
 	}
 
 	boolean func_519_e() {
-		int ai[] = { basePos[0], basePos[1], basePos[2] };
-		int ai1[] = { basePos[0], (basePos[1] + field_878_e) - 1, basePos[2] };
+		int ai[] = {basePos[0], basePos[1], basePos[2]};
+		int ai1[] = {basePos[0], (basePos[1] + field_878_e) - 1, basePos[2]};
 		int i = worldObj.getTypeId(basePos[0], basePos[1] - 1, basePos[2]);
 		if (i != 2 && i != 3) {
 			return false;
@@ -346,11 +349,10 @@ public class WorldGenBigTree extends WorldGenerator173 {
 		func_525_d();
 		return true;
 	}
-
-	static final byte field_882_a[] = { 2, 0, 0, 1, 2, 1 };
+	static final byte field_882_a[] = {2, 0, 0, 1, 2, 1};
 	Random field_881_b;
 	World worldObj;
-	int basePos[] = { 0, 0, 0 };
+	int basePos[] = {0, 0, 0};
 	int field_878_e;
 	int height;
 	double field_876_g;
@@ -362,5 +364,4 @@ public class WorldGenBigTree extends WorldGenerator173 {
 	int field_870_m;
 	int field_869_n;
 	int field_868_o[][];
-
 }
