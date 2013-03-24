@@ -2,16 +2,16 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_4_R1.Block;
-import net.minecraft.server.v1_4_R1.Item;
-import net.minecraft.server.v1_4_R1.ItemStack;
-import net.minecraft.server.v1_4_R1.Material;
-import net.minecraft.server.v1_4_R1.TileEntityChest;
-import net.minecraft.server.v1_4_R1.TileEntityMobSpawner;
-import net.minecraft.server.v1_4_R1.World;
-import net.minecraft.server.v1_4_R1.WorldGenerator;
+import net.minecraft.server.v1_5_R1.Block;
+import net.minecraft.server.v1_5_R1.Item;
+import net.minecraft.server.v1_5_R1.ItemStack;
+import net.minecraft.server.v1_5_R1.Material;
+import net.minecraft.server.v1_5_R1.TileEntityChest;
+import net.minecraft.server.v1_5_R1.TileEntityMobSpawner;
+import net.minecraft.server.v1_5_R1.World;
+import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
-public class WorldGenDungeons extends WorldGenerator {
+public class WorldGenDungeons extends WorldGenerator173 {
 
 	public WorldGenDungeons() {
 	}
@@ -56,20 +56,20 @@ public class WorldGenDungeons extends WorldGenerator {
 							|| j3 == k + i1 + 1) {
 						if (k2 >= 0
 								&& !world.getMaterial(l1, k2 - 1, j3).isSolid()) {
-							world.setTypeId(l1, k2, j3, 0);
+							world.setTypeIdAndData(l1, k2, j3, 0, 0, 2);
 							continue;
 						}
 						if (!world.getMaterial(l1, k2, j3).isSolid()) {
 							continue;
 						}
 						if (k2 == j - 1 && random.nextInt(4) != 0) {
-							world.setTypeId(l1, k2, j3,
-									Block.MOSSY_COBBLESTONE.id);
+							world.setTypeIdAndData(l1, k2, j3,
+									Block.MOSSY_COBBLESTONE.id, 0, 2);
 						} else {
-							world.setTypeId(l1, k2, j3, Block.COBBLESTONE.id);
+							world.setTypeIdAndData(l1, k2, j3, Block.COBBLESTONE.id, 0, 2);
 						}
 					} else {
-						world.setTypeId(l1, k2, j3, 0);
+						world.setTypeIdAndData(l1, k2, j3, 0, 0, 2);
 					}
 				}
 
@@ -101,7 +101,7 @@ public class WorldGenDungeons extends WorldGenerator {
 				if (j4 != 1) {
 					continue;
 				}
-				world.setTypeId(k3, l3, i4, Block.CHEST.id);
+				world.setTypeIdAndData(k3, l3, i4, Block.CHEST.id, 0, 2);
 				TileEntityChest tileentitychest = (TileEntityChest) world
 						.getTileEntity(k3, l3, i4);
 				int k4 = 0;
@@ -121,10 +121,13 @@ public class WorldGenDungeons extends WorldGenerator {
 
 		}
 
-		world.setTypeId(i, j, k, Block.MOB_SPAWNER.id);
+		world.setTypeIdAndData(i, j, k, Block.MOB_SPAWNER.id, 0, 2);
 		TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner) world
 				.getTileEntity(i, j, k);
-		tileentitymobspawner.a(pickMobSpawner(random));
+                if(tileentitymobspawner!=null){
+                    tileentitymobspawner.a().a(pickMobSpawner(random));
+                }
+		
 		return true;
 	}
 

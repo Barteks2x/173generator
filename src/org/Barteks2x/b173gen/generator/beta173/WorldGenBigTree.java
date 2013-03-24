@@ -2,10 +2,10 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_4_R1.World;
-import net.minecraft.server.v1_4_R1.WorldGenerator;
+import net.minecraft.server.v1_5_R1.World;
+import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
-public class WorldGenBigTree extends WorldGenerator {
+public class WorldGenBigTree extends WorldGenerator173 {
 
 	public WorldGenBigTree() {
 		field_881_b = new Random();
@@ -113,7 +113,7 @@ public class WorldGenBigTree extends WorldGenerator {
 					if (i2 != 0 && i2 != 18) {
 						l1++;
 					} else {
-						worldObj.setRawTypeId(ai1[0], ai1[1], ai1[2], l);
+						worldObj.setTypeIdUpdate(ai1[0], ai1[1], ai1[2], l);
 						l1++;
 					}
 				}
@@ -192,7 +192,7 @@ public class WorldGenBigTree extends WorldGenerator {
 					+ (double) k * d + 0.5D);
 			ai3[byte2] = MathHelper.floor_double((double) ai[byte2]
 					+ (double) k * d1 + 0.5D);
-			worldObj.setRawTypeId(ai3[0], ai3[1], ai3[2], i);
+			worldObj.setTypeIdUpdate(ai3[0], ai3[1], ai3[2], i);
 		}
 
 	}
@@ -250,7 +250,6 @@ public class WorldGenBigTree extends WorldGenerator {
 
 	}
 
-	@SuppressWarnings("cast")
 	int func_524_a(int ai[], int ai1[]) {
 		int ai2[] = { 0, 0, 0 };
 		byte byte0 = 0;

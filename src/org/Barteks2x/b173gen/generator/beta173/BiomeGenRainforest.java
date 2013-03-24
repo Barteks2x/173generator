@@ -2,7 +2,7 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_4_R1.WorldGenerator;
+import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
 public class BiomeGenRainforest extends BiomeGenBase {
 
@@ -11,7 +11,7 @@ public class BiomeGenRainforest extends BiomeGenBase {
 	}
 
 	@Override
-	public WorldGenerator a(Random random) {
+	public WorldGenerator173 a(Random random) {
 		if (random.nextInt(3) == 0) {
 			return new WorldGenBigTree();
 		}

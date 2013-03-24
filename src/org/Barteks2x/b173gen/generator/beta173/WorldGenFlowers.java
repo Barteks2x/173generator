@@ -2,13 +2,13 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_4_R1.Block;
-import net.minecraft.server.v1_4_R1.BlockFlower;
-import net.minecraft.server.v1_4_R1.Material;
-import net.minecraft.server.v1_4_R1.World;
-import net.minecraft.server.v1_4_R1.WorldGenerator;
+import net.minecraft.server.v1_5_R1.Block;
+import net.minecraft.server.v1_5_R1.BlockFlower;
+import net.minecraft.server.v1_5_R1.Material;
+import net.minecraft.server.v1_5_R1.World;
+import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
-public class WorldGenFlowers extends WorldGenerator {
+public class WorldGenFlowers extends WorldGenerator173 {
 
 	public WorldGenFlowers(int i) {
 		plantBlockId = i;
@@ -23,7 +23,7 @@ public class WorldGenFlowers extends WorldGenerator {
 			if (world.getMaterial(i1, j1, k1) == Material.AIR
 					&& ((BlockFlower) Block.byId[plantBlockId]).canPlace(world,
 							i1, j1, k1)) {
-				world.setRawTypeId(i1, j1, k1, plantBlockId);
+				world.setTypeIdAndData(i1, j1, k1, plantBlockId, 0, 2);
 			}
 		}
 

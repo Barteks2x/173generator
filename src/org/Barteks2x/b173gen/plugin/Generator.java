@@ -8,7 +8,7 @@ import org.Barteks2x.b173gen.generator.ChunkProviderGenerate;
 import org.Barteks2x.b173gen.generator.beta173.Wcm;
 import org.Barteks2x.b173gen.listener.Beta173GenListener;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_4_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_5_R1.CraftWorld;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -58,7 +58,7 @@ public class Generator extends JavaPlugin {
 		if (worldSetting.isInit) {
 			return;
 		}
-		net.minecraft.server.v1_4_R1.World workWorld = ((CraftWorld) world)
+		net.minecraft.server.v1_5_R1.World workWorld = ((CraftWorld) world)
 				.getHandle();
 
 		Wcm wcm = new Wcm(workWorld.getSeed());

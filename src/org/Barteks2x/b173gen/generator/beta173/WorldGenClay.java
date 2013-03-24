@@ -2,13 +2,13 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_4_R1.Block;
-import net.minecraft.server.v1_4_R1.Material;
-import net.minecraft.server.v1_4_R1.MathHelper;
-import net.minecraft.server.v1_4_R1.World;
-import net.minecraft.server.v1_4_R1.WorldGenerator;
+import net.minecraft.server.v1_5_R1.Block;
+import net.minecraft.server.v1_5_R1.Material;
+import net.minecraft.server.v1_5_R1.MathHelper;
+import net.minecraft.server.v1_5_R1.World;
+import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
-public class WorldGenClay extends WorldGenerator {
+public class WorldGenClay extends WorldGenerator173 {
 
 	public WorldGenClay(int i) {
 		clayBlockId = Block.CLAY.id;
@@ -53,7 +53,7 @@ public class WorldGenClay extends WorldGenerator {
 						}
 						int j3 = world.getTypeId(k2, l2, i3);
 						if (j3 == Block.SAND.id) {
-							world.setRawTypeId(k2, l2, i3, clayBlockId);
+							world.setTypeIdAndData(k2, l2, i3, clayBlockId, 0, 2);
 						}
 					}
 

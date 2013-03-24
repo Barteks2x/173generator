@@ -2,13 +2,13 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_4_R1.Block;
-import net.minecraft.server.v1_4_R1.EnumSkyBlock;
-import net.minecraft.server.v1_4_R1.Material;
-import net.minecraft.server.v1_4_R1.World;
-import net.minecraft.server.v1_4_R1.WorldGenerator;
+import net.minecraft.server.v1_5_R1.Block;
+import net.minecraft.server.v1_5_R1.EnumSkyBlock;
+import net.minecraft.server.v1_5_R1.Material;
+import net.minecraft.server.v1_5_R1.World;
+import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
-public class WorldGenLakes extends WorldGenerator {
+public class WorldGenLakes extends WorldGenerator173 {
 
 	public WorldGenLakes(int i) {
 		field_15235_a = i;
@@ -84,8 +84,8 @@ public class WorldGenLakes extends WorldGenerator {
 			for (int k2 = 0; k2 < 16; k2++) {
 				for (int k3 = 0; k3 < 8; k3++) {
 					if (aflag[(k1 * 16 + k2) * 8 + k3]) {
-						world.setRawTypeId(i + k1, j + k3, k + k2,
-								k3 < 4 ? field_15235_a : 0);
+						world.setTypeIdAndData(i + k1, j + k3, k + k2,
+								k3 < 4 ? field_15235_a : 0, 0, 2);
 					}
 				}
 
@@ -99,8 +99,8 @@ public class WorldGenLakes extends WorldGenerator {
 					if (aflag[(l1 * 16 + l2) * 8 + l3]
 							&& world.getTypeId(i + l1, (j + l3) - 1, k + l2) == Block.DIRT.id
 							&& world.b(EnumSkyBlock.SKY, i + l1, j + l3, k + l2) > 0) {
-						world.setRawTypeId(i + l1, (j + l3) - 1, k + l2,
-								Block.GRASS.id);
+						world.setTypeIdAndData(i + l1, (j + l3) - 1, k + l2,
+								Block.GRASS.id, 0, 2);
 					}
 				}
 
@@ -128,8 +128,8 @@ public class WorldGenLakes extends WorldGenerator {
 								&& (i4 < 4 || random.nextInt(2) != 0)
 								&& world.getMaterial(i + i2, j + i4, k + i3)
 										.isSolid()) {
-							world.setRawTypeId(i + i2, j + i4, k + i3,
-									Block.STONE.id);
+							world.setTypeIdAndData(i + i2, j + i4, k + i3,
+									Block.STONE.id, 0, 2);
 						}
 					}
 

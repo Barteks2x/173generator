@@ -2,12 +2,12 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_4_R1.Block;
-import net.minecraft.server.v1_4_R1.Material;
-import net.minecraft.server.v1_4_R1.World;
-import net.minecraft.server.v1_4_R1.WorldGenerator;
+import net.minecraft.server.v1_5_R1.Block;
+import net.minecraft.server.v1_5_R1.Material;
+import net.minecraft.server.v1_5_R1.World;
+import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
-public class WorldGenLiquids extends WorldGenerator {
+public class WorldGenLiquids extends WorldGenerator173 {
 
 	public WorldGenLiquids(int i) {
 		liquidBlockId = i;
@@ -52,9 +52,9 @@ public class WorldGenLiquids extends WorldGenerator {
 			i1++;
 		}
 		if (l == 3 && i1 == 1) {
-			world.setTypeId(i, j, k, liquidBlockId);
+			world.setTypeIdAndData(i, j, k, liquidBlockId, 0, 2);
 			world.d = true;
-			Block.byId[liquidBlockId].b(world, i, j, k, random);
+			Block.byId[liquidBlockId].a(world, i, j, k, random);//TODO WorldGenLiquids
 			world.d = false;
 		}
 		return true;

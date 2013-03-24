@@ -2,12 +2,12 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_4_R1.Block;
-import net.minecraft.server.v1_4_R1.BlockFlower;
-import net.minecraft.server.v1_4_R1.World;
-import net.minecraft.server.v1_4_R1.WorldGenerator;
+import net.minecraft.server.v1_5_R1.Block;
+import net.minecraft.server.v1_5_R1.BlockFlower;
+import net.minecraft.server.v1_5_R1.World;
+import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
-public class WorldGenTallGrass extends WorldGenerator {
+public class WorldGenTallGrass extends WorldGenerator173 {
 
 	public WorldGenTallGrass(int i, int j) {
 		id = i;
@@ -26,7 +26,7 @@ public class WorldGenTallGrass extends WorldGenerator {
 			if (world.isEmpty(j1, k1, l1)
 					&& ((BlockFlower) Block.byId[id]).canPlace(world, j1, k1,
 							l1)) {
-				world.setRawTypeIdAndData(j1, k1, l1, id, dataValue);
+				world.setTypeIdAndData(j1, k1, l1, id, dataValue, 2);
 			}
 		}
 

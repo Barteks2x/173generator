@@ -2,11 +2,11 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_4_R1.Block;
-import net.minecraft.server.v1_4_R1.World;
-import net.minecraft.server.v1_4_R1.WorldGenerator;
+import net.minecraft.server.v1_5_R1.Block;
+import net.minecraft.server.v1_5_R1.World;
+import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
-public class WorldGenTaiga1 extends WorldGenerator {
+public class WorldGenTaiga1 extends WorldGenerator173 {
 
 	public WorldGenTaiga1() {
 	}
@@ -51,7 +51,7 @@ public class WorldGenTaiga1 extends WorldGenerator {
 		if (i2 != Block.GRASS.id && i2 != Block.DIRT.id || j >= 128 - l - 1) {
 			return false;
 		}
-		world.setRawTypeId(i, j - 1, k, Block.DIRT.id);
+		world.setTypeIdAndData(i, j - 1, k, Block.DIRT.id, 0, 2);
 		int k2 = 0;
 		for (int i3 = j + l; i3 >= j + i1; i3--) {
 			for (int l3 = i - k2; l3 <= i + k2; l3++) {
@@ -59,9 +59,9 @@ public class WorldGenTaiga1 extends WorldGenerator {
 				for (int l4 = k - k2; l4 <= k + k2; l4++) {
 					int i5 = l4 - k;
 					if ((Math.abs(k4) != k2 || Math.abs(i5) != k2 || k2 <= 0)
-							&& !Block.q[world.getTypeId(l3, i3, l4)]) {
-						world.setRawTypeIdAndData(l3, i3, l4, Block.LEAVES.id,
-								1);
+							/**&& !Block.q[world.getTypeId(l3, i3, l4)]**/) {//TODO WorldGenTaiga1
+						world.setTypeIdAndData(l3, i3, l4, Block.LEAVES.id,
+								1, 2);
 					}
 				}
 
@@ -79,7 +79,7 @@ public class WorldGenTaiga1 extends WorldGenerator {
 		for (int j3 = 0; j3 < l - 1; j3++) {
 			int i4 = world.getTypeId(i, j + j3, k);
 			if (i4 == 0 || i4 == Block.LEAVES.id) {
-				world.setRawTypeIdAndData(i, j + j3, k, Block.LOG.id, 1);
+				world.setTypeIdAndData(i, j + j3, k, Block.LOG.id, 1, 2);
 			}
 		}
 

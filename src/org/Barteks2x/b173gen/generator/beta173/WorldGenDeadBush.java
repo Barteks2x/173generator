@@ -2,12 +2,12 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_4_R1.Block;
-import net.minecraft.server.v1_4_R1.BlockFlower;
-import net.minecraft.server.v1_4_R1.World;
-import net.minecraft.server.v1_4_R1.WorldGenerator;
+import net.minecraft.server.v1_5_R1.Block;
+import net.minecraft.server.v1_5_R1.BlockFlower;
+import net.minecraft.server.v1_5_R1.World;
+import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
-public class WorldGenDeadBush extends WorldGenerator {
+public class WorldGenDeadBush extends WorldGenerator173 {
 
 	public WorldGenDeadBush(int i) {
 		field_28058_a = i;
@@ -23,9 +23,9 @@ public class WorldGenDeadBush extends WorldGenerator {
 			int k1 = (j + random.nextInt(4)) - random.nextInt(4);
 			int l1 = (k + random.nextInt(8)) - random.nextInt(8);
 			if (world.isEmpty(j1, k1, l1)
-					&& ((BlockFlower) Block.byId[field_28058_a]).d(world, j1,
+					&& ((BlockFlower) Block.byId[field_28058_a]).f(world, j1,//TODO WorldGenDeadBush
 							k1, l1)) {
-				world.setRawTypeId(j1, k1, l1, field_28058_a);
+				world.setTypeIdAndData(j1, k1, l1, field_28058_a, 0, 2);
 			}
 		}
 

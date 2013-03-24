@@ -2,12 +2,12 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_4_R1.Block;
-import net.minecraft.server.v1_4_R1.Material;
-import net.minecraft.server.v1_4_R1.World;
-import net.minecraft.server.v1_4_R1.WorldGenerator;
+import net.minecraft.server.v1_5_R1.Block;
+import net.minecraft.server.v1_5_R1.Material;
+import net.minecraft.server.v1_5_R1.World;
+import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
-public class WorldGenReed extends WorldGenerator {
+public class WorldGenReed extends WorldGenerator173 {
 
 	public WorldGenReed() {
 	}
@@ -28,8 +28,8 @@ public class WorldGenReed extends WorldGenerator {
 			int l1 = 2 + random.nextInt(random.nextInt(3) + 1);
 			for (int i2 = 0; i2 < l1; i2++) {
 				if (Block.SUGAR_CANE_BLOCK.canPlace(world, i1, j1 + i2, k1)) {
-					world.setRawTypeId(i1, j1 + i2, k1,
-							Block.SUGAR_CANE_BLOCK.id);
+					world.setTypeIdAndData(i1, j1 + i2, k1,
+							Block.SUGAR_CANE_BLOCK.id, 0, 2);
 				}
 			}
 

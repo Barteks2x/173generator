@@ -2,12 +2,12 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_4_R1.Block;
-import net.minecraft.server.v1_4_R1.MathHelper;
-import net.minecraft.server.v1_4_R1.World;
-import net.minecraft.server.v1_4_R1.WorldGenerator;
+import net.minecraft.server.v1_5_R1.Block;
+import net.minecraft.server.v1_5_R1.MathHelper;
+import net.minecraft.server.v1_5_R1.World;
+import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
-public class WorldGenMinable extends WorldGenerator {
+public class WorldGenMinable extends WorldGenerator173 {
 
 	public WorldGenMinable(int i, int j) {
 		minableBlockId = i;
@@ -52,7 +52,7 @@ public class WorldGenMinable extends WorldGenerator {
 						double d14 = ((i3 + 0.5D) - d8) / (d10 / 2D);
 						if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D
 								&& world.getTypeId(k2, l2, i3) == Block.STONE.id) {
-							world.setRawTypeId(k2, l2, i3, minableBlockId);
+							world.setTypeIdAndData(k2, l2, i3, minableBlockId, 0, 2);
 						}
 					}
 

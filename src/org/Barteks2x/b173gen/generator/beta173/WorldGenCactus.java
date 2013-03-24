@@ -2,12 +2,12 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_4_R1.Block;
-import net.minecraft.server.v1_4_R1.Material;
-import net.minecraft.server.v1_4_R1.World;
-import net.minecraft.server.v1_4_R1.WorldGenerator;
+import net.minecraft.server.v1_5_R1.Block;
+import net.minecraft.server.v1_5_R1.Material;
+import net.minecraft.server.v1_5_R1.World;
+import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
-public class WorldGenCactus extends WorldGenerator {
+public class WorldGenCactus extends WorldGenerator173 {
 	public WorldGenCactus() {
 	}
 
@@ -23,7 +23,7 @@ public class WorldGenCactus extends WorldGenerator {
 			int l1 = 1 + random.nextInt(random.nextInt(3) + 1);
 			for (int i2 = 0; i2 < l1; i2++) {
 				if (canStay(world, i1, j1 + i2, k1)) {
-					world.setRawTypeId(i1, j1 + i2, k1, Block.CACTUS.id);
+					world.setTypeIdAndData(i1, j1 + i2, k1, Block.CACTUS.id, 0, 2);
 				}
 			}
 

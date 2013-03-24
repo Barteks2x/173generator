@@ -2,11 +2,11 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_4_R1.Block;
-import net.minecraft.server.v1_4_R1.World;
-import net.minecraft.server.v1_4_R1.WorldGenerator;
+import net.minecraft.server.v1_5_R1.Block;
+import net.minecraft.server.v1_5_R1.World;
+import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
-public class WorldGenPumpkin extends WorldGenerator {
+public class WorldGenPumpkin extends WorldGenerator173 {
 
 	public WorldGenPumpkin() {
 	}
@@ -20,8 +20,8 @@ public class WorldGenPumpkin extends WorldGenerator {
 			if (world.isEmpty(i1, j1, k1)
 					&& world.getTypeId(i1, j1 - 1, k1) == Block.GRASS.id
 					&& Block.PUMPKIN.canPlace(world, i1, j1, k1)) {
-				world.setRawTypeIdAndData(i1, j1, k1, Block.PUMPKIN.id,
-						random.nextInt(4));
+				world.setTypeIdAndData(i1, j1, k1, Block.PUMPKIN.id,
+						random.nextInt(4), 2);
 			}
 		}
 
