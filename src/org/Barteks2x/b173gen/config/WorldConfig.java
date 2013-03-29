@@ -1,6 +1,7 @@
-package org.Barteks2x.b173gen.plugin;
+package org.Barteks2x.b173gen.config;
 
 import org.Barteks2x.b173gen.generator.ChunkProviderGenerate;
+import org.Barteks2x.b173gen.plugin.Generator;
 
 public class WorldConfig {
 	public Generator plugin;

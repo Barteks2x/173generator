@@ -2,24 +2,22 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_5_R1.Block;
-import net.minecraft.server.v1_5_R1.World;
+import net.minecraft.server.v1_5_R2.Block;
+import net.minecraft.server.v1_5_R2.World;
 
 public class MapGenCaves extends MapGenBase {
 
 	public MapGenCaves() {
 	}
 
-	protected void a(int i, int j, byte abyte0[], double d, double d1,
-			double d2) {
-		a(i, j, abyte0, d, d1, d2,
-				1.0F + rand.nextFloat() * 6F, 0.0F, 0.0F, -1, -1, 0.5D);
+	protected void a(int i, int j, byte abyte0[], double d, double d1, double d2) {
+		a(i, j, abyte0, d, d1, d2, 1.0F + rand.nextFloat() * 6F, 0.0F, 0.0F, -1, -1, 0.5D);
 	}
 
 	@SuppressWarnings("cast")
-	protected void a(int i, int j, byte abyte0[], double d,
-			double d1, double d2, float f, float f1, float f2, int k, int l,
-			double d3) {
+	protected void a(int i, int j, byte abyte0[], double d, double d1, double d2, float f,
+		float f1, float f2, int k, int l, double d3) {
+		
 		double d4 = i * 16 + 8;
 		double d5 = j * 16 + 8;
 		float f3 = 0.0F;
@@ -37,9 +35,9 @@ public class MapGenCaves extends MapGenBase {
 		int j1 = random.nextInt(l / 2) + l / 4;
 		boolean flag1 = random.nextInt(6) == 0;
 		for (; k < l; k++) {
-			double d6 = 1.5D + (double) (MathHelper.sin(((float) k * 3.141593F)
-					/ (float) l)
-					* f * 1.0F);
+			double d6 = 1.5D + (double) (MathHelper.sin(((float) k * 3.141593F) /
+				 (float) l) *
+				 f * 1.0F);
 			double d7 = d6 * d3;
 			float f5 = MathHelper.cos(f2);
 			float f6 = MathHelper.sin(f2);
@@ -55,17 +53,17 @@ public class MapGenCaves extends MapGenBase {
 			f1 += f3 * 0.1F;
 			f4 *= 0.9F;
 			f3 *= 0.75F;
-			f4 += (random.nextFloat() - random.nextFloat())
-					* random.nextFloat() * 2.0F;
-			f3 += (random.nextFloat() - random.nextFloat())
-					* random.nextFloat() * 4F;
+			f4 += (random.nextFloat() - random.nextFloat()) *
+				 random.nextFloat() * 2.0F;
+			f3 += (random.nextFloat() - random.nextFloat()) *
+				 random.nextFloat() * 4F;
 			if (!flag && k == j1 && f > 1.0F) {
 				a(i, j, abyte0, d, d1, d2,
-						random.nextFloat() * 0.5F + 0.5F, f1 - 1.570796F,
-						f2 / 3F, k, l, 1.0D);
+					random.nextFloat() * 0.5F + 0.5F, f1 - 1.570796F,
+					f2 / 3F, k, l, 1.0D);
 				a(i, j, abyte0, d, d1, d2,
-						random.nextFloat() * 0.5F + 0.5F, f1 + 1.570796F,
-						f2 / 3F, k, l, 1.0D);
+					random.nextFloat() * 0.5F + 0.5F, f1 + 1.570796F,
+					f2 / 3F, k, l, 1.0D);
 				return;
 			}
 			if (!flag && random.nextInt(4) == 0) {
@@ -78,8 +76,8 @@ public class MapGenCaves extends MapGenBase {
 			if ((d8a * d8a + d9a * d9a) - d10a * d10a > d11 * d11) {
 				return;
 			}
-			if (d < d4 - 16D - d6 * 2D || d2 < d5 - 16D - d6 * 2D
-					|| d > d4 + 16D + d6 * 2D || d2 > d5 + 16D + d6 * 2D) {
+			if (d < d4 - 16D - d6 * 2D || d2 < d5 - 16D - d6 * 2D ||
+				 d > d4 + 16D + d6 * 2D || d2 > d5 + 16D + d6 * 2D) {
 				continue;
 			}
 			int d8 = MathHelper.floor_double(d - d6) - i * 16 - 1;
@@ -114,12 +112,12 @@ public class MapGenCaves extends MapGenBase {
 						if (i3 < 0 || i3 >= 128) {
 							continue;
 						}
-						if (abyte0[j3] == Block.WATER.id
-								|| abyte0[j3] == Block.STATIONARY_WATER.id) {
+						if (abyte0[j3] == Block.WATER.id ||
+							 abyte0[j3] == Block.STATIONARY_WATER.id) {
 							flag2 = true;
 						}
-						if (i3 != d9 - 1 && j2 != d8 && j2 != k1 - 1
-								&& l2 != d10 && l2 != i2 - 1) {
+						if (i3 != d9 - 1 && j2 != d8 && j2 != k1 - 1 &&
+							 l2 != d10 && l2 != i2 - 1) {
 							i3 = d9;
 						}
 					}
@@ -133,7 +131,7 @@ public class MapGenCaves extends MapGenBase {
 			}
 			for (int k2 = d8; k2 < k1; k2++) {
 				double d12 = (((double) (k2 + i * 16) + 0.5D) - d) / d6;
-				label0: for (int k3 = d10; k3 < i2; k3++) {
+label0:                         for (int k3 = d10; k3 < i2; k3++) {
 					double d13 = (((double) (k3 + j * 16) + 0.5D) - d2) / d6;
 					int l3 = (k2 * 16 + k3) * 128 + l1;
 					boolean flag3 = false;
@@ -146,22 +144,25 @@ public class MapGenCaves extends MapGenBase {
 							continue label0;
 						}
 						double d14 = (((double) i4 + 0.5D) - d1) / d7;
-						if (d14 > -0.69999999999999996D
-								&& d12 * d12 + d14 * d14 + d13 * d13 < 1.0D) {
+						if (d14 > -0.69999999999999996D &&
+							 d12 * d12 + d14 * d14 + d13 * d13 < 1.0D) {
 							byte byte0 = abyte0[l3];
 							if (byte0 == Block.GRASS.id) {
 								flag3 = true;
 							}
-							if (byte0 == Block.STONE.id
-									|| byte0 == Block.DIRT.id
-									|| byte0 == Block.GRASS.id) {
+							if (byte0 == Block.STONE.id ||
+								 byte0 == Block.DIRT.id ||
+								 byte0 == Block.GRASS.id) {
 								if (i4 < 10) {
-									abyte0[l3] = (byte) Block.LAVA.id;
+									abyte0[l3] =
+										(byte) Block.LAVA.id;
 								} else {
 									abyte0[l3] = 0;
-									if (flag3
-											&& abyte0[l3 - 1] == Block.DIRT.id) {
-										abyte0[l3 - 1] = (byte) Block.GRASS.id;
+									if (flag3 &&
+										 abyte0[l3 - 1] ==
+										Block.DIRT.id) {
+										abyte0[l3 - 1] =
+											(byte) Block.GRASS.id;
 									}
 								}
 							}
@@ -181,8 +182,7 @@ public class MapGenCaves extends MapGenBase {
 	}
 
 	@Override
-	protected void a(World world, int i, int j, int k, int l,
-			byte abyte0[]) {
+	protected void a(World world, int i, int j, int k, int l, byte abyte0[]) {
 		int i1 = rand.nextInt(rand.nextInt(rand.nextInt(40) + 1) + 1);
 		if (rand.nextInt(15) != 0) {
 			i1 = 0;
@@ -202,8 +202,6 @@ public class MapGenCaves extends MapGenBase {
 				float f2 = rand.nextFloat() * 2.0F + rand.nextFloat();
 				a(k, l, abyte0, d, d1, d2, f2, f, f1, 0, 0, 1.0D);
 			}
-
 		}
-
 	}
 }

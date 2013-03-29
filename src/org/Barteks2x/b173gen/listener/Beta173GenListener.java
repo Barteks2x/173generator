@@ -17,7 +17,7 @@ public class Beta173GenListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onWorldInit(WorldInitEvent event) {
-		this.plugin.WorldInit(event.getWorld());
+		this.plugin.initWorld(event.getWorld());
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)

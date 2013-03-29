@@ -2,11 +2,11 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_5_R1.BiomeMeta;
-import net.minecraft.server.v1_5_R1.EntityWolf;
-import net.minecraft.server.v1_5_R1.WorldGenTaiga1;
-import net.minecraft.server.v1_5_R1.WorldGenTaiga2;
-import net.minecraft.server.v1_5_R1.WorldGenerator;
+import net.minecraft.server.v1_5_R2.BiomeMeta;
+import net.minecraft.server.v1_5_R2.EntityWolf;
+import net.minecraft.server.v1_5_R2.WorldGenTaiga1;
+import net.minecraft.server.v1_5_R2.WorldGenTaiga2;
+import net.minecraft.server.v1_5_R2.WorldGenerator;
 
 public class BiomeGenTaiga extends BiomeGenBase {
 

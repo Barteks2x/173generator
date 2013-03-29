@@ -2,10 +2,10 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_5_R1.Block;
-import net.minecraft.server.v1_5_R1.EnumSkyBlock;
-import net.minecraft.server.v1_5_R1.Material;
-import net.minecraft.server.v1_5_R1.World;
+import net.minecraft.server.v1_5_R2.Block;
+import net.minecraft.server.v1_5_R2.EnumSkyBlock;
+import net.minecraft.server.v1_5_R2.Material;
+import net.minecraft.server.v1_5_R2.World;
 import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
 public class WorldGenLakes extends WorldGenerator173 {

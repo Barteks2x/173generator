@@ -1,8 +1,8 @@
 package org.Barteks2x.b173gen.generator;
 
 import java.util.Random;
-import net.minecraft.server.v1_5_R1.World;
-import net.minecraft.server.v1_5_R1.WorldGenerator;
+import net.minecraft.server.v1_5_R2.World;
+import net.minecraft.server.v1_5_R2.WorldGenerator;
 
 public abstract class WorldGenerator173 extends WorldGenerator {
 

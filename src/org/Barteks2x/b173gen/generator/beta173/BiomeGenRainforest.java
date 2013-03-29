@@ -15,6 +15,6 @@ public class BiomeGenRainforest extends BiomeGenBase {
 		if (random.nextInt(3) == 0) {
 			return new WorldGenBigTree();
 		}
-		return new WorldGenTrees();
+		return new WorldGenTree();
 	}
 }

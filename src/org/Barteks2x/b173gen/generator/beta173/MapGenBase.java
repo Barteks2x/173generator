@@ -2,9 +2,9 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_5_R1.IChunkProvider;
-import net.minecraft.server.v1_5_R1.World;
-import net.minecraft.server.v1_5_R1.WorldGenBase;
+import net.minecraft.server.v1_5_R2.IChunkProvider;
+import net.minecraft.server.v1_5_R2.World;
+import net.minecraft.server.v1_5_R2.WorldGenBase;
 
 public class MapGenBase extends WorldGenBase {
 
@@ -15,7 +15,7 @@ public class MapGenBase extends WorldGenBase {
 
 	@SuppressWarnings("cast")
 	@Override
-	public void a(IChunkProvider chunkProviderGenerate, World world, int i, int j, byte abyte0[]) {
+	public void a(IChunkProvider cpg, World world, int i, int j, byte abyte0[]) {
 		int k = field_1306_a;
 		rand.setSeed(world.getSeed());
 		long l = (rand.nextLong() / 2L) * 2L + 1L;

@@ -2,39 +2,55 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_5_R1.World;
+import net.minecraft.server.v1_5_R2.World;
 import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
 public class WorldGenBigTree extends WorldGenerator173 {
-
+	
+	static final byte a[] = {2, 0, 0, 1, 2, 1};
+	Random b;
+	World worldObj;
+	int basePos[] = {0, 0, 0};
+	int e;
+	int f;
+	double g;
+	double h;
+	double i;
+	double j;
+	double k;
+	int l;
+	int m;
+	int n;
+	int o[][];
+	
 	public WorldGenBigTree() {
-		field_881_b = new Random();
-		field_878_e = 0;
-		field_876_g = 0.61799999999999999D;
-		field_875_h = 1.0D;
-		field_874_i = 0.38100000000000001D;
-		field_873_j = 1.0D;
-		field_872_k = 1.0D;
-		field_871_l = 1;
-		field_870_m = 12;
-		field_869_n = 4;
+		b = new Random();
+		e = 0;
+		g = 0.61799999999999999D;
+		h = 1.0D;
+		i = 0.38100000000000001D;
+		j = 1.0D;
+		k = 1.0D;
+		l = 1;
+		m = 12;
+		n = 4;
 	}
 
 	@SuppressWarnings("cast")
-	void func_521_a() {
-		height = (int) ((double) field_878_e * field_876_g);
-		if (height >= field_878_e) {
-			height = field_878_e - 1;
+	void a() {
+		f = (int) ((double) e * g);
+		if (f >= e) {
+			f = e - 1;
 		}
 		int i = (int) (1.3819999999999999D + Math.pow(
-			(field_872_k * (double) field_878_e) / 13D, 2D));
+			(k * (double) e) / 13D, 2D));
 		if (i < 1) {
 			i = 1;
 		}
-		int ai[][] = new int[i * field_878_e][4];
-		int j = (basePos[1] + field_878_e) - field_869_n;
+		int ai[][] = new int[i * e][4];
+		int j = (basePos[1] + e) - n;
 		int k = 1;
-		int l = basePos[1] + height;
+		int l = basePos[1] + f;
 		int i1 = j - basePos[1];
 		ai[0][0] = basePos[0];
 		ai[0][1] = j;
@@ -43,38 +59,38 @@ public class WorldGenBigTree extends WorldGenerator173 {
 		j--;
 		while (i1 >= 0) {
 			int j1 = 0;
-			float f = func_528_a(i1);
+			float f = a(i1);
 			if (f < 0.0F) {
 				j--;
 				i1--;
 			} else {
 				double d = 0.5D;
 				for (; j1 < i; j1++) {
-					double d1 = field_873_j *
-						 ((double) f * ((double) field_881_b.nextFloat() +
+					double d1 = this.j *
+						 ((double) f * ((double) b.nextFloat() +
 						0.32800000000000001D));
-					double d2 = (double) field_881_b.nextFloat() * 2D *
+					double d2 = (double) b.nextFloat() * 2D *
 						3.1415899999999999D;
 					int k1 = MathHelper.floor_double(d1 * Math.sin(d2) +
 						 (double) basePos[0] + d);
 					int l1 = MathHelper.floor_double(d1 * Math.cos(d2) +
 						 (double) basePos[2] + d);
 					int ai1[] = {k1, j, l1};
-					int ai2[] = {k1, j + field_869_n, l1};
-					if (func_524_a(ai1, ai2) != -1) {
+					int ai2[] = {k1, j + n, l1};
+					if (a(ai1, ai2) != -1) {
 						continue;
 					}
 					int ai3[] = {basePos[0], basePos[1], basePos[2]};
 					double d3 = Math.sqrt(Math.pow(
 						Math.abs(basePos[0] - ai1[0]), 2D) +
 						 Math.pow(Math.abs(basePos[2] - ai1[2]), 2D));
-					double d4 = d3 * field_874_i;
+					double d4 = d3 * this.i;
 					if ((double) ai1[1] - d4 > (double) l) {
 						ai3[1] = l;
 					} else {
 						ai3[1] = (int) ((double) ai1[1] - d4);
 					}
-					if (func_524_a(ai3, ai1) == -1) {
+					if (a(ai3, ai1) == -1) {
 						ai[k][0] = k1;
 						ai[k][1] = j;
 						ai[k][2] = l1;
@@ -87,19 +103,18 @@ public class WorldGenBigTree extends WorldGenerator173 {
 				i1--;
 			}
 		}
-		field_868_o = new int[k][4];
-		System.arraycopy(ai, 0, field_868_o, 0, k);
+		o = new int[k][4];
+		System.arraycopy(ai, 0, o, 0, k);
 	}
 
 	@SuppressWarnings("cast")
-	void func_523_a(int i, int j, int k, float f, byte byte0, int l) {
+	void a(int i, int j, int k, float f, byte byte0, int l) {
 		int i1 = (int) ((double) f + 0.61799999999999999D);
-		byte byte1 = field_882_a[byte0];
-		byte byte2 = field_882_a[byte0 + 3];
+		byte byte1 = a[byte0];
+		byte byte2 = a[byte0 + 3];
 		int ai[] = {i, j, k};
 		int ai1[] = {0, 0, 0};
 		int j1 = -i1;
-		@SuppressWarnings("unused")
 		int k1 = -i1;
 		ai1[byte0] = ai[byte0];
 		for (; j1 <= i1; j1++) {
@@ -126,13 +141,12 @@ public class WorldGenBigTree extends WorldGenerator173 {
 
 	}
 
-	@SuppressWarnings("cast")
-	float func_528_a(int i) {
-		if ((double) i < (double) (float) field_878_e * 0.29999999999999999D) {
+	float a(int i) {
+		if ((double) i < (double) (float) e * 0.29999999999999999D) {
 			return -1.618F;
 		}
-		float f = (float) field_878_e / 2.0F;
-		float f1 = (float) field_878_e / 2.0F - (float) i;
+		float f = (float) e / 2.0F;
+		float f1 = (float) e / 2.0F - (float) i;
 		float f2;
 		if (f1 == 0.0F) {
 			f2 = f;
@@ -146,24 +160,23 @@ public class WorldGenBigTree extends WorldGenerator173 {
 		return f2;
 	}
 
-	float func_526_b(int i) {
-		if (i < 0 || i >= field_869_n) {
+	float b(int i) {
+		if (i < 0 || i >= n) {
 			return -1F;
 		}
-		return i != 0 && i != field_869_n - 1 ? 3F : 2.0F;
+		return i != 0 && i != n - 1 ? 3F : 2.0F;
 	}
 
-	void func_520_a(int i, int j, int k) {
+	void a(int i, int j, int k) {
 		int l = j;
-		for (int i1 = j + field_869_n; l < i1; l++) {
-			float f = func_526_b(l - j);
-			func_523_a(i, l, k, f, (byte) 1, 18);
+		for (int i1 = j + n; l < i1; l++) {
+			float f = b(l - j);
+			a(i, l, k, f, (byte) 1, 18);
 		}
 
 	}
 
-	@SuppressWarnings("cast")
-	void func_522_a(int ai[], int ai1[], int i) {
+	void a(int ai[], int ai1[], int i) {
 		int ai2[] = {0, 0, 0};
 		byte byte0 = 0;
 		int j = 0;
@@ -177,8 +190,8 @@ public class WorldGenBigTree extends WorldGenerator173 {
 		if (ai2[j] == 0) {
 			return;
 		}
-		byte byte1 = field_882_a[j];
-		byte byte2 = field_882_a[j + 3];
+		byte byte1 = a[j];
+		byte byte2 = a[j + 3];
 		byte byte3;
 		if (ai2[j] > 0) {
 			byte3 = 1;
@@ -200,60 +213,59 @@ public class WorldGenBigTree extends WorldGenerator173 {
 
 	}
 
-	void func_518_b() {
+	void b() {
 		int i = 0;
-		for (int j = field_868_o.length; i < j; i++) {
-			int k = field_868_o[i][0];
-			int l = field_868_o[i][1];
-			int i1 = field_868_o[i][2];
-			func_520_a(k, l, i1);
+		for (int j = o.length; i < j; i++) {
+			int k = o[i][0];
+			int l = o[i][1];
+			int i1 = o[i][2];
+			a(k, l, i1);
 		}
 
 	}
 
-	@SuppressWarnings("cast")
-	boolean func_527_c(int i) {
-		return (double) i >= (double) field_878_e * 0.20000000000000001D;
+	boolean c(int i) {
+		return (double) i >= (double) e * 0.20000000000000001D;
 	}
 
-	void func_529_c() {
+	void c() {
 		int i = basePos[0];
 		int j = basePos[1];
-		int k = basePos[1] + height;
+		int k = basePos[1] + f;
 		int l = basePos[2];
 		int ai[] = {i, j, l};
 		int ai1[] = {i, k, l};
-		func_522_a(ai, ai1, 17);
-		if (field_871_l == 2) {
+		a(ai, ai1, 17);
+		if (this.l == 2) {
 			ai[0]++;
 			ai1[0]++;
-			func_522_a(ai, ai1, 17);
+			a(ai, ai1, 17);
 			ai[2]++;
 			ai1[2]++;
-			func_522_a(ai, ai1, 17);
+			a(ai, ai1, 17);
 			ai[0]--;
 			ai1[0]--;
-			func_522_a(ai, ai1, 17);
+			a(ai, ai1, 17);
 		}
 	}
 
-	void func_525_d() {
+	void d() {
 		int i = 0;
-		int j = field_868_o.length;
+		int j = o.length;
 		int ai[] = {basePos[0], basePos[1], basePos[2]};
 		for (; i < j; i++) {
-			int ai1[] = field_868_o[i];
+			int ai1[] = o[i];
 			int ai2[] = {ai1[0], ai1[1], ai1[2]};
 			ai[1] = ai1[3];
 			int k = ai[1] - basePos[1];
-			if (func_527_c(k)) {
-				func_522_a(ai, ai2, 17);
+			if (c(k)) {
+				a(ai, ai2, 17);
 			}
 		}
 
 	}
 
-	int func_524_a(int ai[], int ai1[]) {
+	int a(int ai[], int ai1[]) {
 		int ai2[] = {0, 0, 0};
 		byte byte0 = 0;
 		int i = 0;
@@ -267,8 +279,8 @@ public class WorldGenBigTree extends WorldGenerator173 {
 		if (ai2[i] == 0) {
 			return -1;
 		}
-		byte byte1 = field_882_a[i];
-		byte byte2 = field_882_a[i + 3];
+		byte byte1 = a[i];
+		byte byte2 = a[i + 3];
 		byte byte3;
 		if (ai2[i] > 0) {
 			byte3 = 1;
@@ -301,67 +313,52 @@ public class WorldGenBigTree extends WorldGenerator173 {
 		return Math.abs(j);
 	}
 
-	boolean func_519_e() {
+	boolean e() {
 		int ai[] = {basePos[0], basePos[1], basePos[2]};
-		int ai1[] = {basePos[0], (basePos[1] + field_878_e) - 1, basePos[2]};
+		int ai1[] = {basePos[0], (basePos[1] + e) - 1, basePos[2]};
 		int i = worldObj.getTypeId(basePos[0], basePos[1] - 1, basePos[2]);
 		if (i != 2 && i != 3) {
 			return false;
 		}
-		int j = func_524_a(ai, ai1);
+		int j = a(ai, ai1);
 		if (j == -1) {
 			return true;
 		}
 		if (j < 6) {
 			return false;
 		}
-		field_878_e = j;
+		e = j;
 		return true;
 	}
 
 	@Override
 	public void a(double d, double d1, double d2) {
-		field_870_m = (int) (d * 12D);
+		m = (int) (d * 12D);
 		if (d > 0.5D) {
-			field_869_n = 5;
+			n = 5;
 		}
-		field_873_j = d1;
-		field_872_k = d2;
+		j = d1;
+		k = d2;
 	}
 
 	@Override
 	public boolean a(World world, Random random, int i, int j, int k) {
 		worldObj = world;
 		long l = random.nextLong();
-		field_881_b.setSeed(l);
+		b.setSeed(l);
 		basePos[0] = i;
 		basePos[1] = j;
 		basePos[2] = k;
-		if (field_878_e == 0) {
-			field_878_e = 5 + field_881_b.nextInt(field_870_m);
+		if (e == 0) {
+			e = 5 + b.nextInt(m);
 		}
-		if (!func_519_e()) {
+		if (!e()) {
 			return false;
 		}
-		func_521_a();
-		func_518_b();
-		func_529_c();
-		func_525_d();
+		a();
+		b();
+		c();
+		d();
 		return true;
 	}
-	static final byte field_882_a[] = {2, 0, 0, 1, 2, 1};
-	Random field_881_b;
-	World worldObj;
-	int basePos[] = {0, 0, 0};
-	int field_878_e;
-	int height;
-	double field_876_g;
-	double field_875_h;
-	double field_874_i;
-	double field_873_j;
-	double field_872_k;
-	int field_871_l;
-	int field_870_m;
-	int field_869_n;
-	int field_868_o[][];
 }

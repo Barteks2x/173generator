@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.server.v1_5_R1.BiomeBase;
-import net.minecraft.server.v1_5_R1.ChunkPosition;
-import net.minecraft.server.v1_5_R1.WorldChunkManager;
+import net.minecraft.server.v1_5_R2.BiomeBase;
+import net.minecraft.server.v1_5_R2.ChunkPosition;
+import net.minecraft.server.v1_5_R2.WorldChunkManager;
 
 public class Wcm extends WorldChunkManager {
 	@SuppressWarnings("rawtypes")
