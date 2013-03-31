@@ -2,13 +2,13 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-public class NoiseGeneratorOctaves2 extends NoiseGenerator {
+public class NoiseGeneratorOctaves2Old extends NoiseGeneratorOld {
 
-	public NoiseGeneratorOctaves2(Random random, int i) {
+	public NoiseGeneratorOctaves2Old(Random random, int i) {
 		field_4233_b = i;
-		field_4234_a = new NoiseGenerator2[i];
+		field_4234_a = new NoiseGenerator2Old[i];
 		for (int j = 0; j < i; j++) {
-			field_4234_a[j] = new NoiseGenerator2(random);
+			field_4234_a[j] = new NoiseGenerator2Old(random);
 		}
 
 	}
@@ -42,6 +42,6 @@ public class NoiseGeneratorOctaves2 extends NoiseGenerator {
 		return ad;
 	}
 
-	private NoiseGenerator2 field_4234_a[];
+	private NoiseGenerator2Old field_4234_a[];
 	private int field_4233_b;
 }

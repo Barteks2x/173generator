@@ -2,13 +2,13 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-public class NoiseGeneratorPerlin extends NoiseGenerator {
+public class NoiseGeneratorPerlinOld extends NoiseGeneratorOld {
 
-	public NoiseGeneratorPerlin() {
+	public NoiseGeneratorPerlinOld() {
 		this(new Random());
 	}
 
-	public NoiseGeneratorPerlin(Random random) {
+	public NoiseGeneratorPerlinOld(Random random) {
 		permutations = new int[512];
 		xCoord = random.nextDouble() * 256D;
 		yCoord = random.nextDouble() * 256D;

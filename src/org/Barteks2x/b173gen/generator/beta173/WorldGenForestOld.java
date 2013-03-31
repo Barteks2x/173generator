@@ -6,16 +6,16 @@ import net.minecraft.server.v1_5_R2.Block;
 import net.minecraft.server.v1_5_R2.World;
 import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
-public class WorldGenTree extends WorldGenerator173 {
+public class WorldGenForestOld extends WorldGenerator173 {
 
-	public WorldGenTree() {
+	public WorldGenForestOld() {
 	}
 
 	@Override
 	public boolean a(World world, Random random, int i, int j, int k) {
-		int l = random.nextInt(3) + 4;
+		int l = random.nextInt(3) + 5;
 		boolean flag = true;
-		if (j < 1 || j + l + 1 > 128) {
+		if (j < 1 || j + l + 1 > 256) {
 			return false;
 		}
 		for (int i1 = j; i1 <= j + 1 + l; i1++) {
@@ -60,7 +60,7 @@ public class WorldGenTree extends WorldGenerator173 {
 					if ((Math.abs(l3) != i3 || Math.abs(j4) != i3 || random.
 						nextInt(2) != 0 && j2 != 0)) {
 						world.setTypeIdAndData(k3, k1, i4, Block.LEAVES.id,
-							0, 2);
+							2, 2);
 					}
 				}
 
@@ -71,7 +71,7 @@ public class WorldGenTree extends WorldGenerator173 {
 		for (int l1 = 0; l1 < l; l1++) {
 			int k2 = world.getTypeId(i, j + l1, k);
 			if (k2 == 0 || k2 == Block.LEAVES.id) {
-				world.setTypeIdAndData(i, j + l1, k, Block.LOG.id, 0, 2);
+				world.setTypeIdAndData(i, j + l1, k, Block.LOG.id, 2, 2);
 			}
 		}
 

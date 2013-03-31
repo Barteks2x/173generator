@@ -1,0 +1,16 @@
+structures:
+  canyons: false
+  strongholds: false
+  villages: false
+  temples: false
+newFeatures:
+  newCaves: false
+  newClayGenerator: false
+  newLakeGenerator: false
+  newDungeonGenerator: false
+  ores:
+    emerald: false 
+other:
+  oldTreeGrowing: true
+messages:
+  cantUseEnderEyeMsg: "You can't use Eye of Ender in this world!"

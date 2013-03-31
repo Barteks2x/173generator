@@ -2,13 +2,13 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-public class NoiseGenerator2 {
+public class NoiseGenerator2Old {
 
-	public NoiseGenerator2() {
+	public NoiseGenerator2Old() {
 		this(new Random());
 	}
 
-	public NoiseGenerator2(Random random) {
+	public NoiseGenerator2Old(Random random) {
 		field_4295_e = new int[512];
 		field_4292_a = random.nextDouble() * 256D;
 		field_4291_b = random.nextDouble() * 256D;

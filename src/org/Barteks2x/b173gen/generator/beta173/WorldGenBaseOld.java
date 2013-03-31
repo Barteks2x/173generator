@@ -6,9 +6,9 @@ import net.minecraft.server.v1_5_R2.IChunkProvider;
 import net.minecraft.server.v1_5_R2.World;
 import net.minecraft.server.v1_5_R2.WorldGenBase;
 
-public class MapGenBase extends WorldGenBase {
+public class WorldGenBaseOld extends WorldGenBase {
 
-	public MapGenBase() {
+	public WorldGenBaseOld() {
 		field_1306_a = 8;
 		rand = new Random();
 	}

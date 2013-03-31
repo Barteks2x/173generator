@@ -5,9 +5,9 @@ import java.util.Random;
 import net.minecraft.server.v1_5_R2.Block;
 import net.minecraft.server.v1_5_R2.World;
 
-public class MapGenCaves extends MapGenBase {
+public class WorldGenCavesOld extends WorldGenBaseOld {
 
-	public MapGenCaves() {
+	public WorldGenCavesOld() {
 	}
 
 	protected void a(int i, int j, byte abyte0[], double d, double d1, double d2) {

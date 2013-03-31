@@ -53,9 +53,9 @@ public class BiomeGenBase extends BiomeBase {
 	@Override
 	public WorldGenerator a(Random random) {
 		if (random.nextInt(10) == 0) {
-			return new WorldGenBigTree();
+			return new WorldGenBigTreeOld();
 		}
-		return new WorldGenTree();
+		return new WorldGenTreeOld();
 	}
 
 	@Override

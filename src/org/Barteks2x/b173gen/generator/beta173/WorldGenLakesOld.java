@@ -8,9 +8,9 @@ import net.minecraft.server.v1_5_R2.Material;
 import net.minecraft.server.v1_5_R2.World;
 import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
-public class WorldGenLakes extends WorldGenerator173 {
+public class WorldGenLakesOld extends WorldGenerator173 {
 
-	public WorldGenLakes(int i) {
+	public WorldGenLakesOld(int i) {
 		field_15235_a = i;
 	}
 

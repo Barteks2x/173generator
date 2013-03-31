@@ -17,11 +17,11 @@ public class BiomeGenForest extends BiomeGenBase {
 	@Override
 	public WorldGenerator173 a(Random random) {
 		if (random.nextInt(5) == 0) {
-			return new WorldGenForest();
+			return new WorldGenForestOld();
 		}
 		if (random.nextInt(3) == 0) {
-			return new WorldGenBigTree();
+			return new WorldGenBigTreeOld();
 		}
-		return new WorldGenTree();
+		return new WorldGenTreeOld();
 	}
 }

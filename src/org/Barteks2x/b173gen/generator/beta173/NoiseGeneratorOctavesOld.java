@@ -2,18 +2,18 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-public class NoiseGeneratorOctaves extends NoiseGenerator {
+public class NoiseGeneratorOctavesOld extends NoiseGeneratorOld {
 
-	public NoiseGeneratorOctaves(Random random, int i) {
+	public NoiseGeneratorOctavesOld(Random random, int i) {
 		field_1191_b = i;
-		generatorCollection = new NoiseGeneratorPerlin[i];
+		generatorCollection = new NoiseGeneratorPerlinOld[i];
 		for (int j = 0; j < i; j++) {
-			generatorCollection[j] = new NoiseGeneratorPerlin(random);
+			generatorCollection[j] = new NoiseGeneratorPerlinOld(random);
 		}
 
 	}
 
-	public double func_806_a(double d, double d1) {
+	public double a(double d, double d1) {
 		double d2 = 0.0D;
 		double d3 = 1.0D;
 		for (int i = 0; i < field_1191_b; i++) {
@@ -24,7 +24,7 @@ public class NoiseGeneratorOctaves extends NoiseGenerator {
 		return d2;
 	}
 
-	public double[] generateNoiseOctaves(double ad[], double d, double d1,
+	public double[] gen(double ad[], double d, double d1,
 			double d2, int i, int j, int k, double d3, double d4, double d5) {
 		if (ad == null) {
 			ad = new double[i * j * k];
@@ -49,9 +49,9 @@ public class NoiseGeneratorOctaves extends NoiseGenerator {
 	 */
 	public double[] func_4109_a(double ad[], int i, int j, int k, int l,
 			double d, double d1, double d2) {
-		return generateNoiseOctaves(ad, i, 10D, j, k, 1, l, d, 1.0D, d1);
+		return gen(ad, i, 10D, j, k, 1, l, d, 1.0D, d1);
 	}
 
-	private NoiseGeneratorPerlin generatorCollection[];
+	private NoiseGeneratorPerlinOld generatorCollection[];
 	private int field_1191_b;
 }

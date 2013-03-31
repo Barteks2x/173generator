@@ -1,6 +1,0 @@
-name: 173generator
-version: 1.5.1
-description: Beta 1.7.3 world generator for bukkit.
-authors: ['Barteks2x']
-main: org.Barteks2x.b173gen.plugin.Generator
-load: startup

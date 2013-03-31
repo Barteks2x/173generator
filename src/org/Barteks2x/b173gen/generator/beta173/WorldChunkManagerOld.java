@@ -8,12 +8,12 @@ import net.minecraft.server.v1_5_R2.BiomeBase;
 import net.minecraft.server.v1_5_R2.ChunkPosition;
 import net.minecraft.server.v1_5_R2.WorldChunkManager;
 
-public class Wcm extends WorldChunkManager {
+public class WorldChunkManagerOld extends WorldChunkManager {
 	@SuppressWarnings("rawtypes")
 	private List biomesToSpawn;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	protected Wcm() {
+	protected WorldChunkManagerOld() {
 		this.biomesToSpawn = new ArrayList();
 		this.biomesToSpawn.add(BiomeGenBase.forest);
 		this.biomesToSpawn.add(BiomeGenBase.rainforest);
@@ -23,11 +23,11 @@ public class Wcm extends WorldChunkManager {
 		this.biomesToSpawn.add(BiomeGenBase.plains);
 	}
 
-	public Wcm(long seed) {
+	public WorldChunkManagerOld(long seed) {
 		this();
-		e = new NoiseGeneratorOctaves2(new Random(seed * 9871L), 4);
-		f = new NoiseGeneratorOctaves2(new Random(seed * 39811L), 4);
-		g = new NoiseGeneratorOctaves2(new Random(seed * 0x84a59L), 2);
+		e = new NoiseGeneratorOctaves2Old(new Random(seed * 9871L), 4);
+		f = new NoiseGeneratorOctaves2Old(new Random(seed * 39811L), 4);
+		g = new NoiseGeneratorOctaves2Old(new Random(seed * 0x84a59L), 2);
 	}
 
 	@Override
@@ -208,9 +208,9 @@ public class Wcm extends WorldChunkManager {
 		return this.dx;
 	}
 
-	private NoiseGeneratorOctaves2 e;
-	private NoiseGeneratorOctaves2 f;
-	private NoiseGeneratorOctaves2 g;
+	private NoiseGeneratorOctaves2Old e;
+	private NoiseGeneratorOctaves2Old f;
+	private NoiseGeneratorOctaves2Old g;
 	public double temperature[];
 	public double rain[];
 	public double c[];

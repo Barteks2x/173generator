@@ -8,9 +8,9 @@ import net.minecraft.server.v1_5_R2.MathHelper;
 import net.minecraft.server.v1_5_R2.World;
 import org.Barteks2x.b173gen.generator.WorldGenerator173;
 
-public class WorldGenClay extends WorldGenerator173 {
+public class WorldGenClayOld extends WorldGenerator173 {
 
-	public WorldGenClay(int i) {
+	public WorldGenClayOld(int i) {
 		clayBlockId = Block.CLAY.id;
 		numberOfBlocks = i;
 	}

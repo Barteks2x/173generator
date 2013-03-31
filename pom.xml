@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.barteks2x.b173gen.plugin</groupId>
-	<artifactId>Generator</artifactId>
-	<version>1.5.1</version>
+	<groupId>org.barteks2x</groupId>
+	<artifactId>b173gen</artifactId>
+	<version>1.6-SNAPSHOT</version>
 	<name>173generator</name>
 	<description>Beta 1.7.3 world generator for bukkit</description>
 	<dependencies>
@@ -20,8 +20,9 @@
 			<resource>
 				<includes>
 					<include>plugin.yml</include>
+					<include>world.yml</include>
 				</includes>
-				<directory>${basedir}</directory>
+				<directory>${basedir}/src</directory>
 			</resource>
 		</resources>
 		<plugins>
