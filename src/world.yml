@@ -12,5 +12,3 @@ newFeatures:
     emerald: false 
 other:
   oldTreeGrowing: true
-messages:
-  cantUseEnderEyeMsg: "You can't use Eye of Ender in this world!"

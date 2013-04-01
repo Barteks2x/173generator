@@ -850,7 +850,6 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 			}
 
 		} else {
-			plugin.getLogger().log(Level.INFO, "CanSpawn: world is null!!!");
 			return false;
 		}
 

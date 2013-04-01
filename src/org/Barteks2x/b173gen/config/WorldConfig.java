@@ -11,7 +11,6 @@ public class WorldConfig {
 	public JavaPlugin plugin;
 	public ChunkProviderGenerate chunkProvider;
 	public boolean isInit = false;
-	public String cantUseEnderEyeMsg;
 	private CustomConfigLoader cfgLoader;
 	private String worldName;
 	public boolean generateCanyons = false,
@@ -48,7 +47,6 @@ public class WorldConfig {
 			generateEmerald = config.getBoolean("newFeatures.ores.emerald");
 			newDungeonGen = config.getBoolean("newFeatures.newDungeonGenerator");
 			oldTreeGrowing = config.getBoolean("other.oldTreeGrowing");
-			cantUseEnderEyeMsg = config.getString("messages.cantUseEnderEyeMsg");
 			cfgLoader.saveConfig();
 			return true;
 		} catch (Exception ex) {

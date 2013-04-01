@@ -60,14 +60,14 @@ public class Beta173GenListener implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onStructureGrow(StructureGrowEvent event) {
-		List<BlockState> l = event.getBlocks();
+		/*List<BlockState> l = event.getBlocks();
 		BlockState[] b = new BlockState[l.size()];
 		l.toArray(b);
 		for (int i = 0; i < b.length; i++) {
 			plugin.getLogger().log(Level.INFO, "{0}, {1}, {2}, {3}, {4}",
 				new Object[]{i, Block.byId[b[i].getTypeId()].getName(), b[i].getX(),
 					b[i].getY(), b[i].getZ()});
-		}
+		}*/
 		Location loc = event.getLocation();
 		World world = loc.getWorld();
 		WorldConfig cfg;
@@ -81,8 +81,8 @@ public class Beta173GenListener implements Listener {
 	}
 
 	private boolean growTree(TreeType type, Location loc) {
-		plugin.getLogger().log(Level.INFO, "TreeGrow: {0}, {1}, {2}, {3}", new Object[]{
-				type.name(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()});
+		//plugin.getLogger().log(Level.INFO, "TreeGrow: {0}, {1}, {2}, {3}", new Object[]{
+		//		type.name(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()});
 		boolean result = false;
 		switch (type) {
 			case TREE:
