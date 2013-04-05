@@ -24,22 +24,17 @@ public class Generator extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		this.getLogger().log(Level.INFO, "{0} is now disabled", getDescription().
-			getFullName());
 	}
 
 	@Override
 	public void onEnable() {
-		this.RegisterEvents();
-		this.getLogger().log(Level.INFO, "{0} is now enabled", getDescription().
-			getFullName());
+		this.registerEvents();
 		vTracker = new VersionTracker(this);
 		vTracker.init();
 	}
 
 	@Override
 	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
-		//this.getLogger().log(Level.INFO, "id: " + id + " name: " + worldName);
 		if (!worlds.containsKey(worldName.trim())) {
 			loadWorldConfig(worldName.trim());
 		}
@@ -63,11 +58,11 @@ public class Generator extends JavaPlugin {
 		worldSetting.isInit = true;
 
 		this.getLogger().log(Level.INFO,
-			"Beta 173 world generator enabled for {0}, world seed: {1}", new Object[]{
-			world.getName(), workWorld.getSeed()});
+			"{0} enabled for {1}, world seed: {2}", new Object[]{this.getDescription().
+			getName(), world.getName(), workWorld.getSeed()});
 	}
 
-	private void RegisterEvents() {
+	private void registerEvents() {
 		PluginManager pm = this.getServer().getPluginManager();
 		pm.registerEvents(listener, this);
 	}
@@ -82,7 +77,8 @@ public class Generator extends JavaPlugin {
 		config.loadConfig();
 		config.chunkProvider = new ChunkProviderGenerate(config, this);
 	}
-	public WorldConfig getWorldConfig(org.bukkit.World world){
+
+	public WorldConfig getWorldConfig(org.bukkit.World world) {
 		return worlds.get(world.getName().trim());
 	}
 }

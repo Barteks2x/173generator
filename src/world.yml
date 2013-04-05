@@ -1,3 +1,16 @@
+#canyons - generate canyons, default: false
+#strongholds - generate strongholds(UNTESTED!!!), default: false
+#villages - generate villages(UNTESTED!!!), default: false
+#temples - generate temples(UNTESTED!!!), default: false
+#
+#newCaves - use new cave generator, default: false
+#newClayGenerator - use new clay generator (faster), default: false
+#newLakeGenerator - use new lake generator, default: false
+#newDungeonGenerator - generate new items in dungeons, default: false
+#
+#emeralds - generate emeralds, default: false
+#
+#oldTreeGrowing - default: true
 structures:
   canyons: false
   strongholds: false
@@ -9,6 +22,8 @@ newFeatures:
   newLakeGenerator: false
   newDungeonGenerator: false
   ores:
-    emerald: false 
+    emeralds: false 
 other:
   oldTreeGrowing: true
+messages:
+  eyeOfEnderMsg: "You can't use Eye of Ender in this world!"

@@ -1,8 +1,8 @@
 package org.Barteks2x.b173gen.config;
 
+import org.Barteks2x.config.CustomConfigLoader;
 import java.io.File;
 import java.util.logging.Level;
-import net.minecraft.server.v1_5_R2.World;
 import org.Barteks2x.b173gen.generator.ChunkProviderGenerate;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,6 +11,7 @@ public class WorldConfig {
 	public JavaPlugin plugin;
 	public ChunkProviderGenerate chunkProvider;
 	public boolean isInit = false;
+	public String eyeOfEnderMsg;
 	private CustomConfigLoader cfgLoader;
 	private String worldName;
 	public boolean generateCanyons = false,
@@ -44,9 +45,10 @@ public class WorldConfig {
 			newCaveGen = config.getBoolean("newFeatures.newCaves");
 			newClayGen = config.getBoolean("newFeatures.newClayGenerator");
 			newLakeGen = config.getBoolean("newFeatures.newLakeGenerator");
-			generateEmerald = config.getBoolean("newFeatures.ores.emerald");
+			generateEmerald = config.getBoolean("newFeatures.ores.emeralds");
 			newDungeonGen = config.getBoolean("newFeatures.newDungeonGenerator");
 			oldTreeGrowing = config.getBoolean("other.oldTreeGrowing");
+			eyeOfEnderMsg = config.getString("messages.eyeOfEnderMsg");
 			cfgLoader.saveConfig();
 			return true;
 		} catch (Exception ex) {
