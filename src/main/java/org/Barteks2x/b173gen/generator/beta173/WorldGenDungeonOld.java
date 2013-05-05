@@ -1,14 +1,14 @@
 package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
-import net.minecraft.server.v1_5_R2.Block;
-import net.minecraft.server.v1_5_R2.Item;
-import net.minecraft.server.v1_5_R2.ItemStack;
-import net.minecraft.server.v1_5_R2.Material;
-import net.minecraft.server.v1_5_R2.TileEntityChest;
-import net.minecraft.server.v1_5_R2.TileEntityMobSpawner;
-import net.minecraft.server.v1_5_R2.World;
-import net.minecraft.server.v1_5_R2.WorldGenDungeons;
+import net.minecraft.server.v1_5_R3.Block;
+import net.minecraft.server.v1_5_R3.Item;
+import net.minecraft.server.v1_5_R3.ItemStack;
+import net.minecraft.server.v1_5_R3.Material;
+import net.minecraft.server.v1_5_R3.TileEntityChest;
+import net.minecraft.server.v1_5_R3.TileEntityMobSpawner;
+import net.minecraft.server.v1_5_R3.World;
+import net.minecraft.server.v1_5_R3.WorldGenDungeons;
 
 /**
  *

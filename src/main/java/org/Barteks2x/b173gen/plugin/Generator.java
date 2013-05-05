@@ -2,16 +2,14 @@ package org.Barteks2x.b173gen.plugin;
 
 import org.Barteks2x.b173gen.config.WorldConfig;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.logging.Level;
 
 import org.Barteks2x.b173gen.config.VersionTracker;
 import org.Barteks2x.b173gen.generator.ChunkProviderGenerate;
 import org.Barteks2x.b173gen.generator.beta173.WorldChunkManagerOld;
 import org.Barteks2x.b173gen.listener.Beta173GenListener;
-import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_5_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_5_R3.CraftWorld;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -50,7 +48,7 @@ public class Generator extends JavaPlugin {
 		if (worldSetting.isInit) {
 			return;
 		}
-		net.minecraft.server.v1_5_R2.World workWorld = ((CraftWorld) world).getHandle();
+		net.minecraft.server.v1_5_R3.World workWorld = ((CraftWorld) world).getHandle();
 
 		WorldChunkManagerOld wcm = new WorldChunkManagerOld(workWorld.getSeed());
 		workWorld.worldProvider.d = wcm;

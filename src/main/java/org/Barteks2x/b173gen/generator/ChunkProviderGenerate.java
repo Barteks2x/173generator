@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 
-import net.minecraft.server.v1_5_R2.*;
+import net.minecraft.server.v1_5_R3.*;
 
 import org.Barteks2x.b173gen.generator.beta173.*;
 import org.Barteks2x.b173gen.plugin.Generator;
 import org.Barteks2x.b173gen.config.WorldConfig;
 import org.bukkit.generator.ChunkGenerator;
 
-import static net.minecraft.server.v1_5_R2.Block.*;
+import static net.minecraft.server.v1_5_R3.Block.*;
 
 public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvider {
 
@@ -428,6 +428,10 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 		return chunk;
 	}
 
+	public void b() {
+		//TODO ???
+	}
+
 	@SuppressWarnings("cast")
 	private double[] initNoiseField(double ad[], int i, int j, int k,
 		int l, int i1, int j1) {
@@ -800,7 +804,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 	}
 
 	public String makeString() {
-		return "173generator";
+		return this.toString();
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -818,6 +822,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 	}
 
 	public ChunkPosition findNearestMapFeature(World world, String type, int x, int y, int z) {
+		//TODO stronghold
 		return ((("Stronghold".equals(type)) && (this.strongholdGen != null)) ?
 			this.strongholdGen.getNearestGeneratedFeature(world, x, y, z) : null);
 	}
@@ -850,5 +855,9 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 			return false;
 		}
 
+	}
+	@Override
+	public String toString(){
+		return new StringBuilder(plugin.getDescription().getName()).append(" ").append(plugin.getDescription().getVersion()).toString();
 	}
 }

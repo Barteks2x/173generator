@@ -2,8 +2,8 @@ package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.Random;
 
-import net.minecraft.server.v1_5_R2.Block;
-import net.minecraft.server.v1_5_R2.World;
+import net.minecraft.server.v1_5_R3.Block;
+import net.minecraft.server.v1_5_R3.World;
 
 public class WorldGenCavesOld extends WorldGenBaseOld {
 
