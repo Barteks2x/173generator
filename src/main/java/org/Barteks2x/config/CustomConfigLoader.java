@@ -69,7 +69,7 @@ public class CustomConfigLoader {
 			try {
 				configFile.options().copyHeader(true);
 				configFile.load(plugin.getResource(defaultConfigFilename));
-				plugin.getLogger().log(Level.INFO, configFile.options().header());
+				//plugin.getLogger().log(Level.INFO, configFile.options().header());
 				configFile.save(file);
 			} catch (FileNotFoundException ex) {
 				Logger.getLogger(CustomConfigLoader.class.getName()).
