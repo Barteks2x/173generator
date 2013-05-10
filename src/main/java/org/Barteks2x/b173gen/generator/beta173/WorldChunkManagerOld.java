@@ -228,12 +228,12 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 		return true;
 	}
 
+	//getNearestBiome?
 	@SuppressWarnings("rawtypes")
 	@Override
-	public ChunkPosition a(int par1, int par2, int par3, List par4List,
-			Random par5Random) {
+	public ChunkPosition a(int par1, int par2, int par3, List par4List,Random random) {
 		// TODO
-		return new ChunkPosition(0, 0, 0);
+		return new ChunkPosition((random.nextInt()&0xff)-128+par1, 0, (random.nextInt()&0xff)-128+par3);
 	}
 
 	@Override
