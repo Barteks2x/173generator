@@ -836,11 +836,11 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 
 	public void recreateStructures(int arg0, int arg1) {
 		if (strongholdGen != null) {
-			strongholdGen.a(this, world, i, i1, terrain);
+			strongholdGen.a(this, world, arg0, arg1, (byte[])null);
 		}
 		
 		if (largeFeatureGen != null) {
-			largeFeatureGen.a(this, world, i, i1, terrain);
+			largeFeatureGen.a(this, world, arg0, arg1, (byte[])null);
 		}
 	}
 
