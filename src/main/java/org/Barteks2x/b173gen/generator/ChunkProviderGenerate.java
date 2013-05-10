@@ -822,7 +822,6 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 	}
 
 	public ChunkPosition findNearestMapFeature(World world, String type, int x, int y, int z) {
-		//TODO stronghold
 		return ((("Stronghold".equals(type)) && (this.strongholdGen != null)) ?
 			this.strongholdGen.getNearestGeneratedFeature(world, x, y, z) : null);
 	}
@@ -836,7 +835,13 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 	}
 
 	public void recreateStructures(int arg0, int arg1) {
-		// TODO Auto-generated method stub
+		if (strongholdGen != null) {
+			strongholdGen.a(this, world, i, i1, terrain);
+		}
+		
+		if (largeFeatureGen != null) {
+			largeFeatureGen.a(this, world, i, i1, terrain);
+		}
 	}
 
 	@Override
