@@ -55,6 +55,9 @@ public class Beta173GenListener implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerInteract(PlayerInteractEvent event) {
+		if (event == null || event.getItem() == null){
+			return;
+		}
 		if (event.getItem().getTypeId() == Item.EYE_OF_ENDER.id) {
 			Player player = event.getPlayer();
 			World world = player.getLocation().getWorld();
