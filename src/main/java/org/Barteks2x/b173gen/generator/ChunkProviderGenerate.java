@@ -228,82 +228,30 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 	@Override
 	public byte[] generate(org.bukkit.World w, Random random, int x, int z) {
 		this.rand.setSeed(x * 341873128712L + z * 132897987541L);
-		byte abyte[] = new byte[32768];
-		Chunk chunk = new Chunk(world, abyte, x, z);
+		byte terrain[] = new byte[32768];
 		biomes = wcm.getBiomeBlock(biomes, x * 16, z * 16, 16, 16);
 		double ad[] = this.wcm.temperature;
-		generateTerrain(x, z, abyte, ad);
-		replaceBlocksForBiome(x, z, abyte, biomes);
-		caves.a(this, world, x, z, abyte);
-		chunk.initLighting();
-		return abyte;
+		generateTerrain(x, z, terrain, ad);
+		replaceBlocksForBiome(x, z, terrain, biomes);
+		caves.a(this, world, x, z, terrain);
+		if (canyonGen != null) {
+			canyonGen.a(this, world, x, z, terrain);
+		}
+		if (strongholdGen != null) {
+			strongholdGen.a(this, world, x, z, terrain);
+		}
+		if (mineshaftGen != null) {
+			mineshaftGen.a(this, world, x, z, terrain);
+		}
+		if (villageGen != null) {
+			villageGen.a(this, world, x, z, terrain);
+		}
+		if (largeFeatureGen != null) {
+			largeFeatureGen.a(this, world, x, z, terrain);
+		}
+		return terrain;
 	}
 
-	/*
-	 * @Override
-	 * public byte[][] generateBlockSections(org.bukkit.World world, Random random, int x, int z,
-	 * BiomeGrid biomes) {
-	 * byte[] blockArray = generate(x, z);
-	 * byte[][] sectionBlocks = new byte[16][];
-	 * int blockInArray = 0;
-	 * for (int blockInSectionX = 0; blockInSectionX < 16;
-	 * blockInSectionX++) {
-	 * for (int blockInSectionZ = 0; blockInSectionZ < 16;
-	 * blockInSectionZ++) {
-	 * for (int section = 0; section < 8; section++) {
-	 * for (int blockInSectionY = 0;
-	 * blockInSectionY < 16;
-	 * blockInSectionY++) {
-	 * sectionBlocks[section][blockInSectionX |
-	 * (blockInSectionZ << 4) |
-	 * (blockInSectionY << 8)] =
-	 * blockArray[blockInArray++];
-	 * }
-	 * }
-	 * }
-	 * }
-	 * return sectionBlocks;
-	 *
-	 * }
-	 */
-
-	/*
-	 * @Override
-	 * public short[][] generateExtBlockSections(org.bukkit.World world, Random random, int x,
-	 * int z, BiomeGrid biomes) {
-	 * byte[] blockArray;
-	 * try {
-	 * blockArray = generate(x, z);
-	 * } catch (java.lang.NullPointerException e) {
-	 * World workWorld = ((CraftWorld)world).getHandle();
-	 * WorldChunkManagerOld wcm1 = new WorldChunkManagerOld(workWorld.getSeed());
-	 * workWorld.worldProvider.d = wcm1;
-	 * this.init(workWorld, wcm1, workWorld.getSeed());
-	 * blockArray = generate(x, z);
-	 * }
-	 *
-	 * short[][] sectionBlocks = new short[16][4096];
-	 * int blockInArray = 0;
-	 * for (int blockInSectionX = 0; blockInSectionX < 16;
-	 * blockInSectionX++) {
-	 * for (int blockInSectionZ = 0; blockInSectionZ < 16;
-	 * blockInSectionZ++) {
-	 * for (int section = 0; section < 8; section++) {
-	 * for (int blockInSectionY = 0;
-	 * blockInSectionY < 16;
-	 * blockInSectionY++) {
-	 * sectionBlocks[section][blockInSectionX |
-	 * (blockInSectionZ << 4) |
-	 * (blockInSectionY << 8)] =
-	 * blockArray[blockInArray++];
-	 * }
-	 * }
-	 * }
-	 * }
-	 * return sectionBlocks;
-	 *
-	 * }
-	 */
 	public void replaceBlocksForBiome(int i, int j, byte terrainBlockArray[],
 		BiomeBase abiomebase[]) {
 		byte byte0 = 64;
