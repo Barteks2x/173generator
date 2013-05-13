@@ -1,7 +1,8 @@
 #canyons - generate canyons, default: false
 #strongholds - generate strongholds(UNTESTED!!!), default: false
-#villages - generate villages(UNTESTED!!!), default: false
+#villages - generate villages, default: false
 #temples - generate temples(UNTESTED!!!), default: false
+#mineshafts - generate abandoned mineshafts, default: false
 #
 #newCaves - use new cave generator, default: false
 #newClayGenerator - use new clay generator (faster), default: false
@@ -10,12 +11,13 @@
 #
 #emeralds - generate emeralds, default: false
 #
-#oldTreeGrowing - default: true
+#oldTreeGrowing - use beta 1.7 tree generator to grow trees, default: true
 structures:
   canyons: false
   strongholds: false
   villages: false
   temples: false
+  mineshafts: false
 newFeatures:
   newCaves: false
   newClayGenerator: false

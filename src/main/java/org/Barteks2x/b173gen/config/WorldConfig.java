@@ -42,6 +42,7 @@ public class WorldConfig {
 			generateStrongholds = config.getBoolean("structures.strongholds");
 			generateVillages = config.getBoolean("structures.villages");
 			generateTemples = config.getBoolean("structures.temples");
+			generateMineshafts = config.getBoolean("structures.mineshafts");
 			newCaveGen = config.getBoolean("newFeatures.newCaves");
 			newClayGen = config.getBoolean("newFeatures.newClayGenerator");
 			newLakeGen = config.getBoolean("newFeatures.newLakeGenerator");
