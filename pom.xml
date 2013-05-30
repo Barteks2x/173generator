@@ -3,20 +3,18 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.barteks2x</groupId>
 	<artifactId>b173gen</artifactId>
-	<version>1.6-SNAPSHOT</version>
+	<version>2.0-SNAPSHOT</version>
 	<name>173generator</name>
 	<description>Beta 1.7.3 world generator for bukkit</description>
+	<properties>
+		<gitdescribe-prefix></gitdescribe-prefix>
+		<gitdescribe-suffix></gitdescribe-suffix>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
 			<version>1.5.2-R0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 		
@@ -30,9 +28,27 @@
 					<include>world.yml</include>
 				</includes>
 				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
 			</resource>
 		</resources>
 		<plugins>
+			<plugin>
+				<groupId>org.barteks2x</groupId>
+				<artifactId>gitdescribe-maven-plugin-barteks2x</artifactId>
+				<version>1.4-SNAPSHOT</version>
+				<configuration>
+					<outputPrefix>${gitdescribe-prefix}</outputPrefix>
+					<outputPostfix>${gitdescribe-suffix}</outputPostfix>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>gitdescribe</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -49,9 +65,14 @@
 			<id>Bukkit</id>
 			<url>http://repo.bukkit.org/content/groups/public</url>
 		</repository>
+		<repository>
+			<id>Github-maven-repo</id>
+			<url>https://github.com/Barteks2x/maven-repo/raw/master/snapshots</url>
+		</repository>
 	</repositories>
 	<scm>
+		<connection>scm:git:git://github.com/Barteks2x/173generator.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/Barteks2x/173generator.git</developerConnection>
 		<url>https://github.com/Barteks2x/173generator.git</url>
 	</scm>
-	<url>https://github.com/Barteks2x/173generator.git</url>
 </project>
