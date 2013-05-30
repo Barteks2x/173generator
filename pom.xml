@@ -65,11 +65,17 @@
 			<id>Bukkit</id>
 			<url>http://repo.bukkit.org/content/groups/public</url>
 		</repository>
-		<repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
 			<id>Github-maven-repo</id>
 			<url>https://github.com/Barteks2x/maven-repo/raw/master/snapshots</url>
-		</repository>
-	</repositories>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 	<scm>
 		<connection>scm:git:git://github.com/Barteks2x/173generator.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/Barteks2x/173generator.git</developerConnection>
