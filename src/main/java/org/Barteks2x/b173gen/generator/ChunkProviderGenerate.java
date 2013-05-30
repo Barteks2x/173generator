@@ -481,13 +481,26 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 		long l2 = (rand.nextLong() / 2L) * 2L + 1L;
 		rand.setSeed((long)i * l1 + (long)j * l2 ^ world.getSeed());
 		double d = 0.25D;
-		if (rand.nextInt(4) == 0) {
+		boolean villageFlag = false;
+		if(this.mineshaftGen!=null){
+			this.mineshaftGen.a(world, rand, i, j);
+		}
+		if(this.villageGen!=null){
+			villageFlag = this.villageGen.a(world, rand, i, j);
+		}
+		if(this.strongholdGen!=null){
+			this.strongholdGen.a(world, rand, i, j);
+		}
+		if(this.largeFeatureGen!=null){
+			this.largeFeatureGen.a(world, rand, i, j);
+		}
+		if (!villageFlag && rand.nextInt(4) == 0) {
 			int i1 = k + rand.nextInt(16) + 8;
 			int l4 = rand.nextInt(128);
 			int i8 = l + rand.nextInt(16) + 8;
 			waterLakeGen.a(world, rand, i1, l4, i8);
 		}
-		if (rand.nextInt(8) == 0) {
+		if (!villageFlag && rand.nextInt(8) == 0) {
 			int j1 = k + rand.nextInt(16) + 8;
 			int i5 = rand.nextInt(rand.nextInt(120) + 8);
 			int j8 = l + rand.nextInt(16) + 8;
