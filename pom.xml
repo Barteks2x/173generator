@@ -39,6 +39,8 @@
 				<configuration>
 					<outputPrefix>${gitdescribe-prefix}</outputPrefix>
 					<outputPostfix>${gitdescribe-suffix}</outputPostfix>
+					<match>true</match>
+					<matchValue>[0-9].*</matchValue>
 				</configuration>
 				<executions>
 					<execution>
@@ -84,6 +86,6 @@
 	<scm>
 		<connection>scm:git:git://github.com/Barteks2x/173generator.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/Barteks2x/173generator.git</developerConnection>
-		<url>https://github.com/Barteks2x/173generator.git</url>
+		<url>https://github.com/Barteks2x/173generator</url>
 	</scm>
 </project>
