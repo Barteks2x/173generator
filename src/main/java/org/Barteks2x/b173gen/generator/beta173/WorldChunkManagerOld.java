@@ -1,6 +1,7 @@
 package org.Barteks2x.b173gen.generator.beta173;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -9,10 +10,11 @@ import net.minecraft.server.v1_5_R3.ChunkPosition;
 import net.minecraft.server.v1_5_R3.WorldChunkManager;
 
 public class WorldChunkManagerOld extends WorldChunkManager {
-	@SuppressWarnings("rawtypes")
-	private List biomesToSpawn;
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings("rawtypes")
+	private List<BiomeBase> biomesToSpawn;
+
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	protected WorldChunkManagerOld() {
 		this.biomesToSpawn = new ArrayList();
 		this.biomesToSpawn.add(BiomeGenBase.forest);
@@ -44,8 +46,8 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 		for (int ii = 0; ii < ad.length; ii++) {
 			ad2[ii] = ad[ii];
 		}
-		ad2 = e.func_4112_a(ad2, i, j, k, l, 0.02500000037252903D,
-				0.02500000037252903D, 0.25D);
+		ad2 = f.func_4112_a(ad2, i, j, k, l, 0.02500000037252903D,
+			0.02500000037252903D, 0.25D);
 		c = g.func_4112_a(c, i, j, k, l, 0.25D, 0.25D, 0.58823529411764708D);
 		int i1 = 0;
 		for (int j1 = 0; j1 < k; j1++) {
@@ -53,8 +55,9 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 				double d = c[i1] * 1.1000000000000001D + 0.5D;
 				double d1 = 0.01D;
 				double d2 = 1.0D - d1;
-				double d3 = (ad2[i1] * 0.14999999999999999D + 0.69999999999999996D)
-						* d2 + d * d1;
+				double d3 =
+					(ad2[i1] * 0.14999999999999999D + 0.69999999999999996D) *
+					 d2 + d * d1;
 				d3 = 1.0D - (1.0D - d3) * (1.0D - d3);
 				if (d3 < 0.0D) {
 					d3 = 0.0D;
@@ -83,7 +86,7 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 			ad2[ii] = ad[ii];
 		}
 		ad2 = e.func_4112_a(ad2, i, j, k, l, 0.02500000037252903D,
-				0.02500000037252903D, 0.25D);
+			0.02500000037252903D, 0.25D);
 		c = g.func_4112_a(c, i, j, k, l, 0.25D, 0.25D, 0.58823529411764708D);
 		int i1 = 0;
 		for (int j1 = 0; j1 < k; j1++) {
@@ -91,8 +94,9 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 				double d = c[i1] * 1.1000000000000001D + 0.5D;
 				double d1 = 0.01D;
 				double d2 = 1.0D - d1;
-				double d3 = (ad2[i1] * 0.14999999999999999D + 0.69999999999999996D)
-						* d2 + d * d1;
+				double d3 =
+					(ad2[i1] * 0.14999999999999999D + 0.69999999999999996D) *
+					 d2 + d * d1;
 				d3 = 1.0D - (1.0D - d3) * (1.0D - d3);
 				if (d3 < 0.0D) {
 					d3 = 0.0D;
@@ -114,14 +118,14 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 
 	@Override
 	public BiomeBase[] getBiomeBlock(BiomeBase abiomegenbase[], int i, int j,
-			int k, int l) {
+		int k, int l) {
 		if (abiomegenbase == null || abiomegenbase.length < k * l) {
 			abiomegenbase = new BiomeGenBase[k * l];
 		}
 		temperature = e.func_4112_a(temperature, i, j, k, k,
-				0.02500000037252903D, 0.02500000037252903D, 0.25D);
+			0.02500000037252903D, 0.02500000037252903D, 0.25D);
 		rain = f.func_4112_a(rain, i, j, k, k, 0.05000000074505806D,
-				0.05000000074505806D, 0.33333333333333331D);
+			0.05000000074505806D, 0.33333333333333331D);
 		c = g.func_4112_a(c, i, j, k, k, 0.25D, 0.25D, 0.58823529411764708D);
 		int i1 = 0;
 		for (int j1 = 0; j1 < k; j1++) {
@@ -129,12 +133,13 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 				double d = c[i1] * 1.1000000000000001D + 0.5D;
 				double d1 = 0.01D;
 				double d2 = 1.0D - d1;
-				double d3 = (temperature[i1] * 0.14999999999999999D + 0.69999999999999996D)
-						* d2 + d * d1;
+				double d3 = (temperature[i1] * 0.14999999999999999D +
+					0.69999999999999996D) *
+					 d2 + d * d1;
 				d1 = 0.002D;
 				d2 = 1.0D - d1;
-				double d4 = (rain[i1] * 0.14999999999999999D + 0.5D) * d2 + d
-						* d1;
+				double d4 = (rain[i1] * 0.14999999999999999D + 0.5D) * d2 + d *
+					 d1;
 				d3 = 1.0D - (1.0D - d3) * (1.0D - d3);
 				if (d3 < 0.0D) {
 					d3 = 0.0D;
@@ -160,14 +165,14 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 
 	@Override
 	public BiomeGenBase[] getBiomes(BiomeBase abiomegenbase[], int i, int j,
-			int k, int l) {
+		int k, int l) {
 		if (abiomegenbase == null || abiomegenbase.length < k * l) {
 			abiomegenbase = new BiomeGenBase[k * l];
 		}
 		temperature = e.func_4112_a(temperature, i, j, k, k,
-				0.02500000037252903D, 0.02500000037252903D, 0.25D);
+			0.02500000037252903D, 0.02500000037252903D, 0.25D);
 		rain = f.func_4112_a(rain, i, j, k, k, 0.05000000074505806D,
-				0.05000000074505806D, 0.33333333333333331D);
+			0.05000000074505806D, 0.33333333333333331D);
 		c = g.func_4112_a(c, i, j, k, k, 0.25D, 0.25D, 0.58823529411764708D);
 		int i1 = 0;
 		for (int j1 = 0; j1 < k; j1++) {
@@ -175,12 +180,13 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 				double d = c[i1] * 1.1000000000000001D + 0.5D;
 				double d1 = 0.01D;
 				double d2 = 1.0D - d1;
-				double d3 = (temperature[i1] * 0.14999999999999999D + 0.69999999999999996D)
-						* d2 + d * d1;
+				double d3 = (temperature[i1] * 0.14999999999999999D +
+					0.69999999999999996D) *
+					 d2 + d * d1;
 				d1 = 0.002D;
 				d2 = 1.0D - d1;
-				double d4 = (rain[i1] * 0.14999999999999999D + 0.5D) * d2 + d
-						* d1;
+				double d4 = (rain[i1] * 0.14999999999999999D + 0.5D) * d2 + d *
+					 d1;
 				d3 = 1.0D - (1.0D - d3) * (1.0D - d3);
 				if (d3 < 0.0D) {
 					d3 = 0.0D;
@@ -207,7 +213,6 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 		this.dx = getBiomes(this.dx, i, j, k, l);
 		return this.dx;
 	}
-
 	private NoiseGeneratorOctaves2Old e;
 	private NoiseGeneratorOctaves2Old f;
 	private NoiseGeneratorOctaves2Old g;
@@ -217,8 +222,8 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 	public BiomeGenBase dx[];
 
 	@Override
-	public BiomeGenBase[] a(BiomeBase[] arg0, int arg1, int arg2, int arg3,
-			int arg4, boolean arg5) {
+	public BiomeGenBase[] a(BiomeBase[] arg0, int arg1, int arg2, int arg3, int arg4,
+		boolean arg5) {
 		return getBiomes(arg0, arg1, arg2, arg3, arg4);
 	}
 
@@ -231,15 +236,29 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 	//getNearestBiome?
 	@SuppressWarnings("rawtypes")
 	@Override
-	public ChunkPosition a(int par1, int par2, int par3, List par4List,Random random) {
-		// TODO
-		return new ChunkPosition((random.nextInt()&0xff)-128+par1, 0, (random.nextInt()&0xff)-128+par3);
+	public ChunkPosition a(int x, int y, int r, List biomes, Random rand) {
+		int X = x - r;
+		int maxX = x + r;
+		int Z = y - r;
+		int maxZ = y + r;
+		ChunkPosition pos = null;
+		int a = 0;
+		for (; X <= maxX; ++X) {
+			for (; Z <= maxZ; ++Z) {
+				BiomeGenBase biome = getBiome(X, Z);
+				if (biomes.contains(biome) && (pos==null || rand.nextInt(a + 1) == 0)) {
+					pos = new ChunkPosition(X, 0, Z);
+					++a;
+				}
+			}
+		}
+		return pos;
 	}
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List a() {
+	public List<BiomeBase> a() {
 		// getBiomesToSpawnIn
-		return this.biomesToSpawn;
+		return Collections.unmodifiableList(this.biomesToSpawn);
 	}
 }
