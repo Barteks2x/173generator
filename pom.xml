@@ -42,7 +42,7 @@
 				</configuration>
 				<executions>
 					<execution>
-						<phase>compile</phase>
+						<phase>validate</phase>
 						<goals>
 							<goal>gitdescribe</goal>
 						</goals>
@@ -57,6 +57,11 @@
 					<source>1.5</source>
 					<target>1.5</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
 			</plugin>
 		</plugins>
 	</build>
