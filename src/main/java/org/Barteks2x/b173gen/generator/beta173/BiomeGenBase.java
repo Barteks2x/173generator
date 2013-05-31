@@ -13,17 +13,17 @@ public class BiomeGenBase extends BiomeBase {
 	public static final BiomeGenBase[] biomeList = new BiomeGenBase[256];
 	public static final BiomeGenBase rainforest = new BiomeGenRainforest(21).b(588342).a(
 		"Rainforest").a(2094168);
-	public static final BiomeGenBase swampland = new BiomeGenSwamp(1).b(8362784).a("Swampland").
+	public static final BiomeGenBase swampland = new BiomeGenSwamp(1).b(8362784).a(BiomeBase.SWAMPLAND.y).
 		a(9154376);
 	public static final BiomeGenBase seasonalForest = new BiomeGenBase(4).b(10215459).a(
 		"Seasonal Forest");
-	public static final BiomeGenBase forest = new BiomeGenForest(4).b(353825).a("Forest").a(5159473);
+	public static final BiomeGenBase forest = new BiomeGenForest(4).b(353825).a(BiomeBase.FOREST.y).a(5159473);
 	public static final BiomeGenBase savanna = new BiomeGenDesert(1).b(14278691).a("Savanna");
 	public static final BiomeGenBase shrubland = new BiomeGenBase(1).b(10595616).a("Shrubland");
-	public static final BiomeGenBase taiga = new BiomeGenTaiga(5).b(3060051).a("Taiga").b().a(
+	public static final BiomeGenBase taiga = new BiomeGenTaiga(5).b(3060051).a(BiomeBase.TAIGA.y).b().a(
 		8107825);
-	public static final BiomeGenBase desert = new BiomeGenDesert(2).b(16421912).a("Desert").m();
-	public static final BiomeGenBase plains = new BiomeGenBase(1).b(16767248).a("Plains");
+	public static final BiomeGenBase desert = new BiomeGenDesert(2).b(16421912).a(BiomeBase.DESERT.y).m();
+	public static final BiomeGenBase plains = new BiomeGenBase(1).b(16767248).a(BiomeBase.PLAINS.y);
 	public static final BiomeGenBase iceDesert = new BiomeGenDesert(2).b(16772499).a(
 		"Ice Desert").b().a(12899129);
 	public static final BiomeGenBase tundra = new BiomeGenBase(5).b(5762041).a("Tundra").b().a(

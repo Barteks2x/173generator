@@ -1,9 +1,11 @@
 package org.Barteks2x.b173gen.generator;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.minecraft.server.v1_5_R3.*;
 
@@ -82,6 +84,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 		return populatorList;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void init(World workWorld, WorldChunkManagerOld wcm, long seed) {
 		isInit = true;
 		world = workWorld;
@@ -133,7 +136,39 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 		strongholdGen = config.generateStrongholds ? new WorldGenStronghold() : null;
 		mineshaftGen = config.generateMineshafts ? new WorldGenMineshaft() : null;
 		villageGen = config.generateVillages ? new WorldGenVillage() : null;
-		largeFeatureGen = config.generateTemples ? new WorldGenLargeFeature() : null;
+		largeFeatureGen = config.generateTemples ? new WorldGenLargeFeature173() : null;
+		/**if(largeFeatureGen!=null){
+			try {
+				Field field = largeFeatureGen.getClass().getDeclaredField("e");
+				field.setAccessible(true);
+				List<BiomeBase> l = (List<BiomeBase>) field.get(null);
+				List<BiomeBase> l2 = new ArrayList<BiomeBase>(l.size()+8);
+				l2.addAll(l);
+				l2.add((BiomeBase)BiomeGenBase.desert);
+				l2.add((BiomeBase)BiomeGenBase.rainforest);
+				l2.add((BiomeBase)BiomeGenBase.swampland);
+				field.set(null, l2);
+				field.setAccessible(false);
+				ChunkPosition pos = largeFeatureGen.getNearestGeneratedFeature(world, 200, 64, 394);
+				plugin.getLogger().info(pos.x+", "+pos.y+", "+pos.z);
+			} catch (NoSuchFieldException ex) {
+				Logger.getLogger(ChunkProviderGenerate.class.getName()).
+					log(Level.SEVERE, null, ex);
+			} catch (SecurityException ex) {
+				Logger.getLogger(ChunkProviderGenerate.class.getName()).
+					log(Level.SEVERE, null, ex);
+			} catch (IllegalArgumentException ex) {
+				Logger.getLogger(ChunkProviderGenerate.class.getName()).
+					log(Level.SEVERE, null, ex);
+			} catch (IllegalAccessException ex) {
+				Logger.getLogger(ChunkProviderGenerate.class.getName()).
+					log(Level.SEVERE, null, ex);
+			} catch (ClassCastException ex){
+				Logger.getLogger(ChunkProviderGenerate.class.getName()).
+					log(Level.SEVERE, null, ex);
+			}
+			
+		}**/
 		emeraldGen = config.generateEmerald ? new WorldGenMinable(EMERALD_ORE.id, 2) : null;
 	}
 
@@ -226,6 +261,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public byte[] generate(org.bukkit.World w, Random random, int x, int z) {
 		this.rand.setSeed(x * 341873128712L + z * 132897987541L);
 		byte terrain[] = new byte[32768];
@@ -810,9 +846,9 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 		this.plugin.initWorld(w);
 		if (w != null) {
 			int id = w.getHighestBlockAt(x, z).getTypeId();
-			Material mat;
-			if (id != 0 && (mat = byId[id].material) != null) {
-				return byId[id].material.isSolid();
+			Material material;
+			if (byId[id]!=null && (material = byId[id].material) != null) {
+				return material.isSolid();
 			} else {
 				return false;
 			}
