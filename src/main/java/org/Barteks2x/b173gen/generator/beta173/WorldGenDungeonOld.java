@@ -16,32 +16,32 @@ import net.minecraft.server.v1_5_R3.WorldGenDungeons;
  */
 public class WorldGenDungeonOld extends WorldGenDungeons {
 	@Override
-	public boolean a(World world, Random random, int i, int j, int k) {
-		byte b0 = 3;
-		int l = random.nextInt(2) + 2;
-		int i1 = random.nextInt(2) + 2;
+	public boolean a(World world, Random random, int xPos, int yPos, int zPos) {
+		byte ry = 3;
+		int rx = random.nextInt(2) + 2;
+		int rz = random.nextInt(2) + 2;
 		int j1 = 0;
 
-		int k1;
-		int l1;
-		int i2;
+		int x;
+		int y;
+		int z;
 
-		for (k1 = i - l - 1; k1 <= i + l + 1; ++k1) {
-			for (l1 = j - 1; l1 <= j + b0 + 1; ++l1) {
-				for (i2 = k - i1 - 1; i2 <= k + i1 + 1; ++i2) {
-					Material material = world.getMaterial(k1, l1, i2);
+		for (x = xPos - rx - 1; x <= xPos + rx + 1; ++x) {
+			for (y = yPos - 1; y <= yPos + ry + 1; ++y) {
+				for (z = zPos - rz - 1; z <= zPos + rz + 1; ++z) {
+					Material material = world.getMaterial(x, y, z);
 
-					if (l1 == j - 1 && !material.isBuildable()) {
+					if (y == yPos - 1 && !material.isBuildable()) {
 						return false;
 					}
 
-					if (l1 == j + b0 + 1 && !material.isBuildable()) {
+					if (y == yPos + ry + 1 && !material.isBuildable()) {
 						return false;
 					}
 
-					if ((k1 == i - l - 1 || k1 == i + l + 1 || i2 == k - i1 - 1 ||
-						i2 == k + i1 + 1) && l1 == j && world.
-						isEmpty(k1, l1, i2) && world.isEmpty(k1, l1 + 1, i2)) {
+					if ((x == xPos - rx - 1 || x == xPos + rx + 1 || z == zPos - rz - 1 ||
+						z == zPos + rz + 1) && y == yPos && world.
+						isEmpty(x, y, z) && world.isEmpty(x, y + 1, z)) {
 						++j1;
 					}
 				}
@@ -49,23 +49,23 @@ public class WorldGenDungeonOld extends WorldGenDungeons {
 		}
 
 		if (j1 >= 1 && j1 <= 5) {
-			for (k1 = i - l - 1; k1 <= i + l + 1; ++k1) {
-				for (l1 = j + b0; l1 >= j - 1; --l1) {
-					for (i2 = k - i1 - 1; i2 <= k + i1 + 1; ++i2) {
-						if (k1 != i - l - 1 && l1 != j - 1 && i2 != k - i1 -
-							1 && k1 != i + l + 1 && l1 != j + b0 + 1 &&
-							i2 != k + i1 + 1) {
-							world.setTypeIdAndData(k1, l1, i2, 0, 0, 2);
-						} else if (l1 >= 0 && !world.getMaterial(k1, l1 - 1,
-							i2).isBuildable()) {
-							world.setTypeIdAndData(k1, l1, i2, 0, 0, 2);
-						} else if (world.getMaterial(k1, l1, i2).
+			for (x = xPos - rx - 1; x <= xPos + rx + 1; ++x) {
+				for (y = yPos + ry; y >= yPos - 1; --y) {
+					for (z = zPos - rz - 1; z <= zPos + rz + 1; ++z) {
+						if (x != xPos - rx - 1 && y != yPos - 1 && z != zPos - rz -
+							1 && x != xPos + rx + 1 && y != yPos + ry + 1 &&
+							z != zPos + rz + 1) {
+							world.setTypeIdAndData(x, y, z, 0, 0, 2);
+						} else if (y >= 0 && !world.getMaterial(x, y - 1,
+							z).isBuildable()) {
+							world.setTypeIdAndData(x, y, z, 0, 0, 2);
+						} else if (world.getMaterial(x, y, z).
 							isBuildable()) {
-							if (l1 == j - 1 && random.nextInt(4) != 0) {
-								world.setTypeIdAndData(k1, l1, i2,
+							if (y == yPos - 1 && random.nextInt(4) != 0) {
+								world.setTypeIdAndData(x, y, z,
 									Block.MOSSY_COBBLESTONE.id, 0, 2);
 							} else {
-								world.setTypeIdAndData(k1, l1, i2,
+								world.setTypeIdAndData(x, y, z,
 									Block.COBBLESTONE.id, 0, 2);
 							}
 						}
@@ -73,45 +73,45 @@ public class WorldGenDungeonOld extends WorldGenDungeons {
 				}
 			}
 
-			k1 = 0;
+			x = 0;
 
-			while (k1 < 2) {
-				l1 = 0;
+			while (x < 2) {
+				y = 0;
 				while (true) {
-					if (l1 < 3) {
+					if (y < 3) {
 label204:                                       {
-							i2 = i + random.nextInt(l * 2 + 1) - l;
-							int j2 = k + random.nextInt(i1 * 2 + 1) - i1;
+							z = xPos + random.nextInt(rx * 2 + 1) - rx;
+							int j2 = zPos + random.nextInt(rz * 2 + 1) - rz;
 
-							if (world.isEmpty(i2, j, j2)) {
+							if (world.isEmpty(z, yPos, j2)) {
 								int k2 = 0;
 
-								if (world.getMaterial(i2 - 1, j, j2).
+								if (world.getMaterial(z - 1, yPos, j2).
 									isBuildable()) {
 									++k2;
 								}
 
-								if (world.getMaterial(i2 + 1, j, j2).
+								if (world.getMaterial(z + 1, yPos, j2).
 									isBuildable()) {
 									++k2;
 								}
 
-								if (world.getMaterial(i2, j, j2 - 1).
+								if (world.getMaterial(z, yPos, j2 - 1).
 									isBuildable()) {
 									++k2;
 								}
 
-								if (world.getMaterial(i2, j, j2 + 1).
+								if (world.getMaterial(z, yPos, j2 + 1).
 									isBuildable()) {
 									++k2;
 								}
 
 								if (k2 == 1) {
-									world.setTypeIdAndData(i2, j, j2,
+									world.setTypeIdAndData(z, yPos, j2,
 										Block.CHEST.id, 0, 2);
 									TileEntityChest tileentitychest =
 										(TileEntityChest) world.
-										getTileEntity(i2, j,
+										getTileEntity(z, yPos,
 										j2);
 
 									for (int l2 = 0; l2 < 8;
@@ -135,19 +135,19 @@ label204:                                       {
 								}
 							}
 
-							++l1;
+							++y;
 							continue;
 						}
 					}
 
-					++k1;
+					++x;
 					break;
 				}
 			}
 
-			world.setTypeIdAndData(i, j, k, Block.MOB_SPAWNER.id, 0, 2);
+			world.setTypeIdAndData(xPos, yPos, zPos, Block.MOB_SPAWNER.id, 0, 2);
 			TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner) world.
-				getTileEntity(i, j, k);
+				getTileEntity(xPos, yPos, zPos);
 
 			tileentitymobspawner.a().a(this.b(random));
 			return true;

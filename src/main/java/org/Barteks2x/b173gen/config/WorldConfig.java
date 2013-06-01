@@ -25,7 +25,7 @@ public class WorldConfig {
 		newDungeonGen = false,
 		oldTreeGrowing = true, 
 		generateEmerald = false;
-
+	
 	public WorldConfig(JavaPlugin plug, String worldName) {
 		this.plugin = plug;
 		this.worldName = worldName;

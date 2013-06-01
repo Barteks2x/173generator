@@ -27,9 +27,9 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 
 	public WorldChunkManagerOld(long seed) {
 		this();
-		e = new NoiseGeneratorOctaves2Old(new Random(seed * 9871L), 4);
-		f = new NoiseGeneratorOctaves2Old(new Random(seed * 39811L), 4);
-		g = new NoiseGeneratorOctaves2Old(new Random(seed * 0x84a59L), 2);
+		e = new NoiseGeneratorOctaves2D(new Random(seed * 9871L), 4);
+		f = new NoiseGeneratorOctaves2D(new Random(seed * 39811L), 4);
+		g = new NoiseGeneratorOctaves2D(new Random(seed * 0x84a59L), 2);
 	}
 
 	@Override
@@ -46,9 +46,9 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 		for (int ii = 0; ii < ad.length; ii++) {
 			ad2[ii] = ad[ii];
 		}
-		ad2 = f.func_4112_a(ad2, i, j, k, l, 0.02500000037252903D,
+		ad2 = f.generateNoiseArray(ad2, i, j, k, l, 0.02500000037252903D,
 			0.02500000037252903D, 0.25D);
-		c = g.func_4112_a(c, i, j, k, l, 0.25D, 0.25D, 0.58823529411764708D);
+		c = g.generateNoiseArray(c, i, j, k, l, 0.25D, 0.25D, 0.58823529411764708D);
 		int i1 = 0;
 		for (int j1 = 0; j1 < k; j1++) {
 			for (int k1 = 0; k1 < l; k1++) {
@@ -85,9 +85,9 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 		for (int ii = 0; ii < ad.length; ii++) {
 			ad2[ii] = ad[ii];
 		}
-		ad2 = e.func_4112_a(ad2, i, j, k, l, 0.02500000037252903D,
+		ad2 = e.generateNoiseArray(ad2, i, j, k, l, 0.02500000037252903D,
 			0.02500000037252903D, 0.25D);
-		c = g.func_4112_a(c, i, j, k, l, 0.25D, 0.25D, 0.58823529411764708D);
+		c = g.generateNoiseArray(c, i, j, k, l, 0.25D, 0.25D, 0.58823529411764708D);
 		int i1 = 0;
 		for (int j1 = 0; j1 < k; j1++) {
 			for (int k1 = 0; k1 < l; k1++) {
@@ -112,28 +112,27 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 		for (int ii = 0; ii < ad.length; ii++) {
 			ad[ii] = (float) ad2[ii];
 		}
-		this.temperature = ad2;
+		this.temperatures = ad2;
 		return ad;
 	}
 
 	@Override
-	public BiomeBase[] getBiomeBlock(BiomeBase abiomegenbase[], int i, int j,
-		int k, int l) {
-		if (abiomegenbase == null || abiomegenbase.length < k * l) {
-			abiomegenbase = new BiomeGenBase[k * l];
+	public BiomeBase[] getBiomeBlock(BiomeBase biomes[], int x, int z, int xSize, int zSize) {
+		if (biomes == null || biomes.length < xSize * zSize) {
+			biomes = new BiomeGenBase[xSize * zSize];
 		}
-		temperature = e.func_4112_a(temperature, i, j, k, k,
+		temperatures = e.generateNoiseArray(temperatures, x, z, xSize, xSize,
 			0.02500000037252903D, 0.02500000037252903D, 0.25D);
-		rain = f.func_4112_a(rain, i, j, k, k, 0.05000000074505806D,
+		rain = f.generateNoiseArray(rain, x, z, xSize, xSize, 0.05000000074505806D,
 			0.05000000074505806D, 0.33333333333333331D);
-		c = g.func_4112_a(c, i, j, k, k, 0.25D, 0.25D, 0.58823529411764708D);
+		c = g.generateNoiseArray(c, x, z, xSize, xSize, 0.25D, 0.25D, 0.58823529411764708D);
 		int i1 = 0;
-		for (int j1 = 0; j1 < k; j1++) {
-			for (int k1 = 0; k1 < l; k1++) {
+		for (int j1 = 0; j1 < xSize; j1++) {
+			for (int k1 = 0; k1 < zSize; k1++) {
 				double d = c[i1] * 1.1000000000000001D + 0.5D;
 				double d1 = 0.01D;
 				double d2 = 1.0D - d1;
-				double d3 = (temperature[i1] * 0.14999999999999999D +
+				double d3 = (temperatures[i1] * 0.14999999999999999D +
 					0.69999999999999996D) *
 					 d2 + d * d1;
 				d1 = 0.002D;
@@ -153,14 +152,14 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 				if (d4 > 1.0D) {
 					d4 = 1.0D;
 				}
-				temperature[i1] = d3;
+				temperatures[i1] = d3;
 				rain[i1] = d4;
-				abiomegenbase[i1++] = BiomeGenBase.getBiomeFromLookup(d3, d4);
+				biomes[i1++] = BiomeGenBase.getBiomeFromLookup(d3, d4);
 			}
 
 		}
 
-		return abiomegenbase;
+		return biomes;
 	}
 
 	@Override
@@ -169,18 +168,18 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 		if (abiomegenbase == null || abiomegenbase.length < k * l) {
 			abiomegenbase = new BiomeGenBase[k * l];
 		}
-		temperature = e.func_4112_a(temperature, i, j, k, k,
+		temperatures = e.generateNoiseArray(temperatures, i, j, k, k,
 			0.02500000037252903D, 0.02500000037252903D, 0.25D);
-		rain = f.func_4112_a(rain, i, j, k, k, 0.05000000074505806D,
+		rain = f.generateNoiseArray(rain, i, j, k, k, 0.05000000074505806D,
 			0.05000000074505806D, 0.33333333333333331D);
-		c = g.func_4112_a(c, i, j, k, k, 0.25D, 0.25D, 0.58823529411764708D);
+		c = g.generateNoiseArray(c, i, j, k, k, 0.25D, 0.25D, 0.58823529411764708D);
 		int i1 = 0;
 		for (int j1 = 0; j1 < k; j1++) {
 			for (int k1 = 0; k1 < l; k1++) {
 				double d = c[i1] * 1.1000000000000001D + 0.5D;
 				double d1 = 0.01D;
 				double d2 = 1.0D - d1;
-				double d3 = (temperature[i1] * 0.14999999999999999D +
+				double d3 = (temperatures[i1] * 0.14999999999999999D +
 					0.69999999999999996D) *
 					 d2 + d * d1;
 				d1 = 0.002D;
@@ -200,7 +199,7 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 				if (d4 > 1.0D) {
 					d4 = 1.0D;
 				}
-				temperature[i1] = d3;
+				temperatures[i1] = d3;
 				rain[i1] = d4;
 				abiomegenbase[i1++] = BiomeGenBase.getBiomeFromLookup(d3, d4);
 			}
@@ -213,10 +212,10 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 		this.dx = getBiomes(this.dx, i, j, k, l);
 		return this.dx;
 	}
-	private NoiseGeneratorOctaves2Old e;
-	private NoiseGeneratorOctaves2Old f;
-	private NoiseGeneratorOctaves2Old g;
-	public double temperature[];
+	private NoiseGeneratorOctaves2D e;
+	private NoiseGeneratorOctaves2D f;
+	private NoiseGeneratorOctaves2D g;
+	public double temperatures[];
 	public double rain[];
 	public double c[];
 	public BiomeGenBase dx[];
