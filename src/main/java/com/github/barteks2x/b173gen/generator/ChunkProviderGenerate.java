@@ -96,8 +96,8 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 
 		i = new int[32][32];
 
-		clayGen = config.newClayGen ? new WorldGenClay(32) :
-			new WorldGenClayOld(32);
+		clayGen = config.newClayGen ? new WorldGenClay(6) :
+				new WorldGenClayOld(32);
 		waterLakeGen = config.newLakeGen ? new WorldGenLakes(WATER.id) :
 				new WorldGenLakesOld(WATER.id);
 		lavaLakeGen = config.newLakeGen ? new WorldGenLakes(LAVA.id) :
