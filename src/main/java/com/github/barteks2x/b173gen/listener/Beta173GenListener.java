@@ -1,0 +1,85 @@
+package com.github.barteks2x.b173gen.listener;
+
+import com.github.barteks2x.b173gen.config.WorldConfig;
+import com.github.barteks2x.b173gen.generator.beta173.*;
+import com.github.barteks2x.b173gen.plugin.Generator;
+import java.util.Random;
+import net.minecraft.server.v1_6_R1.Item;
+import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_6_R1.CraftWorld;
+import org.bukkit.entity.Player;
+import org.bukkit.event.*;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.world.StructureGrowEvent;
+import org.bukkit.event.world.WorldInitEvent;
+
+public class Beta173GenListener implements Listener {
+
+	private Generator plugin;
+
+	public Beta173GenListener(Generator plugin) {
+		this.plugin = plugin;
+	}
+	private Random r = new Random();
+
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onWorldInit(WorldInitEvent event) {
+		this.plugin.initWorld(event.getWorld());
+	}
+
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onStructureGrow(StructureGrowEvent event) {
+		Location loc = event.getLocation();
+		World world = loc.getWorld();
+		WorldConfig cfg = null;
+		if ((cfg = plugin.getOrCreateWorldConfig(world.getName())) != null) {
+			if (cfg.oldTreeGrowing) {
+				if (growTree(event.getSpecies(), loc)) {
+					event.getBlocks().clear();
+				} else {
+					event.setCancelled(true);
+				}
+			}
+		}
+	}
+
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onPlayerInteract(PlayerInteractEvent event) {
+		if (event == null || event.getItem() == null) {
+			return;
+		}
+		if (event.getItem().getTypeId() == Item.EYE_OF_ENDER.id) {
+			Player player = event.getPlayer();
+			World world = player.getLocation().getWorld();
+			WorldConfig cfg = null;
+			if ((cfg = plugin.getOrCreateWorldConfig(world.getName())) != null) {
+				if (!cfg.generateStrongholds) {
+					event.setCancelled(true);
+					player.sendMessage(cfg.eyeOfEnderMsg);
+				}
+			}
+		}
+	}
+
+	private boolean growTree(TreeType type, Location loc) {
+		boolean result = false;
+		switch (type) {
+			case TREE:
+				result = new WorldGenTreeOld().a(((CraftWorld)loc.getWorld()).
+						getHandle(), new Random(), loc.getBlockX(), loc.getBlockY(),
+						loc.getBlockZ());
+				break;
+			case BIG_TREE:
+				result = new WorldGenBigTreeOld().a(((CraftWorld)loc.getWorld()).
+						getHandle(), new Random(), loc.getBlockX(), loc.getBlockY(),
+						loc.getBlockZ());
+				break;
+			case BIRCH:
+				result = new WorldGenForestOld().a(((CraftWorld)loc.getWorld()).
+						getHandle(), new Random(), loc.getBlockX(), loc.getBlockY(),
+						loc.getBlockZ());
+				break;
+		}
+		return result;
+	}
+}
