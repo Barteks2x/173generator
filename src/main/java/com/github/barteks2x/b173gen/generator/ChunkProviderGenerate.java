@@ -444,7 +444,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 		BlockSand.instaFall = true;
 		int x = chunkX * 16;
 		int z = chunkZ * 16;
-		BiomeGenBase biome = this.wcm.getBiome(x + 16, z + 16);
+		Biome biome = this.wcm.getBiome(x + 16, z + 16);
 		rand.setSeed(world.getSeed());
 		long rand1 = (rand.nextLong() / 2L) * 2L + 1L;
 		long rand2 = (rand.nextLong() / 2L) * 2L + 1L;
@@ -552,46 +552,46 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 		if (rand.nextInt(10) == 0) {
 			trees++;
 		}
-		if (biome == BiomeGenBase.forest) {
+		if (biome == Biome.forest) {
 			trees += treesRand + 5;
 		}
-		if (biome == BiomeGenBase.rainforest) {
+		if (biome == Biome.rainforest) {
 			trees += treesRand + 5;
 		}
-		if (biome == BiomeGenBase.seasonalForest) {
+		if (biome == Biome.seasonalForest) {
 			trees += treesRand + 2;
 		}
-		if (biome == BiomeGenBase.taiga) {
+		if (biome == Biome.taiga) {
 			trees += treesRand + 5;
 		}
-		if (biome == BiomeGenBase.desert) {
+		if (biome == Biome.desert) {
 			trees -= 20;
 		}
-		if (biome == BiomeGenBase.tundra) {
+		if (biome == Biome.tundra) {
 			trees -= 20;
 		}
-		if (biome == BiomeGenBase.plains) {
+		if (biome == Biome.plains) {
 			trees -= 20;
 		}
 		for (int i11 = 0; i11 < trees; i11++) {
 			int l13 = x + rand.nextInt(16) + 8;
 			int j14 = z + rand.nextInt(16) + 8;
-			WorldGenerator worldgenerator = biome.a(rand);
+			WorldGenerator worldgenerator = biome.getRandomTreeGen(rand);
 			worldgenerator.a(1.0D, 1.0D, 1.0D);
 			worldgenerator.a(world, rand, l13, world.getHighestBlockYAt(l13, j14), j14);
 		}
 
 		byte flowers = 0;
-		if (biome == BiomeGenBase.forest) {
+		if (biome == Biome.forest) {
 			flowers = 2;
 		}
-		if (biome == BiomeGenBase.seasonalForest) {
+		if (biome == Biome.seasonalForest) {
 			flowers = 4;
 		}
-		if (biome == BiomeGenBase.taiga) {
+		if (biome == Biome.taiga) {
 			flowers = 2;
 		}
-		if (biome == BiomeGenBase.plains) {
+		if (biome == Biome.plains) {
 			flowers = 3;
 		}
 		for (int i14 = 0; i14 < flowers; i14++) {
@@ -602,23 +602,23 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 		}
 
 		byte byte1 = 0;
-		if (biome == BiomeGenBase.forest) {
+		if (biome == Biome.forest) {
 			byte1 = 2;
 		}
-		if (biome == BiomeGenBase.rainforest) {
+		if (biome == Biome.rainforest) {
 			byte1 = 10;
 		}
-		if (biome == BiomeGenBase.seasonalForest) {
+		if (biome == Biome.seasonalForest) {
 			byte1 = 2;
 		}
-		if (biome == BiomeGenBase.taiga) {
+		if (biome == Biome.taiga) {
 			byte1 = 1;
 		}
-		if (biome == BiomeGenBase.plains) {
+		if (biome == Biome.plains) {
 			byte1 = 10;
 		}
 		for (int l14 = 0; l14 < byte1; l14++) {
-			boolean flag = (biome == BiomeGenBase.rainforest && rand.nextInt(3) != 0);
+			boolean flag = (biome == Biome.rainforest && rand.nextInt(3) != 0);
 			int l19 = x + rand.nextInt(16) + 8;
 			int k22 = rand.nextInt(128);
 			int j24 = z + rand.nextInt(16) + 8;
@@ -630,7 +630,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 		}
 
 		byte1 = 0;
-		if (biome == BiomeGenBase.desert) {
+		if (biome == Biome.desert) {
 			byte1 = 2;
 		}
 		for (int i15 = 0; i15 < byte1; i15++) {
@@ -672,7 +672,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 			pumpkinGen.a(world, rand, j16, j18, j21);
 		}
 		int k16 = 0;
-		if (biome == BiomeGenBase.desert) {
+		if (biome == Biome.desert) {
 			k16 += 10;
 		}
 		for (int k18 = 0; k18 < k16; k18++) {

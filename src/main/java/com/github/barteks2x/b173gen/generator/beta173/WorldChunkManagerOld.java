@@ -11,12 +11,12 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	protected WorldChunkManagerOld() {
 		this.biomesToSpawn = new ArrayList();
-		this.biomesToSpawn.add(BiomeGenBase.forest);
-		this.biomesToSpawn.add(BiomeGenBase.rainforest);
-		this.biomesToSpawn.add(BiomeGenBase.seasonalForest);
-		this.biomesToSpawn.add(BiomeGenBase.taiga);
-		this.biomesToSpawn.add(BiomeGenBase.tundra);
-		this.biomesToSpawn.add(BiomeGenBase.plains);
+		this.biomesToSpawn.add(Biome.forest);
+		this.biomesToSpawn.add(Biome.rainforest);
+		this.biomesToSpawn.add(Biome.seasonalForest);
+		this.biomesToSpawn.add(Biome.taiga);
+		this.biomesToSpawn.add(Biome.tundra);
+		this.biomesToSpawn.add(Biome.plains);
 	}
 
 	public WorldChunkManagerOld(long seed) {
@@ -27,7 +27,7 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 	}
 
 	@Override
-	public BiomeGenBase getBiome(int i, int j) {
+	public Biome getBiome(int i, int j) {
 		return getBiomeData(i, j, 1, 1)[0];
 	}
 
@@ -113,7 +113,7 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 	@Override
 	public BiomeBase[] getBiomeBlock(BiomeBase biomes[], int x, int z, int xSize, int zSize) {
 		if (biomes == null || biomes.length < xSize * zSize) {
-			biomes = new BiomeGenBase[xSize * zSize];
+			biomes = new Biome[xSize * zSize];
 		}
 		temperatures = e.generateNoiseArray(temperatures, x, z, xSize, xSize,
 				0.02500000037252903D, 0.02500000037252903D, 0.25D);
@@ -148,7 +148,7 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 				}
 				temperatures[i1] = d3;
 				rain[i1] = d4;
-				biomes[i1++] = BiomeGenBase.getBiomeFromLookup(d3, d4);
+				biomes[i1++] = Biome.getBiomeFromLookup(d3, d4);
 			}
 
 		}
@@ -157,10 +157,10 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 	}
 
 	@Override
-	public BiomeGenBase[] getBiomes(BiomeBase abiomegenbase[], int i, int j,
+	public Biome[] getBiomes(BiomeBase abiomegenbase[], int i, int j,
 			int k, int l) {
 		if (abiomegenbase == null || abiomegenbase.length < k * l) {
-			abiomegenbase = new BiomeGenBase[k * l];
+			abiomegenbase = new Biome[k * l];
 		}
 		temperatures = e.generateNoiseArray(temperatures, i, j, k, k,
 				0.02500000037252903D, 0.02500000037252903D, 0.25D);
@@ -195,14 +195,14 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 				}
 				temperatures[i1] = d3;
 				rain[i1] = d4;
-				abiomegenbase[i1++] = BiomeGenBase.getBiomeFromLookup(d3, d4);
+				abiomegenbase[i1++] = Biome.getBiomeFromLookup(d3, d4);
 			}
 
 		}
-		return (BiomeGenBase[])abiomegenbase;
+		return (Biome[])abiomegenbase;
 	}
 
-	private BiomeGenBase[] getBiomeData(int i, int j, int k, int l) {
+	private Biome[] getBiomeData(int i, int j, int k, int l) {
 		this.dx = getBiomes(this.dx, i, j, k, l);
 		return this.dx;
 	}
@@ -212,10 +212,10 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 	public double temperatures[];
 	public double rain[];
 	public double c[];
-	public BiomeGenBase dx[];
+	public Biome dx[];
 
 	@Override
-	public BiomeGenBase[] a(BiomeBase[] arg0, int arg1, int arg2, int arg3, int arg4,
+	public Biome[] a(BiomeBase[] arg0, int arg1, int arg2, int arg3, int arg4,
 			boolean arg5) {
 		return getBiomes(arg0, arg1, arg2, arg3, arg4);
 	}
@@ -238,7 +238,7 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 		int a = 0;
 		for (; X <= maxX; ++X) {
 			for (; Z <= maxZ; ++Z) {
-				BiomeGenBase biome = getBiome(X, Z);
+				Biome biome = getBiome(X, Z);
 				if (biomes.contains(biome) && (pos == null || rand.nextInt(a + 1) == 0)) {
 					pos = new ChunkPosition(X, 0, Z);
 					++a;

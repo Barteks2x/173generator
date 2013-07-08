@@ -1,6 +1,6 @@
 package com.github.barteks2x.b173gen.generator;
 
-import com.github.barteks2x.b173gen.generator.beta173.BiomeGenBase;
+import com.github.barteks2x.b173gen.generator.beta173.Biome;
 import java.util.*;
 import net.minecraft.server.v1_6_R1.MathHelper;
 import net.minecraft.server.v1_6_R1.WorldGenLargeFeature;
@@ -78,8 +78,8 @@ public class WorldGenLargeFeature173 extends WorldGenLargeFeature {
 	}
 
 	static {
-		e = Arrays.asList(new BiomeGenBase[]{
-			BiomeGenBase.desert, BiomeGenBase.rainforest, BiomeGenBase.swampland
+		e = Arrays.asList(new Biome[]{
+			Biome.desert, Biome.rainforest, Biome.swampland
 		});
 	}
 }

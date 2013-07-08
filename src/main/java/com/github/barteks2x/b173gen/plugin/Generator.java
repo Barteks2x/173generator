@@ -8,7 +8,9 @@ import com.github.barteks2x.b173gen.listener.Beta173GenListener;
 import java.util.HashMap;
 import java.util.logging.Level;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_6_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_6_R1.block.CraftBlock;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,12 +21,17 @@ public class Generator extends JavaPlugin {
 	private Beta173GenListener listener = new Beta173GenListener(this);
 	private VersionTracker vTracker;
 
+	static {
+		CraftBlock.biomeToBiomeBase(Biome.SKY);//Initialize CraftBlock class before BiomeGenBase to avoid IllegalArgumentException
+	}
+
 	@Override
 	public void onDisable() {
 	}
 
 	@Override
 	public void onEnable() {
+
 		this.registerEvents();
 		vTracker = new VersionTracker(this);
 		vTracker.init();
