@@ -16,15 +16,12 @@ public class WorldChunkManagerOld {
 		return getBiomeData(i, j, 1, 1)[0];
 	}
 
-	public float[] getWetness(float[] ad, int i, int j, int k, int l) {
+	public double[] getTemperatures(double[] ad, int i, int j, int k, int l) {
 		if (ad == null || ad.length < k * l) {
-			ad = new float[k * l];
+			ad = new double[k * l];
 		}
-		double[] ad2 = new double[ad.length];
-		for (int ii = 0; ii < ad.length; ii++) {
-			ad2[ii] = ad[ii];
-		}
-		ad2 = f.generateNoiseArray(ad2, i, j, k, l, 0.02500000037252903D,
+
+		ad = e.generateNoiseArray(ad, i, j, k, l, 0.02500000037252903D,
 				0.02500000037252903D, 0.25D);
 		c = g.generateNoiseArray(c, i, j, k, l, 0.25D, 0.25D, 0.58823529411764708D);
 		int i1 = 0;
@@ -33,63 +30,20 @@ public class WorldChunkManagerOld {
 				double d = c[i1] * 1.1000000000000001D + 0.5D;
 				double d1 = 0.01D;
 				double d2 = 1.0D - d1;
-				double d3 =
-						(ad2[i1] * 0.14999999999999999D + 0.69999999999999996D) *
-						d2 + d * d1;
+				double d3 = (ad[i1] * 0.14999999999999999D + 0.69999999999999996D) * d2 + d * d1;
 				d3 = 1.0D - (1.0D - d3) * (1.0D - d3);
 				if (d3 < 0.0D) {
-					d3 = 0.0D;
+					d3 = 0.0001D;
 				}
 				if (d3 > 1.0D) {
 					d3 = 1.0D;
 				}
-				ad2[i1] = d3;
+				ad[i1] = d3;
 				i1++;
 			}
 
 		}
-		for (int ii = 0; ii < ad.length; ii++) {
-			ad[ii] = (float)ad2[ii];
-		}
-		return ad;
-	}
-
-	public float[] getTemperatures(float[] ad, int i, int j, int k, int l) {
-		if (ad == null || ad.length < k * l) {
-			ad = new float[k * l];
-		}
-		double[] ad2 = new double[ad.length];
-		for (int ii = 0; ii < ad.length; ii++) {
-			ad2[ii] = ad[ii];
-		}
-		ad2 = e.generateNoiseArray(ad2, i, j, k, l, 0.02500000037252903D,
-				0.02500000037252903D, 0.25D);
-		c = g.generateNoiseArray(c, i, j, k, l, 0.25D, 0.25D, 0.58823529411764708D);
-		int i1 = 0;
-		for (int j1 = 0; j1 < k; j1++) {
-			for (int k1 = 0; k1 < l; k1++) {
-				double d = c[i1] * 1.1000000000000001D + 0.5D;
-				double d1 = 0.01D;
-				double d2 = 1.0D - d1;
-				double d3 =
-						(ad2[i1] * 0.14999999999999999D + 0.69999999999999996D) *
-						d2 + d * d1;
-				d3 = 1.0D - (1.0D - d3) * (1.0D - d3);
-				if (d3 < 0.0D) {
-					d3 = 0.0D;
-				}
-				if (d3 > 1.0D) {
-					d3 = 1.0D;
-				}
-				ad2[i1] = d3;
-				i1++;
-			}
-
-		}
-		for (int ii = 0; ii < ad.length; ii++) {
-			ad[ii] = (float)ad2[ii];
-		}
-		this.temperatures = ad2;
+		this.temperatures = ad;
 		return ad;
 	}
 
@@ -109,8 +63,7 @@ public class WorldChunkManagerOld {
 				double d1 = 0.01D;
 				double d2 = 1.0D - d1;
 				double d3 = (temperatures[i1] * 0.14999999999999999D +
-						0.69999999999999996D) *
-						d2 + d * d1;
+						0.69999999999999996D) * d2 + d * d1;
 				d1 = 0.002D;
 				d2 = 1.0D - d1;
 				double d4 = (rain[i1] * 0.14999999999999999D + 0.5D) * d2 + d *
