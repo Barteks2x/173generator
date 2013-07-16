@@ -1,4 +1,4 @@
-package com.github.barteks2x.b173gen.generator.beta173;
+package com.github.barteks2x.b173gen.oldnoisegen;
 
 public abstract class NoiseGenerator {
 

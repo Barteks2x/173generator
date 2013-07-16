@@ -1,12 +1,12 @@
 package com.github.barteks2x.b173gen.listener;
 
+import com.github.barteks2x.b173gen.oldgen.WorldGenBigTreeOld;
+import com.github.barteks2x.b173gen.oldgen.WorldGenForestOld;
+import com.github.barteks2x.b173gen.oldgen.WorldGenTreeOld;
 import com.github.barteks2x.b173gen.config.WorldConfig;
-import com.github.barteks2x.b173gen.generator.beta173.*;
-import com.github.barteks2x.b173gen.plugin.Generator;
+import com.github.barteks2x.b173gen.Generator;
 import java.util.Random;
-import net.minecraft.server.v1_6_R1.Item;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_6_R1.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.*;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -48,7 +48,7 @@ public class Beta173GenListener implements Listener {
 		if (event == null || event.getItem() == null) {
 			return;
 		}
-		if (event.getItem().getTypeId() == Item.EYE_OF_ENDER.id) {
+		if (event.getItem().getType() == Material.EYE_OF_ENDER) {
 			Player player = event.getPlayer();
 			World world = player.getLocation().getWorld();
 			WorldConfig cfg = null;
@@ -65,19 +65,16 @@ public class Beta173GenListener implements Listener {
 		boolean result = false;
 		switch (type) {
 			case TREE:
-				result = new WorldGenTreeOld().a(((CraftWorld)loc.getWorld()).
-						getHandle(), new Random(), loc.getBlockX(), loc.getBlockY(),
-						loc.getBlockZ());
+				result = new WorldGenTreeOld().generate(loc.getWorld(), new Random(), loc.
+						getBlockX(), loc.getBlockY(), loc.getBlockZ());
 				break;
 			case BIG_TREE:
-				result = new WorldGenBigTreeOld().a(((CraftWorld)loc.getWorld()).
-						getHandle(), new Random(), loc.getBlockX(), loc.getBlockY(),
-						loc.getBlockZ());
+				result = new WorldGenBigTreeOld().generate(loc.getWorld(), new Random(), loc.
+						getBlockX(), loc.getBlockY(), loc.getBlockZ());
 				break;
 			case BIRCH:
-				result = new WorldGenForestOld().a(((CraftWorld)loc.getWorld()).
-						getHandle(), new Random(), loc.getBlockX(), loc.getBlockY(),
-						loc.getBlockZ());
+				result = new WorldGenForestOld().generate(loc.getWorld(), new Random(), loc.
+						getBlockX(), loc.getBlockY(), loc.getBlockZ());
 				break;
 		}
 		return result;

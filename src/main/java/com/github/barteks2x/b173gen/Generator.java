@@ -1,16 +1,13 @@
-package com.github.barteks2x.b173gen.plugin;
+package com.github.barteks2x.b173gen;
 
 import com.github.barteks2x.b173gen.config.VersionTracker;
 import com.github.barteks2x.b173gen.config.WorldConfig;
 import com.github.barteks2x.b173gen.generator.ChunkProviderGenerate;
-import com.github.barteks2x.b173gen.generator.beta173.WorldChunkManagerOld;
 import com.github.barteks2x.b173gen.listener.Beta173GenListener;
+import com.github.barteks2x.b173gen.oldgen.WorldChunkManagerOld;
 import java.util.HashMap;
 import java.util.logging.Level;
 import org.bukkit.World;
-import org.bukkit.block.Biome;
-import org.bukkit.craftbukkit.v1_6_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_6_R1.block.CraftBlock;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,12 +15,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Generator extends JavaPlugin {
 
 	private final HashMap<String, WorldConfig> worlds = new HashMap<String, WorldConfig>();
-	private Beta173GenListener listener = new Beta173GenListener(this);
+	private Beta173GenListener listener;
 	private VersionTracker vTracker;
-
-	static {
-		CraftBlock.biomeToBiomeBase(Biome.SKY);//Initialize CraftBlock class before BiomeGenBase to avoid IllegalArgumentException
-	}
 
 	@Override
 	public void onDisable() {
@@ -31,7 +24,7 @@ public class Generator extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-
+		listener = new Beta173GenListener(this);
 		this.registerEvents();
 		vTracker = new VersionTracker(this);
 		vTracker.init();
@@ -54,16 +47,13 @@ public class Generator extends JavaPlugin {
 		if (worldSetting.isInit) {
 			return;
 		}
-		net.minecraft.server.v1_6_R1.World workWorld = ((CraftWorld)world).getHandle();
-
-		WorldChunkManagerOld wcm = new WorldChunkManagerOld(workWorld.getSeed());
-		workWorld.worldProvider.e = wcm;
-		worldSetting.chunkProvider.init(workWorld, wcm, workWorld.getSeed());
+		worldSetting.chunkProvider.init(world, new WorldChunkManagerOld(world.getSeed()));
 		worldSetting.isInit = true;
 
 		this.getLogger().log(Level.INFO,
 				"{0} enabled for {1}, world seed: {2}", new Object[]{this.getDescription().
-			getName(), world.getName(), workWorld.getSeed()});
+			getName(), world.getName(), String.valueOf(world.getSeed())});
+
 	}
 
 	private void registerEvents() {

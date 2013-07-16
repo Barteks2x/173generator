@@ -1,8 +1,10 @@
-package com.github.barteks2x.b173gen.generator.beta173;
+package com.github.barteks2x.b173gen.oldgen;
 
 import com.github.barteks2x.b173gen.generator.WorldGenerator173;
+import com.github.barteks2x.b173gen.reflection.Util;
 import java.util.Random;
-import net.minecraft.server.v1_6_R1.*;
+import org.bukkit.Material;
+import org.bukkit.World;
 
 public class WorldGenLakesOld extends WorldGenerator173 {
 
@@ -11,9 +13,9 @@ public class WorldGenLakesOld extends WorldGenerator173 {
 	}
 
 	@Override
-	public boolean a(World world, Random random, int i, int j, int k) {
+	public boolean generate(World world, Random random, int i, int j, int k) {
 		i -= 8;
-		for (k -= 8; j > 0 && world.getMaterial(i, j, k) == Material.AIR; j--) {
+		for (k -= 8; j > 0 && world.getBlockTypeIdAt(i, j, k) == 0; j--) {
 		}
 		j -= 4;
 		boolean aflag[] = new boolean[2048];
@@ -47,27 +49,21 @@ public class WorldGenLakesOld extends WorldGenerator173 {
 			for (int j2 = 0; j2 < 16; j2++) {
 				for (int j3 = 0; j3 < 8; j3++) {
 					boolean flag = !aflag[(j1 * 16 + j2) * 8 + j3] &&
-							(j1 < 15 && aflag[((j1 + 1) * 16 + j2) * 8 + j3] ||
-							j1 > 0 &&
-							aflag[((j1 - 1) * 16 + j2) * 8 + j3] ||
-							j2 < 15 &&
-							aflag[(j1 * 16 + (j2 + 1)) * 8 + j3] ||
-							j2 > 0 &&
-							aflag[(j1 * 16 + (j2 - 1)) * 8 + j3] ||
-							j3 < 7 &&
-							aflag[(j1 * 16 + j2) * 8 + (j3 + 1)] || j3 > 0 &&
-							aflag[(j1 * 16 + j2) * 8 + (j3 - 1)]);
+							(j1 < 15 && aflag[((j1 + 1) * 16 + j2) * 8 + j3] || j1 > 0 &&
+							aflag[((j1 - 1) * 16 + j2) * 8 + j3] || j2 < 15 && aflag[(j1 * 16 +
+							(j2 + 1)) * 8 + j3] || j2 > 0 && aflag[(j1 * 16 + (j2 - 1)) * 8 + j3] ||
+							j3 < 7 && aflag[(j1 * 16 + j2) * 8 + (j3 + 1)] || j3 > 0 && aflag[(j1 *
+							16 + j2) * 8 + (j3 - 1)]);
 					if (!flag) {
 						continue;
 					}
-					Material material = world.getMaterial(i + j1, j + j3, k +
-							j2);
-					if (j3 >= 4 && material.isLiquid()) {
+					Material material = world.getBlockAt(i + j1, j + j3, k + j2).getType();
+					if (j3 >= 4 && Util.isLiquid(material)) {
 						return false;
 					}
 					if (j3 < 4 &&
-							!material.isSolid() &&
-							world.getTypeId(i + j1, j + j3, k + j2) !=
+							!Util.isSolid(world, i + j1, j + j3, k + j2) &&
+							world.getBlockTypeIdAt(i + j1, j + j3, k + j2) !=
 							field_15235_a) {
 						return false;
 					}
@@ -81,8 +77,8 @@ public class WorldGenLakesOld extends WorldGenerator173 {
 			for (int k2 = 0; k2 < 16; k2++) {
 				for (int k3 = 0; k3 < 8; k3++) {
 					if (aflag[(k1 * 16 + k2) * 8 + k3]) {
-						world.setTypeIdAndData(i + k1, j + k3, k + k2,
-								k3 < 4 ? field_15235_a : 0, 0, 2);
+						world.getBlockAt(i + k1, j + k3, k + k2).setTypeIdAndData(k3 < 4 ?
+								field_15235_a : 0, (byte)0, false);
 					}
 				}
 
@@ -94,20 +90,16 @@ public class WorldGenLakesOld extends WorldGenerator173 {
 			for (int l2 = 0; l2 < 16; l2++) {
 				for (int l3 = 4; l3 < 8; l3++) {
 					if (aflag[(l1 * 16 + l2) * 8 + l3] &&
-							world.getTypeId(i + l1, (j + l3) - 1, k + l2) ==
-							Block.DIRT.id &&
-							world.b(EnumSkyBlock.SKY, i + l1, j + l3, k + l2) >
-							0) {
-						world.setTypeIdAndData(i + l1, (j + l3) - 1, k + l2,
-								Block.GRASS.id, 0, 2);
+							world.getBlockTypeIdAt(i + l1, (j + l3) - 1, k + l2) == Material.DIRT.
+							getId() && Util.nmsWorld_b_SKY(world, i + l1, j + l3, k + l2) > 0) {
+						world.getBlockAt(i + l1, (j + l3) - 1, k + l2).setTypeIdAndData(
+								Material.GRASS.getId(), (byte)0, false);
 					}
 				}
-
 			}
-
 		}
 
-		if (Block.byId[field_15235_a].material == Material.LAVA) {
+		if (Material.getMaterial(field_15235_a) == Material.LAVA) {
 			for (int i2 = 0; i2 < 16; i2++) {
 				for (int i3 = 0; i3 < 16; i3++) {
 					for (int i4 = 0; i4 < 8; i4++) {
@@ -124,13 +116,10 @@ public class WorldGenLakesOld extends WorldGenerator173 {
 								aflag[(i2 * 16 + i3) * 8 + (i4 + 1)] ||
 								i4 > 0 &&
 								aflag[(i2 * 16 + i3) * 8 + (i4 - 1)]);
-						if (flag1 &&
-								(i4 < 4 || random.nextInt(2) != 0) &&
-								world.getMaterial(i + i2, j + i4, k + i3)
-								.isSolid()) {
-							world.setTypeIdAndData(i + i2, j + i4, k +
-									i3,
-									Block.STONE.id, 0, 2);
+						if (flag1 && (i4 < 4 || random.nextInt(2) != 0) && Util.isSolid(world, i +
+								i2, j + i4, k + i3)) {
+							world.getBlockAt(i + i2, j + i4, k +
+									i3).setTypeIdAndData(Material.STONE.getId(), (byte)0, false);
 						}
 					}
 

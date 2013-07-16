@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import com.github.barteks2x.b173gen.plugin.Generator;
+import com.github.barteks2x.b173gen.Generator;
 
 public class VersionTracker {
 	private File versionFile;

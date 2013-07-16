@@ -1,16 +1,20 @@
 package com.github.barteks2x.b173gen.generator;
 
+import com.github.barteks2x.b173gen.Generator;
+import com.github.barteks2x.b173gen.WorldGenBaseOld;
 import com.github.barteks2x.b173gen.config.WorldConfig;
-import com.github.barteks2x.b173gen.generator.beta173.*;
-import com.github.barteks2x.b173gen.plugin.Generator;
+import com.github.barteks2x.b173gen.newgen.*;
+import com.github.barteks2x.b173gen.oldgen.*;
+import com.github.barteks2x.b173gen.oldnoisegen.NoiseGeneratorOctaves3D;
+import com.github.barteks2x.b173gen.reflection.Util;
 import java.util.*;
-import net.minecraft.server.v1_6_R1.*;
-import org.bukkit.Location;
+import org.bukkit.*;
+import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
 
-import static net.minecraft.server.v1_6_R1.Block.*;
+import static org.bukkit.Material.*;
 
-public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvider {
+public class ChunkProviderGenerate extends ChunkGenerator {
 
 	private Random rand;
 	private NoiseGeneratorOctaves3D noiseGen1;
@@ -25,8 +29,8 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 	private double sandNoise[] = new double[256];
 	private double gravelNoise[] = new double[256];
 	private double stoneNoise[] = new double[256];
-	private WorldGenBase caves;
-	private BiomeBase[] biomes;
+	private WorldGenBaseOld caves;
+	private Biome[] biomes;
 	private double noise3[];
 	private double noise1[];
 	private double noise2[];
@@ -39,7 +43,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 	private World world;
 	private WorldConfig config;
 	private Generator plugin;
-	private WorldGenerator dungeonGen,
+	private WorldGenerator173 dungeonGen,
 			dirtGen,
 			gravelGen,
 			coalGen,
@@ -50,8 +54,8 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 			emeraldGen,
 			lapisGen,
 			yellowFlowerGen,
-			longGrassGen1,
-			longGrassGen2,
+			longGrassGenNormal,
+			longGrassGenRainforest,
 			deadBushGen,
 			redFlowerGen,
 			brownMushroomGen,
@@ -64,13 +68,13 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 			clayGen,
 			waterLakeGen,
 			lavaLakeGen;
-	private WorldGenCanyon canyonGen;
-	private WorldGenStronghold strongholdGen;
-	private WorldGenMineshaft mineshaftGen;
-	private WorldGenVillage villageGen;
+	private WorldGenCanyonRef canyonGen;
+	private WorldGenStrongholdRef strongholdGen;
+	private WorldGenMineshaftRef mineshaftGen;
+	private WorldGenVillageRef villageGen;
 	//temples
-	private WorldGenLargeFeature largeFeatureGen;
-	private boolean isInit = false;
+	private WorldGenLargeFeatureRef largeFeatureGen;
+	private static final int EMERALD_ORE_ID = 129;
 
 	@Override
 	public List<org.bukkit.generator.BlockPopulator> getDefaultPopulators(org.bukkit.World w) {
@@ -79,12 +83,11 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 	}
 
 	@SuppressWarnings("unchecked")
-	public void init(World workWorld, WorldChunkManagerOld wcm, long seed) {
-		isInit = true;
-		world = workWorld;
+	public void init(World world, WorldChunkManagerOld wcm) {
+		this.world = world;
 		this.wcm = wcm;
 
-		rand = new Random(seed);
+		rand = new Random(world.getSeed());
 		noiseGen1 = new NoiseGeneratorOctaves3D(rand, 16);
 		noiseGen2 = new NoiseGeneratorOctaves3D(rand, 16);
 		noiseGen3 = new NoiseGeneratorOctaves3D(rand, 8);
@@ -96,42 +99,40 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 
 		i = new int[32][32];
 
-		clayGen = config.newClayGen ? new WorldGenClay(6) :
+		clayGen = config.newClayGen ? new WorldGenClayRef(6) :
 				new WorldGenClayOld(32);
-		waterLakeGen = config.newLakeGen ? new WorldGenLakes(WATER.id) :
-				new WorldGenLakesOld(WATER.id);
-		lavaLakeGen = config.newLakeGen ? new WorldGenLakes(LAVA.id) :
-				new WorldGenLakesOld(LAVA.id);
-		caves = config.newCaveGen ? new WorldGenCaves() : new WorldGenCavesOld();
-
-		dungeonGen = new WorldGenDungeons();
-		dirtGen = new WorldGenMinable(DIRT.id, 32);
-		gravelGen = new WorldGenMinable(GRAVEL.id, 32);
-		coalGen = new WorldGenMinable(COAL_ORE.id, 16);
-		ironGen = new WorldGenMinable(IRON_ORE.id, 8);
-		goldGen = new WorldGenMinable(GOLD_ORE.id, 8);
-		redstoneGen = new WorldGenMinable(REDSTONE_ORE.id, 7);
-		diamondGen = new WorldGenMinable(DIAMOND_ORE.id, 7);
-		lapisGen = new WorldGenMinable(LAPIS_ORE.id, 6);
-		yellowFlowerGen = new WorldGenFlowers(YELLOW_FLOWER.id);
-		longGrassGen1 = new WorldGenGrass(LONG_GRASS.id, 1);
-		longGrassGen2 = new WorldGenGrass(LONG_GRASS.id, 2);
-		deadBushGen = new WorldGenDeadBush(DEAD_BUSH.id);
-		redFlowerGen = new WorldGenFlowers(RED_ROSE.id);
-		brownMushroomGen = new WorldGenFlowers(BROWN_MUSHROOM.id);
-		redMushroomGen = new WorldGenFlowers(RED_MUSHROOM.id);
-		reedGen = new WorldGenReed();
-		pumpkinGen = new WorldGenPumpkin();
-		cactusGen = new WorldGenCactus();
-		liquidWaterGen = new WorldGenLiquids(WATER.id);
-		liquidLavaGen = new WorldGenLiquids(LAVA.id);
-		workWorld.worldData.setType(WorldType.FLAT);
-		canyonGen = config.generateCanyons ? new WorldGenCanyon() : null;
-		strongholdGen = config.generateStrongholds ? new WorldGenStronghold() : null;
-		mineshaftGen = config.generateMineshafts ? new WorldGenMineshaft() : null;
-		villageGen = config.generateVillages ? new WorldGenVillage() : null;
-		largeFeatureGen = config.generateTemples ? new WorldGenLargeFeature173() : null;
-		emeraldGen = config.generateEmerald ? new WorldGenMinable(EMERALD_ORE.id, 2) : null;
+		waterLakeGen = config.newLakeGen ? new WorldGenLakesRef(WATER.getId()) :
+				new WorldGenLakesOld(WATER.getId());
+		lavaLakeGen = config.newLakeGen ? new WorldGenLakesRef(LAVA.getId()) :
+				new WorldGenLakesOld(LAVA.getId());
+		caves = config.newCaveGen ? new WorldGenCavesRef() : new WorldGenCavesOld();
+		dungeonGen = config.newDungeonGen ? new WorldGenDungeonRef() : new WorldGenDungeonOld();
+		dirtGen = new WorldGenMinableRef(DIRT.getId(), 32);
+		gravelGen = new WorldGenMinableRef(GRAVEL.getId(), 32);
+		coalGen = new WorldGenMinableRef(COAL_ORE.getId(), 16);
+		ironGen = new WorldGenMinableRef(IRON_ORE.getId(), 8);
+		goldGen = new WorldGenMinableRef(GOLD_ORE.getId(), 8);
+		redstoneGen = new WorldGenMinableRef(REDSTONE_ORE.getId(), 7);
+		diamondGen = new WorldGenMinableRef(DIAMOND_ORE.getId(), 7);
+		lapisGen = new WorldGenMinableRef(LAPIS_ORE.getId(), 6);
+		yellowFlowerGen = new WorldGenFlowersRef(YELLOW_FLOWER.getId());
+		longGrassGenNormal = new WorldGenGrassRef(LONG_GRASS.getId(), 1);
+		longGrassGenRainforest = new WorldGenGrassRef(LONG_GRASS.getId(), 2);
+		deadBushGen = new WorldGenDeadBushRef(DEAD_BUSH.getId());
+		redFlowerGen = new WorldGenFlowersRef(RED_ROSE.getId());
+		brownMushroomGen = new WorldGenFlowersRef(BROWN_MUSHROOM.getId());
+		redMushroomGen = new WorldGenFlowersRef(RED_MUSHROOM.getId());
+		reedGen = new WorldGenReedRef();
+		pumpkinGen = new WorldGenPumpkinRef();
+		cactusGen = new WorldGenCactusRef();
+		liquidWaterGen = new WorldGenLiquidsRef(WATER.getId());
+		liquidLavaGen = new WorldGenLiquidsRef(LAVA.getId());
+		canyonGen = config.generateCanyons ? new WorldGenCanyonRef() : null;
+		strongholdGen = config.generateStrongholds ? new WorldGenStrongholdRef() : null;
+		mineshaftGen = config.generateMineshafts ? new WorldGenMineshaftRef() : null;
+		villageGen = config.generateVillages ? new WorldGenVillageRef() : null;
+		largeFeatureGen = config.generateTemples ? new WorldGenLargeFeatureRef() : null;
+		emeraldGen = config.generateEmerald ? new WorldGenMinableRef(EMERALD_ORE_ID, 2) : null;//For 1.2.* compatibility
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
@@ -190,14 +191,13 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 									if (d17 < 0.5D && ySection * 8 +
 											l1 >=
 											oceanHeight - 1) {
-										block = ICE.id;
+										block = ICE.getId();
 									} else {
-										block =
-												STATIONARY_WATER.id;
+										block = STATIONARY_WATER.getId();
 									}
 								}
 								if (d15 > 0.0D) {
-									block = STONE.id;
+									block = STONE.getId();
 								}
 								terrain[blockLoc] = (byte)block;
 								blockLoc += c;
@@ -222,36 +222,56 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
-	public byte[] generate(org.bukkit.World w, Random random, int x, int z) {
+	public byte[][] generateBlockSections(World world, Random random, int x, int z,
+			BiomeGrid biomeGrid) {
 		this.rand.setSeed(x * 341873128712L + z * 132897987541L);
 		byte terrain[] = new byte[32768];
 		biomes = wcm.getBiomeBlock(biomes, x * 16, z * 16, 16, 16);
 		double temp[] = this.wcm.temperatures;
 		generateTerrain(x, z, terrain, temp);
-		replaceBlocksForBiome(x, z, terrain, biomes);
-		caves.a(this, world, x, z, terrain);
+		replaceBlocksForBiomeAndSetBiome(x, z, terrain, biomes);
+		caves.generate(world, x, z, terrain);
 		if (canyonGen != null) {
-			canyonGen.a(this, world, x, z, terrain);
+			canyonGen.generate(world, x, z, terrain);
 		}
 		if (strongholdGen != null) {
-			strongholdGen.a(this, world, x, z, terrain);
+			strongholdGen.generate(world, x, z, terrain);
 		}
 		if (mineshaftGen != null) {
-			mineshaftGen.a(this, world, x, z, terrain);
+			mineshaftGen.generate(world, x, z, terrain);
 		}
 		if (villageGen != null) {
-			villageGen.a(this, world, x, z, terrain);
+			villageGen.generate(world, x, z, terrain);
 		}
 		if (largeFeatureGen != null) {
-			largeFeatureGen.a(this, world, x, z, terrain);
+			largeFeatureGen.generate(world, x, z, terrain);
 		}
-		return terrain;
+		int n = 0;
+		for (int x_t = 0; x_t < 16; ++x_t) {
+			for (int z_t = 0; z_t < 16; ++z_t) {
+				biomeGrid.setBiome(x_t, z_t, biomes[n]);
+				++n;
+			}
+		}
+		byte[][] sections = new byte[16][4096];
+		for (int x_t = 0; x_t < 16; ++x_t) {
+			for (int y_t = 0; y_t < 128; ++y_t) {
+				for (int z_t = 0; z_t < 16; ++z_t) {
+					sections[y_t >> 4][((y_t & 0xF) << 8) | (z_t << 4) | x_t] =
+							terrain[(x_t << 11) | (z_t << 7) | y_t];
+				}
+			}
+		}
+		return sections;
 	}
 
-	public void replaceBlocksForBiome(int xPos, int zPos, byte terrain[], BiomeBase biomes[]) {
+	public void replaceBlocksForBiomeAndSetBiome(int xPos, int zPos, byte terrain[], Biome biomes[]) {
 		byte oceanHeight = 64;
 		double d = 0.03125D;
+		for (int x = 0; x < 16; ++x) {
+			for (int z = 0; z < 16; ++z) {
+			}
+		}
 		sandNoise = noiseGen4.generateNoiseArray(sandNoise, xPos * 16, zPos * 16, 0.0D,
 				16, 16, 1, d, d, 1.0D);
 		gravelNoise = noiseGen4.generateNoiseArray(gravelNoise, xPos * 16, 109.0134D,
@@ -261,7 +281,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 				d * 2D, d * 2D);
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
-				BiomeBase biome = biomes[x + z * 16];
+				Biome biome = biomes[x + z * 16];
 				boolean sand = sandNoise[x + z * 16] + rand.nextDouble() * 0.2D >
 						0.0D;
 				boolean gravel =
@@ -269,12 +289,12 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 				int depth = (int)(stoneNoise[x + z * 16] / 3D + 3D + rand.
 						nextDouble() * 0.25D);
 				int prevDepth = -1;
-				byte topBlock = biome.A;
-				byte fillerBlock = biome.B;
+				byte topBlock = BiomeOld.top(biome);
+				byte fillerBlock = BiomeOld.filler(biome);
 				for (int y = 127; y >= 0; y--) {
 					int blockIndex = (((z << 4) + x) << 7) + y;
 					if (y <= 0 + rand.nextInt(5)) {
-						terrain[blockIndex] = (byte)BEDROCK.id;
+						terrain[blockIndex] = (byte)BEDROCK.getId();
 						continue;
 					}
 					byte blockID = terrain[blockIndex];
@@ -282,29 +302,27 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 						prevDepth = -1;
 						continue;
 					}
-					if (blockID != STONE.id) {
+					if (blockID != STONE.getId()) {
 						continue;
 					}
 					if (prevDepth == -1) {
 						if (depth <= 0) {
 							topBlock = 0;
-							fillerBlock =
-									(byte)STONE.id;
-						} else if (y >= oceanHeight - 4 &&
-								y <= oceanHeight + 1) {
-							topBlock = biome.A;
-							fillerBlock = biome.B;
+							fillerBlock = (byte)STONE.getId();
+						} else if (y >= oceanHeight - 4 && y <= oceanHeight + 1) {
+							topBlock = BiomeOld.top(biome);
+							fillerBlock = BiomeOld.filler(biome);
 							if (gravel) {
 								topBlock = 0;
-								fillerBlock = (byte)GRAVEL.id;
+								fillerBlock = (byte)GRAVEL.getId();
 							}
 							if (sand) {
-								topBlock = (byte)SAND.id;
-								fillerBlock = (byte)SAND.id;
+								topBlock = (byte)SAND.getId();
+								fillerBlock = (byte)SAND.getId();
 							}
 						}
 						if (y < oceanHeight && topBlock == 0) {
-							topBlock = (byte)STATIONARY_WATER.id;
+							topBlock = (byte)STATIONARY_WATER.getId();
 						}
 						prevDepth = depth;
 						if (y >= oceanHeight - 1) {
@@ -319,31 +337,15 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 					}
 					prevDepth--;
 					terrain[blockIndex] = fillerBlock;
-					if (prevDepth == 0 && fillerBlock == SAND.id) {
+					if (prevDepth == 0 && fillerBlock == SAND.getId()) {
 						prevDepth = rand.nextInt(4);
-						fillerBlock = (byte)SANDSTONE.id;
+						fillerBlock = (byte)SANDSTONE.getId();
 					}
 				}
 
 			}
 
 		}
-	}
-
-	public Chunk getChunkAt(int i, int j) {
-		return getOrCreateChunk(i, j);
-	}
-
-	public Chunk getOrCreateChunk(int i, int i1) {
-		byte terrain[] = generate(world.getWorld(), rand, i, i1);
-
-		Chunk chunk = new Chunk(world, terrain, i, i1);
-		chunk.initLighting();
-		return chunk;
-	}
-
-	public void b() {
-		//TODO ???
 	}
 
 	private double[] initNoiseField(double array[], int xPos, int yPos, int zPos, int xSize,
@@ -440,8 +442,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 		return array;
 	}
 
-	public void getChunkAt(IChunkProvider c, int chunkX, int chunkZ) {
-		BlockSand.instaFall = true;
+	public void populate(int chunkX, int chunkZ) {
 		int x = chunkX * 16;
 		int z = chunkZ * 16;
 		Biome biome = this.wcm.getBiome(x + 16, z + 16);
@@ -451,99 +452,99 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 		rand.setSeed((long)chunkX * rand1 + (long)chunkZ * rand2 ^ world.getSeed());
 		boolean villageFlag = false;
 		if (this.mineshaftGen != null) {
-			this.mineshaftGen.a(world, rand, chunkX, chunkZ);
+			this.mineshaftGen.generate(world, rand, chunkX, chunkZ);
 		}
 		if (this.villageGen != null) {
-			villageFlag = this.villageGen.a(world, rand, chunkX, chunkZ);
+			villageFlag = this.villageGen.generate(world, rand, chunkX, chunkZ);
 		}
 		if (this.strongholdGen != null) {
-			this.strongholdGen.a(world, rand, chunkX, chunkZ);
+			this.strongholdGen.generate(world, rand, chunkX, chunkZ);
 		}
 		if (this.largeFeatureGen != null) {
-			this.largeFeatureGen.a(world, rand, chunkX, chunkZ);
+			this.largeFeatureGen.generate(world, rand, chunkX, chunkZ);
 		}
 		if (!villageFlag && rand.nextInt(4) == 0) {
 			int X = x + rand.nextInt(16) + 8;
 			int Y = rand.nextInt(128);
 			int Z = z + rand.nextInt(16) + 8;
-			waterLakeGen.a(world, rand, X, Y, Z);
+			waterLakeGen.generate(world, rand, X, Y, Z);
 		}
 		if (!villageFlag && rand.nextInt(8) == 0) {
 			int X = x + rand.nextInt(16) + 8;
 			int Y = rand.nextInt(rand.nextInt(120) + 8);
 			int Z = z + rand.nextInt(16) + 8;
 			if (Y < 64 || rand.nextInt(10) == 0) {
-				lavaLakeGen.a(world, rand, X, Y, Z);
+				lavaLakeGen.generate(world, rand, X, Y, Z);
 			}
 		}
 		for (int j = 0; j < 8; j++) {
 			int X = x + rand.nextInt(16) + 8;
 			int Y = rand.nextInt(128);
 			int Z = z + rand.nextInt(16) + 8;
-			dungeonGen.a(world, rand, X, Y, Z);
+			dungeonGen.generate(world, rand, X, Y, Z);
 		}
 
 		for (int j = 0; j < 10; j++) {
 			int X = x + rand.nextInt(16);
 			int Y = rand.nextInt(128);
 			int Z = z + rand.nextInt(16);
-			clayGen.a(world, rand, X, Y, Z);
+			clayGen.generate(world, rand, X, Y, Z);
 		}
 
 		for (int j = 0; j < 20; j++) {
 			int X = x + rand.nextInt(16);
 			int Y = rand.nextInt(128);
 			int Z = z + rand.nextInt(16);
-			dirtGen.a(world, rand, X, Y, Z);
+			dirtGen.generate(world, rand, X, Y, Z);
 		}
 
 		for (int j = 0; j < 10; j++) {
 			int X = x + rand.nextInt(16);
 			int Y = rand.nextInt(128);
 			int Z = z + rand.nextInt(16);
-			gravelGen.a(world, rand, X, Y, Z);
+			gravelGen.generate(world, rand, X, Y, Z);
 		}
 
 		for (int j = 0; j < 20; j++) {
 			int X = x + rand.nextInt(16);
 			int Y = rand.nextInt(128);
 			int Z = z + rand.nextInt(16);
-			coalGen.a(world, rand, X, Y, Z);
+			coalGen.generate(world, rand, X, Y, Z);
 		}
 
 		for (int j = 0; j < 20; j++) {
 			int X = x + rand.nextInt(16);
 			int Y = rand.nextInt(64);
 			int Z = z + rand.nextInt(16);
-			ironGen.a(world, rand, X, Y, Z);
+			ironGen.generate(world, rand, X, Y, Z);
 		}
 
 		for (int j = 0; j < 2; j++) {
 			int X = x + rand.nextInt(16);
 			int Y = rand.nextInt(32);
 			int Z = z + rand.nextInt(16);
-			goldGen.a(world, rand, X, Y, Z);
+			goldGen.generate(world, rand, X, Y, Z);
 		}
 
 		for (int j = 0; j < 8; j++) {
 			int X = x + rand.nextInt(16);
 			int Y = rand.nextInt(16);
 			int Z = z + rand.nextInt(16);
-			redstoneGen.a(world, rand, X, Y, Z);
+			redstoneGen.generate(world, rand, X, Y, Z);
 		}
 
 		for (int j = 0; j < 1; j++) {
 			int X = x + rand.nextInt(16);
 			int Y = rand.nextInt(16);
 			int Z = z + rand.nextInt(16);
-			diamondGen.a(world, rand, X, Y, Z);
+			diamondGen.generate(world, rand, X, Y, Z);
 		}
 
 		for (int j = 0; j < 1; j++) {
 			int X = x + rand.nextInt(16);
 			int Y = rand.nextInt(16) + rand.nextInt(16);
 			int Z = z + rand.nextInt(16);
-			lapisGen.a(world, rand, X, Y, Z);
+			lapisGen.generate(world, rand, X, Y, Z);
 		}
 
 		int treesRand = (int)((treeNoise.generateNoise(x * 0.5D, z * 0.5D) / 8D +
@@ -552,148 +553,148 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 		if (rand.nextInt(10) == 0) {
 			trees++;
 		}
-		if (biome == Biome.forest) {
+		if (biome == Biome.FOREST) {
 			trees += treesRand + 5;
 		}
-		if (biome == Biome.rainforest) {
+		if (biome == Biome.JUNGLE) {
 			trees += treesRand + 5;
 		}
-		if (biome == Biome.seasonalForest) {
+		if (biome == Biome.FOREST_HILLS) {
 			trees += treesRand + 2;
 		}
-		if (biome == Biome.taiga) {
+		if (biome == Biome.TAIGA) {
 			trees += treesRand + 5;
 		}
-		if (biome == Biome.desert) {
+		if (biome == Biome.DESERT) {
 			trees -= 20;
 		}
-		if (biome == Biome.tundra) {
+		if (biome == Biome.ICE_PLAINS) {
 			trees -= 20;
 		}
-		if (biome == Biome.plains) {
+		if (biome == Biome.PLAINS) {
 			trees -= 20;
 		}
 		for (int i11 = 0; i11 < trees; i11++) {
 			int l13 = x + rand.nextInt(16) + 8;
 			int j14 = z + rand.nextInt(16) + 8;
-			WorldGenerator worldgenerator = biome.getRandomTreeGen(rand);
+			WorldGenerator173 worldgenerator = BiomeOld.getRandomTreeGen(rand, biome);
 			worldgenerator.a(1.0D, 1.0D, 1.0D);
-			worldgenerator.a(world, rand, l13, world.getHighestBlockYAt(l13, j14), j14);
+			worldgenerator.generate(world, rand, l13, world.getHighestBlockYAt(l13, j14), j14);
 		}
 
 		byte flowers = 0;
-		if (biome == Biome.forest) {
+		if (biome == Biome.FOREST) {
 			flowers = 2;
 		}
-		if (biome == Biome.seasonalForest) {
+		if (biome == Biome.FOREST_HILLS) {
 			flowers = 4;
 		}
-		if (biome == Biome.taiga) {
+		if (biome == Biome.TAIGA) {
 			flowers = 2;
 		}
-		if (biome == Biome.plains) {
+		if (biome == Biome.PLAINS) {
 			flowers = 3;
 		}
 		for (int i14 = 0; i14 < flowers; i14++) {
 			int k14 = x + rand.nextInt(16) + 8;
 			int l16 = rand.nextInt(128);
 			int k19 = z + rand.nextInt(16) + 8;
-			yellowFlowerGen.a(world, rand, k14, l16, k19);
+			yellowFlowerGen.generate(world, rand, k14, l16, k19);
 		}
 
 		byte byte1 = 0;
-		if (biome == Biome.forest) {
+		if (biome == Biome.FOREST) {
 			byte1 = 2;
 		}
-		if (biome == Biome.rainforest) {
+		if (biome == Biome.JUNGLE) {
 			byte1 = 10;
 		}
-		if (biome == Biome.seasonalForest) {
+		if (biome == Biome.FOREST_HILLS) {
 			byte1 = 2;
 		}
-		if (biome == Biome.taiga) {
+		if (biome == Biome.TAIGA) {
 			byte1 = 1;
 		}
-		if (biome == Biome.plains) {
+		if (biome == Biome.PLAINS) {
 			byte1 = 10;
 		}
 		for (int l14 = 0; l14 < byte1; l14++) {
-			boolean flag = (biome == Biome.rainforest && rand.nextInt(3) != 0);
+			boolean flag = (biome == Biome.JUNGLE && rand.nextInt(3) != 0);
 			int l19 = x + rand.nextInt(16) + 8;
 			int k22 = rand.nextInt(128);
 			int j24 = z + rand.nextInt(16) + 8;
 			if (flag) {
-				longGrassGen2.a(world, rand, l19, k22, j24);
+				longGrassGenRainforest.generate(world, rand, l19, k22, j24);
 			} else {
-				longGrassGen1.a(world, rand, l19, k22, j24);
+				longGrassGenNormal.generate(world, rand, l19, k22, j24);
 			}
 		}
 
 		byte1 = 0;
-		if (biome == Biome.desert) {
+		if (biome == Biome.DESERT) {
 			byte1 = 2;
 		}
 		for (int i15 = 0; i15 < byte1; i15++) {
 			int i17 = x + rand.nextInt(16) + 8;
 			int i20 = rand.nextInt(128);
 			int l22 = z + rand.nextInt(16) + 8;
-			deadBushGen.a(world, rand, i17, i20, l22);
+			deadBushGen.generate(world, rand, i17, i20, l22);
 		}
 
 		if (rand.nextInt(2) == 0) {
 			int j15 = x + rand.nextInt(16) + 8;
 			int j17 = rand.nextInt(128);
 			int j20 = z + rand.nextInt(16) + 8;
-			redFlowerGen.a(world, rand, j15, j17, j20);
+			redFlowerGen.generate(world, rand, j15, j17, j20);
 		}
 		if (rand.nextInt(4) == 0) {
 			int k15 = x + rand.nextInt(16) + 8;
 			int k17 = rand.nextInt(128);
 			int k20 = z + rand.nextInt(16) + 8;
-			brownMushroomGen.a(world, rand, k15, k17, k20);
+			brownMushroomGen.generate(world, rand, k15, k17, k20);
 		}
 		if (rand.nextInt(8) == 0) {
 			int l15 = x + rand.nextInt(16) + 8;
 			int l17 = rand.nextInt(128);
 			int l20 = z + rand.nextInt(16) + 8;
-			redMushroomGen.a(world, rand, l15, l17, l20);
+			redMushroomGen.generate(world, rand, l15, l17, l20);
 		}
 		for (int i16 = 0; i16 < 10; i16++) {
 			int i18 = x + rand.nextInt(16) + 8;
 			int i21 = rand.nextInt(128);
 			int i23 = z + rand.nextInt(16) + 8;
-			reedGen.a(world, rand, i18, i21, i23);
+			reedGen.generate(world, rand, i18, i21, i23);
 		}
 
 		if (rand.nextInt(32) == 0) {
 			int j16 = x + rand.nextInt(16) + 8;
 			int j18 = rand.nextInt(128);
 			int j21 = z + rand.nextInt(16) + 8;
-			pumpkinGen.a(world, rand, j16, j18, j21);
+			pumpkinGen.generate(world, rand, j16, j18, j21);
 		}
 		int k16 = 0;
-		if (biome == Biome.desert) {
+		if (biome == Biome.DESERT) {
 			k16 += 10;
 		}
 		for (int k18 = 0; k18 < k16; k18++) {
 			int k21 = x + rand.nextInt(16) + 8;
 			int j23 = rand.nextInt(128);
 			int k24 = z + rand.nextInt(16) + 8;
-			cactusGen.a(world, rand, k21, j23, k24);
+			cactusGen.generate(world, rand, k21, j23, k24);
 		}
 
 		for (int l18 = 0; l18 < 50; l18++) {
 			int l21 = x + rand.nextInt(16) + 8;
 			int k23 = rand.nextInt(rand.nextInt(120) + 8);
 			int l24 = z + rand.nextInt(16) + 8;
-			liquidWaterGen.a(world, rand, l21, k23, l24);
+			liquidWaterGen.generate(world, rand, l21, k23, l24);
 		}
 
 		for (int i19 = 0; i19 < 20; i19++) {
 			int i22 = x + rand.nextInt(16) + 8;
 			int l23 = rand.nextInt(rand.nextInt(rand.nextInt(112) + 8) + 8);
 			int i25 = z + rand.nextInt(16) + 8;
-			liquidLavaGen.a(world, rand, i22, l23, i25);
+			liquidLavaGen.generate(world, rand, i22, l23, i25);
 		}
 
 		temperatures = this.wcm.getTemperatures(temperatures, x + 8, z + 8, 16, 16);
@@ -701,13 +702,13 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 			for (int j22 = z + 8; j22 < z + 8 + 16; j22++) {
 				int i24 = j19 - (x + 8);
 				int j25 = j22 - (z + 8);
-				int k25 = world.getHighestBlockYAt(j19, j22);
-				double d1 = temperatures[i24 * 16 + j25] -
-						((double)(k25 - 64) / 64D) * 0.29999999999999999D;
-				Material m = world.getMaterial(j19, k25 - 1, j22);
-				if (d1 < 0.5D && k25 > 0 && k25 < 128 && world.
-						isEmpty(j19, k25, j22) && m.isSolid() && m != Material.ICE) {
-					world.setTypeIdAndData(j19, k25, j22, SNOW.id, 0, 2);
+				int y = world.getHighestBlockYAt(j19, j22);
+				double temp = temperatures[(i24 << 4) | j25] - ((y - 64D) / 64D) * 0.3D;
+				Material m = world.getBlockAt(j19, y - 1, j22).getType();
+				if (temp < 0.5D && y > 0 && y < 128 && world.getBlockTypeIdAt(j19, y, j22) == 0 &&
+						Util.isSolid(world, j19, y - 1, j22) && m != ICE) {
+					world.getBlockAt(j19, y, j22).setTypeIdAndData(SNOW.getId(), (byte)0,
+							false);
 				}
 			}
 
@@ -717,81 +718,26 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 				int k7 = x + rand.nextInt(16);
 				int l10 = rand.nextInt(16) + rand.nextInt(16);
 				int k13 = z + rand.nextInt(16);
-				emeraldGen.a(world, rand, k7, l10, k13);
+				emeraldGen.generate(world, rand, k7, l10, k13);
 			}
-		}
-		BlockSand.instaFall = false;
-	}
-
-	public boolean saveChunks(boolean flag, IProgressUpdate iprogressupdate) {
-		return true;
-	}
-
-	public boolean canSave() {
-		return true;
-	}
-
-	public String makeString() {
-		return this.toString();
-	}
-
-	@SuppressWarnings("rawtypes")
-	public List getMobsFor(EnumCreatureType type, int x, int y, int z) {
-		BiomeBase biome = this.wcm.getBiome(x, z);
-		return biome.getMobs(type);
-	}
-
-	public boolean unloadChunks() {
-		return false;
-	}
-
-	public boolean isChunkLoaded(int x, int z) {
-		return true;
-	}
-
-	public ChunkPosition findNearestMapFeature(World world, String type, int x, int y, int z) {
-		return ((("Stronghold".equals(type)) && (this.strongholdGen != null)) ?
-				this.strongholdGen.getNearestGeneratedFeature(world, x, y, z) : null);
-	}
-
-	public int getLoadedChunks() {
-		return 0;
-	}
-
-	public String getName() {
-		return plugin.getDescription().getName();
-	}
-
-	public void recreateStructures(int arg0, int arg1) {
-		if (strongholdGen != null) {
-			strongholdGen.a(this, world, arg0, arg1, (byte[])null);
-		}
-
-		if (largeFeatureGen != null) {
-			largeFeatureGen.a(this, world, arg0, arg1, (byte[])null);
 		}
 	}
 
 	@Override
-	public boolean canSpawn(org.bukkit.World w, int x, int z) {
+	public boolean canSpawn(World w, int x, int z) {
 		this.plugin.initWorld(w);
-		if (w != null) {
-			int id = w.getHighestBlockAt(x, z).getTypeId();
-			Material material;
-			if (byId[id] != null && (material = byId[id].material) != null) {
-				return material.isSolid();
-			} else {
-				return false;
-			}
+		int y;
 
-		} else {
-			return false;
+		for (y = 63; w.getBlockTypeIdAt(x, y + 1, z) != 0; ++y) {
+			;
 		}
+
+		return w.getBlockTypeIdAt(x, y, z) == Material.SAND.getId();
 
 	}
 
 	@Override
-	public Location getFixedSpawnLocation(org.bukkit.World world, Random random) {
+	public Location getFixedSpawnLocation(World world, Random random) {
 		int x = 0;
 		int y = 0;
 
@@ -804,7 +750,7 @@ public class ChunkProviderGenerate extends ChunkGenerator implements IChunkProvi
 	@Override
 	public String toString() {
 		return new StringBuilder(plugin.getDescription().getName()).append(" ").append(
-				plugin.getDescription().getVersion()).append(" world: ").append(world.
-				getWorld().getName()).toString();
+				plugin.getDescription().getVersion()).append(" world: ").append(world.getName()).
+				toString();
 	}
 }

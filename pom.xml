@@ -14,7 +14,7 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>1.6.1-R0.1-SNAPSHOT</version>
+			<version>1.6.2-R0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 		
@@ -72,11 +72,6 @@
 		<repository>
 			<id>Bukkit</id>
 			<url>http://repo.bukkit.org/content/groups/public</url>
-		</repository>
-		<!--BKCommonLib repsitory -->
-		<repository>
-			<id>dj-tcraft repository</id>
-			<url>http://ci.dj-tcraft.nl/plugin/repository/everything/</url>
 		</repository>
 	</repositories>
 	

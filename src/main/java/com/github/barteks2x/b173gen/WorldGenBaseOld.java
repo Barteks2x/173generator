@@ -1,34 +1,30 @@
-package com.github.barteks2x.b173gen.generator.beta173;
+package com.github.barteks2x.b173gen;
 
 import java.util.Random;
-import net.minecraft.server.v1_6_R1.*;
+import org.bukkit.World;
 
-public class WorldGenBaseOld extends WorldGenBase {
+public abstract class WorldGenBaseOld {
 
 	public WorldGenBaseOld() {
-		field_1306_a = 8;
+		blockShift = 8;
 		rand = new Random();
 	}
 
 	@SuppressWarnings("cast")
-	@Override
-	public void a(IChunkProvider cpg, World world, int i, int j, byte abyte0[]) {
-		int k = field_1306_a;
+	public void generate(World world, int i, int j, byte abyte0[]) {
+		int k = blockShift;
 		rand.setSeed(world.getSeed());
 		long l = (rand.nextLong() / 2L) * 2L + 1L;
 		long l1 = (rand.nextLong() / 2L) * 2L + 1L;
 		for (int i1 = i - k; i1 <= i + k; i1++) {
 			for (int j1 = j - k; j1 <= j + k; j1++) {
 				rand.setSeed((long)i1 * l + (long)j1 * l1 ^ world.getSeed());
-				a(world, i1, j1, i, j, abyte0);
+				generate(world, i1, j1, i, j, abyte0);
 			}
-
 		}
-
 	}
-
-	protected void a(World world, int i, int j, int k, int l, byte abyte0[]) {
-	}
-	protected int field_1306_a;
+	protected int blockShift;
 	protected Random rand;
+
+	protected abstract void generate(World world, int i1, int j1, int i, int j, byte[] abyte0);
 }

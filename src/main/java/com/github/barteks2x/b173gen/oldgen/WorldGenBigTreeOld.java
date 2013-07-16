@@ -1,8 +1,8 @@
-package com.github.barteks2x.b173gen.generator.beta173;
+package com.github.barteks2x.b173gen.oldgen;
 
 import com.github.barteks2x.b173gen.generator.WorldGenerator173;
 import java.util.Random;
-import net.minecraft.server.v1_6_R1.World;
+import org.bukkit.World;
 
 public class WorldGenBigTreeOld extends WorldGenerator173 {
 
@@ -70,9 +70,9 @@ public class WorldGenBigTreeOld extends WorldGenerator173 {
 							0.32800000000000001D));
 					double d2 = (double)rand.nextFloat() * 2D *
 							3.1415899999999999D;
-					int k1 = MathHelper.floor_double(d1 * Math.sin(d2) +
+					int k1 = MathHelper.floor(d1 * Math.sin(d2) +
 							(double)basePos[0] + d);
-					int l1 = MathHelper.floor_double(d1 * Math.cos(d2) +
+					int l1 = MathHelper.floor(d1 * Math.cos(d2) +
 							(double)basePos[2] + d);
 					int ai1[] = {k1, j, l1};
 					int ai2[] = {k1, j + n, l1};
@@ -125,12 +125,12 @@ public class WorldGenBigTreeOld extends WorldGenerator173 {
 					l1++;
 				} else {
 					ai1[byte2] = ai[byte2] + l1;
-					int i2 = worldObj.getTypeId(ai1[0], ai1[1], ai1[2]);
+					int i2 = worldObj.getBlockTypeIdAt(ai1[0], ai1[1], ai1[2]);
 					if (i2 != 0 && i2 != 18) {
 						l1++;
 					} else {
-						worldObj.setTypeIdAndData(ai1[0], ai1[1], ai1[2], l,
-								0, 2);
+						worldObj.getBlockAt(ai1[0], ai1[1], ai1[2]).setTypeIdAndData(l, (byte)0,
+								false);
 						l1++;
 					}
 				}
@@ -202,12 +202,12 @@ public class WorldGenBigTreeOld extends WorldGenerator173 {
 		int ai3[] = {0, 0, 0};
 		int k = 0;
 		for (int l = ai2[j] + byte3; k != l; k += byte3) {
-			ai3[j] = MathHelper.floor_double((double)(ai[j] + k) + 0.5D);
-			ai3[byte1] = MathHelper.floor_double((double)ai[byte1] +
+			ai3[j] = MathHelper.floor((double)(ai[j] + k) + 0.5D);
+			ai3[byte1] = MathHelper.floor((double)ai[byte1] +
 					(double)k * d + 0.5D);
-			ai3[byte2] = MathHelper.floor_double((double)ai[byte2] +
+			ai3[byte2] = MathHelper.floor((double)ai[byte2] +
 					(double)k * d1 + 0.5D);
-			worldObj.setTypeIdAndData(ai3[0], ai3[1], ai3[2], i, 0, 2);
+			worldObj.getBlockAt(ai3[0], ai3[1], ai3[2]).setTypeIdAndData(i, (byte)0, false);
 		}
 
 	}
@@ -295,11 +295,11 @@ public class WorldGenBigTreeOld extends WorldGenerator173 {
 				break;
 			}
 			ai3[i] = pos1[i] + j;
-			ai3[byte1] = MathHelper.floor_double((double)pos1[byte1] +
+			ai3[byte1] = MathHelper.floor((double)pos1[byte1] +
 					(double)j * d);
-			ai3[byte2] = MathHelper.floor_double((double)pos1[byte2] +
+			ai3[byte2] = MathHelper.floor((double)pos1[byte2] +
 					(double)j * d1);
-			int l = worldObj.getTypeId(ai3[0], ai3[1], ai3[2]);
+			int l = worldObj.getBlockTypeIdAt(ai3[0], ai3[1], ai3[2]);
 			if (l != 0 && l != 18) {
 				break;
 			}
@@ -314,7 +314,7 @@ public class WorldGenBigTreeOld extends WorldGenerator173 {
 	public boolean canGenerate() {
 		int pos1[] = {basePos[0], basePos[1], basePos[2]};
 		int pos2[] = {basePos[0], (basePos[1] + e) - 1, basePos[2]};
-		int id = worldObj.getTypeId(basePos[0], basePos[1] - 1, basePos[2]);
+		int id = worldObj.getBlockTypeIdAt(basePos[0], basePos[1] - 1, basePos[2]);
 		if (id != 2 && id != 3) {
 			return false;
 		}
@@ -329,7 +329,6 @@ public class WorldGenBigTreeOld extends WorldGenerator173 {
 		return true;
 	}
 
-	@Override
 	public void a(double d, double d1, double d2) {
 		m = (int)(d * 12D);
 		if (d > 0.5D) {
@@ -340,7 +339,7 @@ public class WorldGenBigTreeOld extends WorldGenerator173 {
 	}
 
 	@Override
-	public boolean a(World world, Random random, int x, int y, int z) {
+	public boolean generate(World world, Random random, int x, int y, int z) {
 		worldObj = world;
 		rand.setSeed(random.nextLong());
 		basePos[0] = x;

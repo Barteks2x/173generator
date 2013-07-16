@@ -1,20 +1,21 @@
-package com.github.barteks2x.b173gen.generator.beta173;
+package com.github.barteks2x.b173gen.oldgen;
 
 import com.github.barteks2x.b173gen.generator.WorldGenerator173;
 import java.util.Random;
-import net.minecraft.server.v1_6_R1.MathHelper;
-import net.minecraft.server.v1_6_R1.*;
+import org.bukkit.Material;
+import org.bukkit.World;
 
 public class WorldGenClayOld extends WorldGenerator173 {
 
 	public WorldGenClayOld(int i) {
-		clayBlockId = Block.CLAY.id;
+		clayBlockId = Material.CLAY.getId();
 		numberOfBlocks = i;
 	}
 
 	@Override
-	public boolean a(World world, Random random, int i, int j, int k) {
-		if (world.getMaterial(i, j, k) != Material.WATER) {
+	public boolean generate(World world, Random random, int i, int j, int k) {
+		if (world.getBlockTypeIdAt(i, j, k) != Material.WATER.getId() && world.
+				getBlockTypeIdAt(i, j, k) != Material.STATIONARY_WATER.getId()) {
 			return false;
 		}
 		float f = random.nextFloat() * 3.141593F;
@@ -48,10 +49,10 @@ public class WorldGenClayOld extends WorldGenerator173 {
 						if (d12 * d12 + d13 * d13 + d14 * d14 >= 1.0D) {
 							continue;
 						}
-						int j3 = world.getTypeId(k2, l2, i3);
-						if (j3 == Block.SAND.id) {
-							world.setTypeIdAndData(k2, l2, i3,
-									clayBlockId, 0, 2);
+						int j3 = world.getBlockTypeIdAt(k2, l2, i3);
+						if (j3 == Material.SAND.getId()) {
+							world.getBlockAt(k2, l2, i3).setTypeIdAndData(clayBlockId, (byte)0,
+									false);
 						}
 					}
 

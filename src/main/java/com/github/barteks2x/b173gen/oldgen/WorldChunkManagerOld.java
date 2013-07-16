@@ -1,37 +1,21 @@
-package com.github.barteks2x.b173gen.generator.beta173;
+package com.github.barteks2x.b173gen.oldgen;
 
-import java.util.*;
-import net.minecraft.server.v1_6_R1.*;
+import com.github.barteks2x.b173gen.oldnoisegen.NoiseGeneratorOctaves2D;
+import java.util.Random;
+import org.bukkit.block.Biome;
 
-public class WorldChunkManagerOld extends WorldChunkManager {
-
-	@SuppressWarnings("rawtypes")
-	private List<BiomeBase> biomesToSpawn;
-
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	protected WorldChunkManagerOld() {
-		this.biomesToSpawn = new ArrayList();
-		this.biomesToSpawn.add(Biome.forest);
-		this.biomesToSpawn.add(Biome.rainforest);
-		this.biomesToSpawn.add(Biome.seasonalForest);
-		this.biomesToSpawn.add(Biome.taiga);
-		this.biomesToSpawn.add(Biome.tundra);
-		this.biomesToSpawn.add(Biome.plains);
-	}
+public class WorldChunkManagerOld {
 
 	public WorldChunkManagerOld(long seed) {
-		this();
 		e = new NoiseGeneratorOctaves2D(new Random(seed * 9871L), 4);
 		f = new NoiseGeneratorOctaves2D(new Random(seed * 39811L), 4);
 		g = new NoiseGeneratorOctaves2D(new Random(seed * 0x84a59L), 2);
 	}
 
-	@Override
 	public Biome getBiome(int i, int j) {
 		return getBiomeData(i, j, 1, 1)[0];
 	}
 
-	@Override
 	public float[] getWetness(float[] ad, int i, int j, int k, int l) {
 		if (ad == null || ad.length < k * l) {
 			ad = new float[k * l];
@@ -70,7 +54,6 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 		return ad;
 	}
 
-	@Override
 	public float[] getTemperatures(float[] ad, int i, int j, int k, int l) {
 		if (ad == null || ad.length < k * l) {
 			ad = new float[k * l];
@@ -110,8 +93,7 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 		return ad;
 	}
 
-	@Override
-	public BiomeBase[] getBiomeBlock(BiomeBase biomes[], int x, int z, int xSize, int zSize) {
+	public Biome[] getBiomeBlock(Biome biomes[], int x, int z, int xSize, int zSize) {
 		if (biomes == null || biomes.length < xSize * zSize) {
 			biomes = new Biome[xSize * zSize];
 		}
@@ -148,7 +130,7 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 				}
 				temperatures[i1] = d3;
 				rain[i1] = d4;
-				biomes[i1++] = Biome.getBiomeFromLookup(d3, d4);
+				biomes[i1++] = BiomeOld.getBiomeFromLookup(d3, d4);
 			}
 
 		}
@@ -156,8 +138,7 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 		return biomes;
 	}
 
-	@Override
-	public Biome[] getBiomes(BiomeBase abiomegenbase[], int i, int j,
+	public Biome[] getBiomes(Biome abiomegenbase[], int i, int j,
 			int k, int l) {
 		if (abiomegenbase == null || abiomegenbase.length < k * l) {
 			abiomegenbase = new Biome[k * l];
@@ -195,11 +176,11 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 				}
 				temperatures[i1] = d3;
 				rain[i1] = d4;
-				abiomegenbase[i1++] = Biome.getBiomeFromLookup(d3, d4);
+				abiomegenbase[i1++] = BiomeOld.getBiomeFromLookup(d3, d4);
 			}
 
 		}
-		return (Biome[])abiomegenbase;
+		return abiomegenbase;
 	}
 
 	private Biome[] getBiomeData(int i, int j, int k, int l) {
@@ -213,45 +194,4 @@ public class WorldChunkManagerOld extends WorldChunkManager {
 	public double rain[];
 	public double c[];
 	public Biome dx[];
-
-	@Override
-	public Biome[] a(BiomeBase[] arg0, int arg1, int arg2, int arg3, int arg4,
-			boolean arg5) {
-		return getBiomes(arg0, arg1, arg2, arg3, arg4);
-	}
-
-	@SuppressWarnings("rawtypes")
-	@Override
-	public boolean a(int arg0, int arg1, int arg2, List arg3) {// areBiomesVisible
-		return true;
-	}
-
-	//getNearestBiome?
-	@SuppressWarnings("rawtypes")
-	@Override
-	public ChunkPosition a(int x, int y, int r, List biomes, Random rand) {
-		int X = x - r;
-		int maxX = x + r;
-		int Z = y - r;
-		int maxZ = y + r;
-		ChunkPosition pos = null;
-		int a = 0;
-		for (; X <= maxX; ++X) {
-			for (; Z <= maxZ; ++Z) {
-				Biome biome = getBiome(X, Z);
-				if (biomes.contains(biome) && (pos == null || rand.nextInt(a + 1) == 0)) {
-					pos = new ChunkPosition(X, 0, Z);
-					++a;
-				}
-			}
-		}
-		return pos;
-	}
-
-	@Override
-	@SuppressWarnings("rawtypes")
-	public List<BiomeBase> a() {
-		// getBiomesToSpawnIn
-		return Collections.unmodifiableList(this.biomesToSpawn);
-	}
 }

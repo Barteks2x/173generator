@@ -1,8 +1,9 @@
-package com.github.barteks2x.b173gen.generator.beta173;
+package com.github.barteks2x.b173gen.oldgen;
 
+import com.github.barteks2x.b173gen.WorldGenBaseOld;
 import java.util.Random;
-import net.minecraft.server.v1_6_R1.Block;
-import net.minecraft.server.v1_6_R1.World;
+import org.bukkit.Material;
+import org.bukkit.World;
 
 public class WorldGenCavesOld extends WorldGenBaseOld {
 
@@ -23,7 +24,7 @@ public class WorldGenCavesOld extends WorldGenBaseOld {
 		float f4 = 0.0F;
 		Random random = new Random(rand.nextLong());
 		if (l <= 0) {
-			int i1 = field_1306_a * 16 - 16;
+			int i1 = blockShift * 16 - 16;
 			l = i1 - random.nextInt(i1 / 4);
 		}
 		boolean flag = false;
@@ -79,12 +80,12 @@ public class WorldGenCavesOld extends WorldGenBaseOld {
 					d > d4 + 16D + d6 * 2D || d2 > d5 + 16D + d6 * 2D) {
 				continue;
 			}
-			int d8 = MathHelper.floor_double(d - d6) - i * 16 - 1;
-			int k1 = (MathHelper.floor_double(d + d6) - i * 16) + 1;
-			int d9 = MathHelper.floor_double(d1 - d7) - 1;
-			int l1 = MathHelper.floor_double(d1 + d7) + 1;
-			int d10 = MathHelper.floor_double(d2 - d6) - j * 16 - 1;
-			int i2 = (MathHelper.floor_double(d2 + d6) - j * 16) + 1;
+			int d8 = MathHelper.floor(d - d6) - i * 16 - 1;
+			int k1 = (MathHelper.floor(d + d6) - i * 16) + 1;
+			int d9 = MathHelper.floor(d1 - d7) - 1;
+			int l1 = MathHelper.floor(d1 + d7) + 1;
+			int d10 = MathHelper.floor(d2 - d6) - j * 16 - 1;
+			int i2 = (MathHelper.floor(d2 + d6) - j * 16) + 1;
 			if (d8 < 0) {
 				d8 = 0;
 			}
@@ -111,8 +112,8 @@ public class WorldGenCavesOld extends WorldGenBaseOld {
 						if (i3 < 0 || i3 >= 128) {
 							continue;
 						}
-						if (abyte0[j3] == Block.WATER.id ||
-								abyte0[j3] == Block.STATIONARY_WATER.id) {
+						if (abyte0[j3] == Material.WATER.getId() ||
+								abyte0[j3] == Material.STATIONARY_WATER.getId()) {
 							flag2 = true;
 						}
 						if (i3 != d9 - 1 && j2 != d8 && j2 != k1 - 1 &&
@@ -147,22 +148,22 @@ public class WorldGenCavesOld extends WorldGenBaseOld {
 						if (d14 > -0.69999999999999996D &&
 								d12 * d12 + d14 * d14 + d13 * d13 < 1.0D) {
 							byte byte0 = abyte0[l3];
-							if (byte0 == Block.GRASS.id) {
+							if (byte0 == Material.GRASS.getId()) {
 								flag3 = true;
 							}
-							if (byte0 == Block.STONE.id ||
-									byte0 == Block.DIRT.id ||
-									byte0 == Block.GRASS.id) {
+							if (byte0 == Material.STONE.getId() ||
+									byte0 == Material.DIRT.getId() ||
+									byte0 == Material.GRASS.getId()) {
 								if (i4 < 10) {
 									abyte0[l3] =
-											(byte)Block.LAVA.id;
+											(byte)Material.LAVA.getId();
 								} else {
 									abyte0[l3] = 0;
 									if (flag3 &&
 											abyte0[l3 - 1] ==
-											Block.DIRT.id) {
+											Material.DIRT.getId()) {
 										abyte0[l3 - 1] =
-												(byte)Block.GRASS.id;
+												(byte)Material.GRASS.getId();
 									}
 								}
 							}
@@ -182,7 +183,7 @@ public class WorldGenCavesOld extends WorldGenBaseOld {
 	}
 
 	@Override
-	protected void a(World world, int i, int j, int k, int l, byte abyte0[]) {
+	protected void generate(World world, int i, int j, int k, int l, byte abyte0[]) {
 		int i1 = rand.nextInt(rand.nextInt(rand.nextInt(40) + 1) + 1);
 		if (rand.nextInt(15) != 0) {
 			i1 = 0;
