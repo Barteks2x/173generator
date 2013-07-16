@@ -143,6 +143,13 @@ public class ChunkProviderGenerate extends ChunkGenerator {
 		this.populatorList.add(new BlockPopulator(this));
 	}
 
+	public static Biome biomeMapping(Biome b) {
+		Biome map;
+		map = (b == Biome.BEACH || b == Biome.DESERT_HILLS || b == Biome.BEACH.SWAMPLAND) ?
+				Biome.PLAINS : b;
+		return map;
+	}
+
 	public void generateTerrain(int x, int z, byte terrain[], double temperatures[]) {
 		byte byte0 = 4;
 		byte oceanHeight = 64;
@@ -249,7 +256,7 @@ public class ChunkProviderGenerate extends ChunkGenerator {
 		int n = 0;
 		for (int x_t = 0; x_t < 16; ++x_t) {
 			for (int z_t = 0; z_t < 16; ++z_t) {
-				biomeGrid.setBiome(x_t, z_t, biomes[n]);
+				biomeGrid.setBiome(x_t, z_t, biomeMapping(biomes[n]));
 				++n;
 			}
 		}
