@@ -89,6 +89,21 @@ public class Util {
 				if (paramTypes[i] == Boolean.class) {
 					paramTypes[i] = boolean.class;
 				}
+				if (paramTypes[i] == Float.class) {
+					paramTypes[i] = float.class;
+				}
+				if (paramTypes[i] == Double.class) {
+					paramTypes[i] = double.class;
+				}
+				if (paramTypes[i] == Byte.class) {
+					paramTypes[i] = byte.class;
+				}
+				if (paramTypes[i] == Short.class) {
+					paramTypes[i] = short.class;
+				}
+				if (paramTypes[i] == Long.class) {
+					paramTypes[i] = long.class;
+				}
 			}
 		} else {
 			paramTypes = null;
