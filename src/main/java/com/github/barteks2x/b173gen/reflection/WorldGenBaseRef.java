@@ -19,7 +19,7 @@ public class WorldGenBaseRef extends WorldGenBaseOld {
 		cl = Util.getNMSClass(className);
 		worldGenBaseObject = Util.newInstance(cl);
 		generate1 = Util.getMethod(cl, Void.TYPE, false, false, Util.NMS_CPG_CLASS,
-				Util.NMS_WORLD_CLASS, Random.class, int.class, int.class, byte[].class);
+				Util.NMS_WORLD_CLASS, int.class, int.class, byte[].class);
 		generate2 = Util.getMethod(cl, Void.TYPE, false, false, Util.NMS_WORLD_CLASS, int.class,
 				int.class, int.class, int.class, byte[].class);
 		world_getHandle = Util.getMethodByName("getHandle", Util.getOBCClass("CraftWorld"));
