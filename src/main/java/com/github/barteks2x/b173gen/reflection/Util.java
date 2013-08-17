@@ -61,7 +61,7 @@ public class Util {
 	}
 
 	private static Class<?> getNMSCpgClass() {
-		return getNMSClass("ChunkProviderGenerate");
+		return getNMSClass("IChunkProvider");
 	}
 
 	public static Class<?> getNMSClass(String name) {
