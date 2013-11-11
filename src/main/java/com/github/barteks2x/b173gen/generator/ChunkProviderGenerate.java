@@ -260,10 +260,6 @@ public class ChunkProviderGenerate extends ChunkGenerator {
 	public void replaceBlocksForBiomeAndSetBiome(int xPos, int zPos, byte terrain[], Biome biomes[]) {
 		byte oceanHeight = 64;
 		double d = 0.03125D;
-		for (int x = 0; x < 16; ++x) {
-			for (int z = 0; z < 16; ++z) {
-			}
-		}
 		sandNoise = noiseGen4.generateNoiseArray(sandNoise, xPos * 16, zPos * 16, 0.0D,
 				16, 16, 1, d, d, 1.0D);
 		gravelNoise = noiseGen4.generateNoiseArray(gravelNoise, xPos * 16, 109.0134D,
