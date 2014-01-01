@@ -69,7 +69,7 @@
                 <configuration>
                     <source>1.5</source>
                     <target>1.5</target>
-                    <showDeprecation>true</showDeprecation>
+                    <showDeprecation>false</showDeprecation>
                 </configuration>
             </plugin>
         </plugins>
