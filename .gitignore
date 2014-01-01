@@ -16,3 +16,6 @@
 /dist
 /manifest.mf
 /nbactions.xml
+
+#Linux files
+/.directory

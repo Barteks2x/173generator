@@ -1,250 +1,397 @@
 package com.github.barteks2x.b173gen.reflection;
 
-import com.github.barteks2x.b173gen.oldgen.WorldGenLakesOld;
+import com.github.barteks2x.b173gen.exception.B173GenInitException;
+import com.github.barteks2x.b173gen.exception.B173GenInitWarning;
+import static com.github.barteks2x.b173gen.reflection.Util.NMSClassHelper.*;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bukkit.Material;
-import org.bukkit.World;
 
 public class Util {
+    public static void init(final List<Exception> errors, final List<B173GenInitWarning> warnings) {
+        PackageHelper.init(errors, warnings);
+        NMSClassHelper.init(errors, warnings);
+        OBCClassHelper.init(errors, warnings);
+        MethodHelper.init(errors, warnings);
+    }
 
-	public static final Class<?> NMS_WORLD_CLASS = getNMSWorldClass();
-	public static final Class<?> NMS_CPG_CLASS = getNMSCpgClass();
-	public static final Class<?> NMS_ENUM_SKY_BLOCK_CLASS = getNMSClass("EnumSkyBlock");
-	public static final Method NMS_WORLD_B_SKY = getNMSWORLD_B_SKY();
+    private static <T extends Object> void addArray(List<T> list, T[] objects) {
+        list.addAll(Arrays.asList(objects));
+    }
 
-	static Class<?> getOBCClass(String name) {
-		String pname = "org.bukkit.craftbukkit" + getNMSPackageName().
-				replace("net.minecraft.server", "");
+    public static class NMSClassHelper {
+        public static Class<?> Block;
+        public static Class<?> ChunkProviderGenerate;
+        public static Class<?> IChunkProvider;
+        public static Class<?> World;
+        public static Class<?> WorldGenCanyon;
+        public static Class<?> WorldGenCaves;
+        public static Class<?> WorldGenClay;
+        public static Class<?> WorldGenDungeons;
+        public static Class<?> WorldGenLakes;
+        public static Class<?> WorldGenLargeFeature;
+        public static Class<?> WorldGenMineshaft;
+        public static Class<?> WorldGenStronghold;
+        public static Class<?> WorldGenVillage;
+        private static final String EXCEPTION_INFO = "NMS_CLASS_HELPER_INIT";
 
-		try {
-			if (pname.endsWith(".")) {
-				return Class.forName(pname + name);
-			}
-			return Class.forName(pname + "." + name);
-		} catch (ClassNotFoundException ex) {
-			Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return null;
-	}
+        private static void init(List<Exception> err, List<B173GenInitWarning> warn) {
+            String pckg = PackageHelper.getNMSPackageName();
+            if(pckg == null) {
+                err.add(new B173GenInitException(EXCEPTION_INFO, "package name == null"));
+                return;
+            }
+            Block = findClass(err, pckg, "Block", true);
+            ChunkProviderGenerate = findClass(err, pckg, "ChunkProviderGenerate", true);
+            IChunkProvider = findClass(err, pckg, "IChunkProvider", true);
+            World = findClass(err, pckg, "World", false);
+            WorldGenCanyon = findClass(err, pckg, "WorldGenCanyon", false);
+            WorldGenCaves = findClass(err, pckg, "WorldGenCaves", false);
+            WorldGenClay = findClass(err, pckg, "WorldGenClay", false);
+            WorldGenDungeons = findClass(err, pckg, "WorldGenDungeons", false);
+            WorldGenLakes = findClass(err, pckg, "WorldGenLakes", false);
+            WorldGenLargeFeature = findClass(err, pckg, "WorldGenLargeFeature", false);
+            WorldGenMineshaft = findClass(err, pckg, "WorldGenMineshaft", false);
+            WorldGenStronghold = findClass(err, pckg, "WorldGenStronghold", false);
+            WorldGenVillage = findClass(err, pckg, "WorldGenVillage", false);
+        }
 
-	private static Method getNMSWORLD_B_SKY() {
-		try {
-			Class<?> enumSkyBlockClass = Util.getNMSClass("EnumSkyBlock");
-			Method nmsWorld_b_SKY = Util.getMethod(NMS_WORLD_CLASS, int.class, false, false,
-					enumSkyBlockClass, int.class, int.class, int.class);
-			return nmsWorld_b_SKY;
-		} catch (IllegalArgumentException ex) {
-			Logger.getLogger(WorldGenLakesOld.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (SecurityException ex) {
-			Logger.getLogger(WorldGenLakesOld.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return null;
-	}
+        private static Class<?> findClass(List<Exception> errors, String p, String cl, boolean isRequired) {
+            String name = p.endsWith(".") ? p + cl : p + "." + cl;
+            try {
+                return Class.forName(name);
+            } catch(ClassNotFoundException ex) {
+                if(isRequired) {
+                    errors.add(new B173GenInitException(ex, EXCEPTION_INFO,
+                            "Couldn't find class: \"", cl, "\", full name: \"", name, "\""));
+                } else {
 
-	private static String getNMSPackageName() {
-		Package ps[] = Package.getPackages();
-		String pname = null;
-		for (Package p : ps) {
-			if (p.getName().startsWith("net.minecraft.server")) {
-				pname = p.getName();
-				break;
-			}
-		}
-		return pname;
-	}
+                }
+            } catch(Exception ex) {
+                errors.add(new B173GenInitException(ex, EXCEPTION_INFO,
+                        "Unknown exception while assessing class\"",
+                        cl, "\", full name: \"", name, "\""));
+            }
+            return null;
+        }
+    }
 
-	private static Class<?> getNMSWorldClass() {
-		return getNMSClass("World");
-	}
+    public static class OBCClassHelper {
+        public static Class<?> CraftWorld;
+        private static final String EXCEPTION_INFO = "OBC_CLASS_HELPER_INIT";
 
-	private static Class<?> getNMSCpgClass() {
-		return getNMSClass("IChunkProvider");
-	}
+        private static void init(List<Exception> err, List<B173GenInitWarning> warn) {
+            String packageName = PackageHelper.getOBCPackageName();
+            if(packageName == null) {
+                err.add(new B173GenInitException(EXCEPTION_INFO, "package name == null"));
+                return;
+            }
+            CraftWorld = NMSClassHelper.findClass(err, packageName, "CraftWorld", true);
+        }
+    }
 
-	public static Class<?> getNMSClass(String name) {
-		String pname = getNMSPackageName();
-		try {
-			if (pname.endsWith(".")) {
-				return Class.forName(pname + name);
-			}
-			return Class.forName(pname + "." + name);
-		} catch (ClassNotFoundException ex) {
-			Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return null;
-	}
+    public static class MethodHelper {
+        public static Method CraftWorld_getHandle;
+        public static Method WorldGenCanyon_generate;
+        public static Method WorldGenCaves_generate;
+        public static Method WorldGenClay_generate;
+        public static Method WorldGenDungeons_generate;
+        public static Method WorldGenLakes_generate;
+        public static Method WorldGenlargeFeature_generate_populator;
+        public static Method WorldGenlargeFeature_generate_generator;
+        public static Method WorldGenMineshaft_generate_populator;
+        public static Method WorldGenMineshaft_generate_generator;
+        public static Method WorldGenStronghold_generate_populator;
+        public static Method WorldGenStronghold_generate_generator;
+        public static Method WorldGenVillage_generate_populator;
+        public static Method WorldGenVillage_generate_generator;
+        protected static final Class<?> INT = int.class;
+        protected static final Class<?> BYTE = byte.class;
+        protected static final Class<?> CHAR = char.class;
+        protected static final Class<?> SHORT = short.class;
+        protected static final Class<?> LONG = long.class;
+        protected static final Class<?> BOOLEAN = boolean.class;
+        protected static final Class<?> FLOAT = float.class;
+        protected static final Class<?> DOUBLE = double.class;
+        private static final String EXCEPTION_INFO = "METHOD_HELPER_INIT";
 
-	public static Object newInstance(Class<?> cl, Object... par) {
-		Class<?> paramTypes[];
-		if (par != null && par.length != 0 && par[0] != null) {
-			paramTypes = new Class<?>[par.length];
-			for (int i = 0; i < par.length; ++i) {
-				paramTypes[i] = par[i].getClass();
-				if (paramTypes[i] == Integer.class) {
-					paramTypes[i] = int.class;
-				}
-				if (paramTypes[i] == Boolean.class) {
-					paramTypes[i] = boolean.class;
-				}
-				if (paramTypes[i] == Float.class) {
-					paramTypes[i] = float.class;
-				}
-				if (paramTypes[i] == Double.class) {
-					paramTypes[i] = double.class;
-				}
-				if (paramTypes[i] == Byte.class) {
-					paramTypes[i] = byte.class;
-				}
-				if (paramTypes[i] == Short.class) {
-					paramTypes[i] = short.class;
-				}
-				if (paramTypes[i] == Long.class) {
-					paramTypes[i] = long.class;
-				}
-			}
-		} else {
-			paramTypes = null;
-		}
-		try {
-			if (paramTypes != null) {
-				return cl.getConstructor(paramTypes).newInstance(par);
-			}
-			return cl.getConstructor().newInstance();
-		} catch (InstantiationException ex) {
-			Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IllegalArgumentException ex) {
-			Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (InvocationTargetException ex) {
-			Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (NoSuchMethodException ex) {
-			Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (SecurityException ex) {
-			Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return null;
-	}
+        private static void init(List<Exception> err, List<B173GenInitWarning> warn) {
+            Class<?> clazz = OBCClassHelper.CraftWorld;
+            if(clazz == null) {
+                err.add(new B173GenInitException(EXCEPTION_INFO, "CraftWorld class == null"));
+                return;
+            }
+            CraftWorld_getHandle = getMethod(err, warn, clazz, "getHandle", true);
+            final Class<?> types_generate_populator[] = new Class<?>[] {World, Random.class, INT, INT, INT};
+            final Class<?> types_generate_populator_structures[] = new Class<?>[] {World, Random.class, INT, INT};
+            final Class<?> types_generate_generator_new[] = new Class<?>[] {IChunkProvider, World, INT, INT, Array.newInstance(Block, 0).getClass()};
+            final Class<?> types_generate_generator_old[] = new Class<?>[] {IChunkProvider, World, INT, INT, byte[].class};
+            //--------------------------------------------------------------------------------------, INT
+            //Canyons
+            clazz = NMSClassHelper.WorldGenCanyon;
+            if(clazz == null) {
+                warn.add(new B173GenInitWarning(EXCEPTION_INFO, "WorldGenCanyon class == null"));
+                return;
+            }
+            WorldGenCanyon_generate = findAnyOf(err, warn, "generate", WorldGenCanyon, Void.TYPE,
+                    false, false, Arrays.asList(types_generate_generator_new, types_generate_generator_old));
+            //--------------------------------------------------------------------------------------
+            //Caves
+            clazz = NMSClassHelper.WorldGenCaves;
+            if(clazz == null) {
+                warn.add(new B173GenInitWarning(EXCEPTION_INFO, "WorldGenCaves class == null"));
+                return;
+            }
+            WorldGenCaves_generate = findAnyOf(err, warn, "generate", WorldGenCaves, Void.TYPE,
+                    false, false, Arrays.asList(types_generate_generator_new, types_generate_generator_old));
+            //--------------------------------------------------------------------------------------
+            //New clay generator
+            clazz = NMSClassHelper.WorldGenClay;
+            if(clazz == null) {
+                warn.add(new B173GenInitWarning(EXCEPTION_INFO, "WorldGenClay class == null"));
+                return;
+            }
+            WorldGenClay_generate = findMethod(err, warn, "generate", WorldGenClay, BOOLEAN,
+                    false, false, false, types_generate_populator);
+            //--------------------------------------------------------------------------------------
+            //New dungeon generator
+            clazz = NMSClassHelper.WorldGenDungeons;
+            if(clazz == null) {
+                warn.add(new B173GenInitWarning(EXCEPTION_INFO, "WorldGenDungeon class == null"));
+                return;
+            }
+            WorldGenDungeons_generate = findMethod(err, warn, "generate", WorldGenDungeons, BOOLEAN,
+                    false, false, false, types_generate_populator);
+            //--------------------------------------------------------------------------------------
+            //New lake generator
+            clazz = NMSClassHelper.WorldGenLakes;
+            if(clazz == null) {
+                warn.add(new B173GenInitWarning(EXCEPTION_INFO, "WorldGenLakes class == null"));
+                return;
+            }
+            WorldGenLakes_generate = findMethod(err, warn, "generate", WorldGenLakes, BOOLEAN,
+                    false, false, false, types_generate_populator);
+            //--------------------------------------------------------------------------------------
+            //"Large feature" generator
+            clazz = NMSClassHelper.WorldGenLargeFeature;
+            if(clazz == null) {
+                warn.add(new B173GenInitWarning(EXCEPTION_INFO, "WorldGenLargeFeature class == null"));
+                return;
+            }
+            WorldGenlargeFeature_generate_populator = findMethod(err, warn, "generate",
+                    WorldGenLargeFeature, BOOLEAN, false, false, false,
+                    types_generate_populator_structures);
+            WorldGenlargeFeature_generate_generator = findAnyOf(err, warn, "generate",
+                    WorldGenLargeFeature, Void.TYPE, false, false,
+                    Arrays.asList(types_generate_generator_new, types_generate_generator_old));
+            //--------------------------------------------------------------------------------------
+            //Minwshaft generator
+            clazz = NMSClassHelper.WorldGenMineshaft;
+            if(clazz == null) {
+                warn.add(new B173GenInitWarning(EXCEPTION_INFO, "WorldGenMineshaft class == null"));
+                return;
+            }
+            WorldGenMineshaft_generate_populator = findMethod(err, warn, "generate",
+                    WorldGenMineshaft, BOOLEAN, false, false, false,
+                    types_generate_populator_structures);
+            WorldGenMineshaft_generate_generator = findAnyOf(err, warn, "generate",
+                    WorldGenMineshaft, Void.TYPE, false, false,
+                    Arrays.asList(types_generate_generator_new, types_generate_generator_old));
+            //--------------------------------------------------------------------------------------
+            //Stronghold generator
+            clazz = NMSClassHelper.WorldGenStronghold;
+            if(clazz == null) {
+                warn.add(new B173GenInitWarning(EXCEPTION_INFO, "WorldGenStronghold class == null"));
+                return;
+            }
+            WorldGenStronghold_generate_populator = findMethod(err, warn, "generate",
+                    WorldGenStronghold, BOOLEAN, false, false, false,
+                    types_generate_populator_structures);
+            WorldGenStronghold_generate_generator = findAnyOf(err, warn, "generate",
+                    WorldGenStronghold, Void.TYPE, false, false,
+                    Arrays.asList(types_generate_generator_new, types_generate_generator_old));
+            //--------------------------------------------------------------------------------------
+            //Village generator
+            clazz = NMSClassHelper.WorldGenVillage;
+            if(clazz == null) {
+                warn.add(new B173GenInitWarning(EXCEPTION_INFO, "WorldGenCanyon class == null"));
+                return;
+            }
+            WorldGenVillage_generate_populator = findMethod(err, warn, "generate",
+                    WorldGenVillage, BOOLEAN, false, false, false,
+                    types_generate_populator_structures);
+            WorldGenVillage_generate_generator = findAnyOf(err, warn, "generate",
+                    WorldGenVillage, Void.TYPE, false, false,
+                    Arrays.asList(types_generate_generator_new, types_generate_generator_old));
+        }
 
-	public static Object newInstance(Class<?> cl) {
-		try {
-			return cl.getConstructor().newInstance();
-		} catch (InstantiationException ex) {
-			Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IllegalArgumentException ex) {
-			Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (InvocationTargetException ex) {
-			Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (NoSuchMethodException ex) {
-			Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (SecurityException ex) {
-			Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return null;
-	}
+        private static Method getMethod(List<Exception> errors, List<B173GenInitWarning> warn,
+                Class<?> cl, String name, boolean required, Class... paramTypes) {
+            try {
+                if(paramTypes == null || paramTypes.length == 0 || paramTypes[0] == null) {
+                    return cl.getDeclaredMethod(name);
+                }
+                return cl.getDeclaredMethod(name, paramTypes);
+            } catch(NoSuchMethodException ex) {
+                String[] msg = new String[] {
+                    "Couldn't find method: \"", name, "\", in class: \"", cl.getName(), "\""};
+                if(required) {
+                    errors.add(new B173GenInitException(ex, EXCEPTION_INFO, msg));
+                } else {
+                    warn.add(new B173GenInitWarning(EXCEPTION_INFO, msg));
+                }
+            } catch(SecurityException ex) {
+                String[] msg = new String[] {
+                    "Access denied! Method: \"", name, "\", in class: \"", cl.getName(), "\""};
+                if(required) {
+                    errors.add(new B173GenInitException(ex, EXCEPTION_INFO, msg));
+                } else {
+                    warn.add(new B173GenInitWarning(EXCEPTION_INFO, msg));
+                }
+            } catch(Exception ex) {
+                String[] msg = new String[] {
+                    "Unknown exception while accessing method \"",
+                    name, "\", in class: \"", cl.getName(), "\""};
+                if(required) {
+                    errors.add(new B173GenInitException(ex, EXCEPTION_INFO, msg));
+                } else {
+                    warn.add(new B173GenInitWarning(EXCEPTION_INFO, msg));
+                }
+            }
+            return null;
+        }
 
-	public static Method getMethod(Class<?> cl, Class<?> retType, boolean isStatic,
-			boolean accessibleOlny, Class... paramTypes) {
-		ArrayList<Method> methods = new ArrayList<Method>(20);
-		addArray(methods, cl.getDeclaredMethods());
-		addArray(methods, cl.getSuperclass().getDeclaredMethods());
-		search:
-		for (Method m : methods) {
-			if (!m.isAccessible()) {
-				if (!accessibleOlny) {
-					m.setAccessible(true);
-				} else {
-					continue;
-				}
-			}
-			if (m.getParameterTypes().length != paramTypes.length) {
-				continue;
-			}
-			if (Modifier.isStatic(m.getModifiers()) != isStatic) {
-				continue;
-			}
-			if (m.getReturnType() != retType) {
-				continue;
-			}
-			Class<?> types[] = m.getParameterTypes();
+        private static Method findMethod(List<Exception> errors, List<B173GenInitWarning> warn,
+                String deobfName, Class<?> cl, Class<?> retType, boolean isStatic,
+                boolean accessibleOlny, boolean required, Class... paramTypes) {
+            LinkedList<Method> methods = new LinkedList<Method>();
+            Class<?> cl_temp = cl;
+            addArray(methods, cl.getDeclaredMethods());
+            while(!cl_temp.getSuperclass().equals(Object.class)) {//Find all superclass methods
+                cl_temp = cl_temp.getSuperclass();
+                addArray(methods, cl_temp.getDeclaredMethods());
+            }
+            search:
+            for(Method m: methods) {
+                if(!m.isAccessible()) {
+                    if(!accessibleOlny) {
+                        m.setAccessible(true);
+                    } else {
+                        continue;
+                    }
+                }
+                if(m.getParameterTypes().length != paramTypes.length) {
+                    continue;
+                }
+                if(Modifier.isStatic(m.getModifiers()) != isStatic) {
+                    continue;
+                }
+                if(m.getReturnType() != retType) {
+                    continue;
+                }
+                Class<?> types[] = m.getParameterTypes();
 
-			for (int i = 0; i < paramTypes.length; ++i) {
-				if (!types[i].getName().equals(paramTypes[i].getName())) {
-					continue search;
-				}
-			}
-			return m;
-		}
-		return null;
-	}
+                for(int i = 0; i < paramTypes.length; ++i) {
+                    if(!types[i].getName().equals(paramTypes[i].getName())) {
+                        continue search;
+                    }
+                }
+                return m;
+            }
+            String[] msg = new String[] {
+                "Couldn't find method (deobfuscated name: \"", deobfName,
+                "\") in class: \"", cl.getName(),
+                "\", return type: \"", retType.getName(),
+                "\", parameters: \"", getClassNameArray(paramTypes),
+                "\", isStatic: ", Boolean.toString(isStatic)};
+            if(required) {
+                errors.add(new B173GenInitException(EXCEPTION_INFO, msg));
+            } else {
+                warn.add(new B173GenInitWarning(EXCEPTION_INFO, msg));
+            }
+            return null;
+        }
 
-	public static Method getMethodByName(String name, Class<?> cl, Class... paramTypes) {
-		try {
-			if (paramTypes == null || paramTypes.length == 0 || paramTypes[0] == null) {
-				return cl.getDeclaredMethod(name);
-			}
-			return cl.getDeclaredMethod(name, paramTypes);
-		} catch (NoSuchMethodException ex) {
-			Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (SecurityException ex) {
-			Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return null;
-	}
+        private static Method findAnyOf(List<Exception> errors, List<B173GenInitWarning> warn,
+                String deobfName, Class<?> cl, Class<?> retType, boolean isStatic,
+                boolean accessibleOlny, List<Class<?>[]> types) {
+            LinkedList<Exception> errTemp = new LinkedList<Exception>();
+            LinkedList<B173GenInitWarning> warnTemp = new LinkedList<B173GenInitWarning>();
+            Method m;
+            for(Class<?>[] typeArray: types) {
+                m = findMethod(errTemp, warnTemp, deobfName, cl, retType, isStatic, accessibleOlny,
+                        false, typeArray);
+                if(m != null) {
+                    return m;
+                }
+            }
+            warn.addAll(warnTemp);
+            return null;
+        }
 
-	private static <T extends Object> void addArray(List<T> list, T[] objects) {
-		list.addAll(Arrays.asList(objects));
-	}
+        private static String getClassNameArray(Class clazz[]) {
+            if(clazz == null || clazz.length == 0) {
+                return "";
+            }
+            StringBuilder sb = new StringBuilder(clazz[0].getName());
+            for(int i = 1; i < clazz.length; ++i) {
+                sb.append(", ").append(clazz[i].getName());
+            }
+            return sb.toString();
+        }
+    }
 
-	public static boolean isSolid(World w, int x, int y, int z) {
-		try {
-			Object nmsWorldObj = Util.getMethodByName("getHandle", w.getClass()).invoke(w);
-			Method getMaterial = Util.getMethodByName("getMaterial", NMS_WORLD_CLASS,
-					int.class, int.class, int.class);
-			Object material = getMaterial.invoke(nmsWorldObj, x, y, z);
-			Method isSolid = Util.getMethodByName("isSolid", material.getClass());
-			return (Boolean)isSolid.invoke(material);
-		} catch (IllegalAccessException ex) {
-			Logger.getLogger(WorldGenLakesOld.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IllegalArgumentException ex) {
-			Logger.getLogger(WorldGenLakesOld.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (InvocationTargetException ex) {
-			Logger.getLogger(WorldGenLakesOld.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return false;
-	}
+    private static class PackageHelper {
+        private static final String EXCEPTION_INFO = "PACKAGE_HELPER_INIT";
+        private static String NMS_PACKAGE = null;
+        private static String OBC_PACKAGE = null;
 
-	public static int nmsWorld_b_SKY(World w, int i1, int i2, int i3) {
-		try {
-			Object nmsWorldObj = Util.getMethodByName("getHandle", w.getClass()).invoke(w);
-			Field enumSkyBlockField = Util.NMS_ENUM_SKY_BLOCK_CLASS.getField("SKY");
-			Object enumSkyBlockObj = enumSkyBlockField.get(null);
-			Method nmsWorld_b_SKY = Util.NMS_WORLD_B_SKY;
-			return (Integer)nmsWorld_b_SKY.invoke(nmsWorldObj, enumSkyBlockObj, i1, i2, i3);
-		} catch (IllegalAccessException ex) {
-			Logger.getLogger(WorldGenLakesOld.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IllegalArgumentException ex) {
-			Logger.getLogger(WorldGenLakesOld.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (InvocationTargetException ex) {
-			Logger.getLogger(WorldGenLakesOld.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (NoSuchFieldException ex) {
-			Logger.getLogger(WorldGenLakesOld.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (SecurityException ex) {
-			Logger.getLogger(WorldGenLakesOld.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return 0;
-	}
+        public static void init(List<Exception> err, List<B173GenInitWarning> warn) {
 
-	public static boolean isLiquid(Material m) {
-		if (m.toString().toLowerCase().contains("water") || m.toString().toLowerCase().contains(
-				"lava")) {
-			return true;
-		}
-		return false;
-	}
+            String[] packagesToFind = new String[] {
+                "net.minecraft.server",
+                "org.bukkit.craftbukkit"
+            };
+            String[] packages = findPackages(packagesToFind, true, false);
+            if(packages[0] == null) {
+                err.add(new B173GenInitException(
+                        EXCEPTION_INFO, "Couldn't find net.minecraft.server.* package!"));
+            }
+            NMS_PACKAGE = packages[0];
+            if(packages[1] == null) {
+                err.add(new B173GenInitException(
+                        EXCEPTION_INFO, "Couldn't find org.bukkit.craftbukkit.* package!"));
+            }
+            OBC_PACKAGE = packages[1];
+        }
+
+        public static String getNMSPackageName() {
+            return NMS_PACKAGE;
+        }
+
+        public static String getOBCPackageName() {
+            return OBC_PACKAGE;
+        }
+
+        private static String[] findPackages(String pckgs[], boolean... canEqual) {
+            Package ps[] = Package.getPackages();
+            String pname[] = new String[pckgs.length];
+            for(Package p: ps) {
+                int i = 0;
+                for(String pckg: pckgs) {
+                    if(p.getName().startsWith(pckg)) {
+                        if(pname[i] == null || p.getName().length() < pname[i].length()) {
+                            if(!canEqual[i] && p.getName().replaceFirst(pckgs[i], "").isEmpty()) {
+                                continue;
+                            }
+                            pname[i] = p.getName();
+                        }
+                    }
+                    ++i;
+                }
+            }
+            return pname;
+        }
+    }
 }
