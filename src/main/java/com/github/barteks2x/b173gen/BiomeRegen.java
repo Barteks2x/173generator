@@ -4,9 +4,11 @@ import com.github.barteks2x.b173gen.biome.BetaBiome;
 import com.github.barteks2x.b173gen.oldgen.WorldChunkManagerOld;
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class BiomeRegen {
@@ -21,12 +23,12 @@ public class BiomeRegen {
         for(File regionFile: regions) {
             String name = regionFile.getName();
             if(!name.startsWith("r.") || !name.endsWith(".mca")) {
-                sender.sendMessage("non-region file: " + name);
+                plugin.getLogger().log(Level.WARNING, "non-region file: {0}", name);
                 continue;
             }
             String s[] = name.split("\\.");//"." is a reserved character in regular expression (use "\." instead)
             if(s.length != 4) {
-                sender.sendMessage("incorrect region file name: " + name + " length: " + s.length);
+                plugin.getLogger().log(Level.WARNING, "incorrect region file name: {0} length: {1}", new Object[] {name, s.length});
                 continue;
             }
             int x, z;
@@ -34,20 +36,20 @@ public class BiomeRegen {
                 x = Integer.parseInt(s[1]);
                 z = Integer.parseInt(s[2]);
             } catch(NumberFormatException ex) {
-                sender.sendMessage("Couldn't parse region position: " + name);
+                plugin.getLogger().log(Level.WARNING, "Couldn''t parse region position: {0}", name);
                 continue;
             } catch(NullPointerException ex) {
-                sender.sendMessage("Couldn't parse region position: " + name);
+                plugin.getLogger().log(Level.WARNING, "Couldn''t parse region position: {0}", name);
                 continue;
             }
-            progress.max += regenBiomesInRegion(world, sender, regionFile, x, z, chunks);
+            progress.max += regenBiomesInRegion(world, (sender instanceof Player) ? (Player)sender : null, regionFile, x, z, chunks, plugin);
         }
         final Iterator<ChunkCoords> it = chunks.iterator();
-        new Task(plugin, it, world, wcm, progress, sender).runTaskLater(plugin, 1);
-        
+        new Task(plugin, it, world, wcm, progress, (sender instanceof Player) ? sender.getName() : null).runTaskLater(plugin, 1);
+
     }
 
-    private static int regenBiomesInRegion(World world, CommandSender sender, File regionFile, int regionX, int regionZ, List<ChunkCoords> chunks) {
+    private static int regenBiomesInRegion(World world, Player sender, File regionFile, int regionX, int regionZ, List<ChunkCoords> chunks, Generator plugin) {
         BufferedInputStream bis = null;
         int chunksToUpdate = 0;
         try {
@@ -55,7 +57,7 @@ public class BiomeRegen {
             byte[] data = new byte[4096];
             int read = bis.read(data);
             if(read != 4096) {
-                sender.sendMessage("Corrupted region file: " + regionFile.getName());
+                plugin.getLogger().log(Level.WARNING, "Corrupted region file: {0}", regionFile.getName());
                 return chunksToUpdate;
             }
             int chunkXBase = regionX << 5;
@@ -71,9 +73,9 @@ public class BiomeRegen {
             }
 
         } catch(FileNotFoundException ex) {
-            sender.sendMessage("Couldn't open region file: " + regionFile.getName() + " - " + ex.getClass().getName());
+            plugin.getLogger().log(Level.WARNING, "Couldn''t open region file: {0} - {1}", new Object[] {regionFile.getName(), ex.getClass().getName()});
         } catch(IOException ex) {
-            sender.sendMessage("Couldn't open region file: " + regionFile.getName() + " - " + ex.getClass().getName());
+            plugin.getLogger().log(Level.WARNING, "Couldn''t open region file: {0} - {1}", new Object[] {regionFile.getName(), ex.getClass().getName()});
         } finally {
             if(bis != null) {
                 try {
@@ -120,16 +122,18 @@ public class BiomeRegen {
         private final World world;
         private final WorldChunkManagerOld wcm;
         private final ChunkUpdateProgress progress;
-        private final CommandSender sender;
         private final Generator plugin;
-        private Task(Generator plugin, Iterator<ChunkCoords> it, World world, WorldChunkManagerOld wcm, ChunkUpdateProgress progress, CommandSender sender){
+        private final String player;
+
+        private Task(Generator plugin, Iterator<ChunkCoords> it, World world, WorldChunkManagerOld wcm, ChunkUpdateProgress progress, String player) {
             this.plugin = plugin;
             this.it = it;
             this.world = world;
             this.wcm = wcm;
             this.progress = progress;
-            this.sender = sender;
+            this.player = player;
         }
+
         public void run() {
             for(int i = 0; i < 32 && it.hasNext(); ++i) {
                 ChunkCoords c = it.next();
@@ -149,18 +153,20 @@ public class BiomeRegen {
                     chunk.unload();
                 }
             }
-            
-            if(progress.max == 0){//Division by 0 isn't allowed
+
+            if(progress.max == 0) {//Division by 0 isn't allowed
                 progress.done = 1;
                 progress.max = 1;
             }
-            
-            sender.sendMessage("Regenerating biomes: " + progress.done + "/"
-                    + progress.max + " (" + (progress.done * 100) / progress.max + "%)");
+
+            plugin.getLogger().log(Level.INFO, "Regenerating biomes: {0}/{1} ({2}%)", new Object[] {progress.done, progress.max, (progress.done * 100) / progress.max});
             if(it.hasNext()) {
-                new Task(plugin, it, world, wcm, progress, sender).runTaskLater(plugin, 1);
+                new Task(plugin, it, world, wcm, progress, player).runTaskLater(plugin, 1);
             } else {
-                sender.sendMessage("Regenerating biomes: done!");
+                plugin.getLogger().info("Regenerating biomes: done!");
+                if(player != null && plugin.getServer().getPlayer(player) != null) {
+                    plugin.getServer().getPlayer(player).sendMessage("Regenerating biomes: done!");
+                }
             }
         }
 

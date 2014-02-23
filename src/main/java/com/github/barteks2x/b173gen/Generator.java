@@ -7,10 +7,14 @@ import com.github.barteks2x.b173gen.exception.B173GenInitException;
 import com.github.barteks2x.b173gen.exception.B173GenInitWarning;
 import com.github.barteks2x.b173gen.generator.ChunkProviderGenerate;
 import com.github.barteks2x.b173gen.listener.Beta173GenListener;
+import com.github.barteks2x.b173gen.oldgen.MinecraftMethods;
 import com.github.barteks2x.b173gen.oldgen.WorldChunkManagerOld;
 import java.io.*;
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.logging.Level;
+import net.minecraft.server.v1_7_R1.Blocks;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -24,7 +28,6 @@ public class Generator extends JavaPlugin {
     private final HashMap<String, WorldConfig> worlds = new HashMap<String, WorldConfig>();
     private Beta173GenListener listener;
     private VersionTracker vTracker;
-    private boolean isInit = false;
     @Override
     public void onDisable() {
     }
@@ -32,6 +35,7 @@ public class Generator extends JavaPlugin {
     @Override
     public void onLoad(){
         VersionChecker.checkServerVersion(this);
+        MinecraftMethods.init();
     }
 
     @Override
