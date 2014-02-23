@@ -27,7 +27,7 @@ public class MinecraftMethods {
             return below == Material.SAND;
         }
         if(block == Material.PUMPKIN){
-            return below.isSolid();
+            return below != Material.AIR;
         }
         if(block == Material.LONG_GRASS){
             return below == Material.DIRT || below == Material.GRASS;
@@ -51,7 +51,7 @@ public class MinecraftMethods {
 
     public static boolean Material_isBuildable(World w, int x, int y, int z) {
         Block m = w.getBlockAt(x, y, z);
-        return !(m.isLiquid() || m.getType().isSolid());
+        return !(m.isLiquid() || m.isEmpty());
     }
 
     private MinecraftMethods() {

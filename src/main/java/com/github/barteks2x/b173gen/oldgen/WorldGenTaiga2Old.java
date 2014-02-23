@@ -72,7 +72,7 @@ public class WorldGenTaiga2Old implements WorldGenerator173 {
                                 int i4 = l3 - k;
 
                                 if((Math.abs(k3) != k2 || Math.abs(i4) != k2 || k2 <= 0)
-                                        && world.getBlockAt(i3, j3, l3).getType().isTransparent()) {
+                                        && world.getBlockAt(i3, j3, l3).isEmpty()) {
                                     Block b = world.getBlockAt(i3, j3, l3);
                                     b.setType(LEAVES);
                                     b.setData((byte)1);

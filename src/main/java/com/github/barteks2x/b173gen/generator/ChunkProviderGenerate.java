@@ -6,13 +6,11 @@ import com.github.barteks2x.b173gen.biome.BetaBiome;
 import static com.github.barteks2x.b173gen.biome.BetaBiome.*;
 import com.github.barteks2x.b173gen.biome.BiomeOld;
 import com.github.barteks2x.b173gen.config.WorldConfig;
-import com.github.barteks2x.b173gen.newgen.*;
 import com.github.barteks2x.b173gen.oldgen.*;
 import com.github.barteks2x.b173gen.oldnoisegen.NoiseGeneratorOctaves3D;
 import java.util.*;
 import org.bukkit.*;
 import static org.bukkit.Material.*;
-import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
 
 public class ChunkProviderGenerate extends ChunkGenerator {
@@ -70,12 +68,6 @@ public class ChunkProviderGenerate extends ChunkGenerator {
             clayGen,
             waterLakeGen,
             lavaLakeGen;
-    private WorldGenCanyonRef canyonGen;
-    private WorldGenStrongholdRef strongholdGen;
-    private WorldGenMineshaftRef mineshaftGen;
-    private WorldGenVillageRef villageGen;
-    //temples
-    private WorldGenLargeFeatureRef largeFeatureGen;
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public ChunkProviderGenerate(WorldConfig config, Generator plugin) {
@@ -88,7 +80,7 @@ public class ChunkProviderGenerate extends ChunkGenerator {
     @Override
     public List<org.bukkit.generator.BlockPopulator> getDefaultPopulators(org.bukkit.World w) {
         plugin.initWorld(w);
-        return populatorList;
+        return Collections.unmodifiableList(populatorList);
     }
 
     @SuppressWarnings("unchecked")
@@ -106,14 +98,11 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         noiseGen7 = new NoiseGeneratorOctaves3D(rand, 16);
         treeNoise = new NoiseGeneratorOctaves3D(rand, 8);
 
-        clayGen = config.newClayGen ? new WorldGenClayRef(6)
-                : new WorldGenClayOld(32);
-        waterLakeGen = config.newLakeGen ? new WorldGenLakesRef(WATER.getId())
-                : new WorldGenLakesOld(WATER);
-        lavaLakeGen = config.newLakeGen ? new WorldGenLakesRef(LAVA.getId())
-                : new WorldGenLakesOld(LAVA);
-        caves = config.newCaveGen ? new WorldGenCavesRef() : new WorldGenCavesOld();
-        dungeonGen = config.newDungeonGen ? new WorldGenDungeonRef() : new WorldGenDungeonOld();
+        clayGen = new WorldGenClayOld(32);
+        waterLakeGen = new WorldGenLakesOld(WATER);
+        lavaLakeGen = new WorldGenLakesOld(LAVA);
+        caves = new WorldGenCavesOld();
+        dungeonGen = new WorldGenDungeonOld();
         dirtGen = new WorldGenMinableOld(DIRT, 32);
         gravelGen = new WorldGenMinableOld(GRAVEL, 32);
         coalGen = new WorldGenMinableOld(COAL_ORE, 16);
@@ -134,11 +123,6 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         cactusGen = new WorldGenCactusOld();
         liquidWaterGen = new WorldGenLiquidsOld(WATER);
         liquidLavaGen = new WorldGenLiquidsOld(LAVA);
-        canyonGen = config.generateCanyons ? new WorldGenCanyonRef() : null;
-        strongholdGen = config.generateStrongholds ? new WorldGenStrongholdRef() : null;
-        mineshaftGen = config.generateMineshafts ? new WorldGenMineshaftRef() : null;
-        villageGen = config.generateVillages ? new WorldGenVillageRef() : null;
-        largeFeatureGen = config.generateTemples ? new WorldGenLargeFeatureRef() : null;
         emeraldGen = config.generateEmerald ? new WorldGenMinableOld(EMERALD_ORE, 2) : null;//For 1.2.* compatibility
     }
 
@@ -220,21 +204,6 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         generateTerrain(x, z, terrain, temp);
         replaceBlocksForBiome(x, z, terrain, biomes);
         caves.generate(world, x, z, terrain);
-        if(canyonGen != null) {
-            canyonGen.generate(world, x, z, terrain);
-        }
-        if(strongholdGen != null) {
-            strongholdGen.generate(world, x, z, terrain);
-        }
-        if(mineshaftGen != null) {
-            mineshaftGen.generate(world, x, z, terrain);
-        }
-        if(villageGen != null) {
-            villageGen.generate(world, x, z, terrain);
-        }
-        if(largeFeatureGen != null) {
-            largeFeatureGen.generate(world, x, z, terrain);
-        }
         int n = 0;
         for(int x_t = 0; x_t < 16; ++x_t) {
             for(int z_t = 0; z_t < 16; ++z_t) {
@@ -595,7 +564,7 @@ public class ChunkProviderGenerate extends ChunkGenerator {
                 double temp = temperatures[(i24 << 4) | j25] - (y - 64) / 64D * 0.3D;
                 Material m = world.getBlockAt(j19, y - 1, j22).getType();
                 if((temp < 0.5D) && y > 0 && y < 128 && world.getBlockAt(j19, y, j22).isEmpty()
-                        && world.getBlockAt(j19, y - 1, j22).getType().isSolid() && m != ICE) {
+                        && !world.getBlockAt(j19, y - 1, j22).isLiquid() && m != ICE) {
                     world.getBlockAt(j19, y, j22).setType(SNOW);
                 }
             }
@@ -609,18 +578,6 @@ public class ChunkProviderGenerate extends ChunkGenerator {
                 emeraldGen.generate(world, rand, k7, l10, k13);
             }
         }
-        if(this.mineshaftGen != null) {
-            this.mineshaftGen.generate(world, rand, chunkX, chunkZ);
-        }
-        if(this.villageGen != null) {
-            this.villageGen.generate(world, rand, chunkX, chunkZ);
-        }
-        if(this.strongholdGen != null) {
-            this.strongholdGen.generate(world, rand, chunkX, chunkZ);
-        }
-        if(this.largeFeatureGen != null) {
-            this.largeFeatureGen.generate(world, rand, chunkX, chunkZ);
-        }
     }
 
     public int getHighestSolidOrLiquidBlock(int i, int j) {
@@ -632,9 +589,10 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         for(j &= 15; k > 0; --k) {
             Material material = chunk.getBlock(i, k, j).getType();
 
-            if(material.isSolid() || MinecraftMethods.isLiquid(material)) {
+            if(material != Material.AIR || MinecraftMethods.isLiquid(material)) {
                 return k + 1;
             }
+            
         }
 
         return -1;

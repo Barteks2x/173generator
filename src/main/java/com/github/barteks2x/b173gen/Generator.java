@@ -8,7 +8,6 @@ import com.github.barteks2x.b173gen.exception.B173GenInitWarning;
 import com.github.barteks2x.b173gen.generator.ChunkProviderGenerate;
 import com.github.barteks2x.b173gen.listener.Beta173GenListener;
 import com.github.barteks2x.b173gen.oldgen.WorldChunkManagerOld;
-import com.github.barteks2x.b173gen.reflection.Util;
 import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
@@ -55,7 +54,6 @@ public class Generator extends JavaPlugin {
     }
 
     public void initWorld(World world) {
-        init();
         if(!(this.worlds.containsKey(world.getName().trim()))) {
             return;
         }
@@ -111,48 +109,6 @@ public class Generator extends JavaPlugin {
             BiomeRegen.regenBiomes(world, sender, this, this.worlds.get(world.getName().trim()).chunkProvider.wcm);
         }
         return true;
-    }
-
-    private void init() {
-        if(!isInit) {
-            isInit = true;
-            List<Exception> err = new LinkedList<Exception>();
-            List<B173GenInitWarning> warn = new LinkedList<B173GenInitWarning>();
-            Util.init(err, warn);
-            boolean errors = false;
-
-            if(!warn.isEmpty()) {
-                for(B173GenInitWarning warning: warn) {
-                    StringBuilder sb = new StringBuilder("173generator init: ").append("\n")
-                            .append(warning.toString());
-                    this.getLogger().log(Level.WARNING, sb.toString());
-                }
-            }
-            for(Exception ex: err) {
-                errors = true;
-                if(ex instanceof B173GenInitException) {
-                    B173GenInitException e = (B173GenInitException)ex;
-                    StringWriter sw = new StringWriter();
-                    PrintWriter pw = new PrintWriter(sw);
-                    e.printStackTrace(pw);
-                    StringBuilder sb = new StringBuilder("173generator init exception: ")
-                            .append(e.getAdditionalInfo()).append("\n")
-                            .append(sw.toString());
-                    this.getLogger().log(Level.SEVERE, sb.toString());
-                } else {
-                    StringWriter sw = new StringWriter();
-                    PrintWriter pw = new PrintWriter(sw);
-                    ex.printStackTrace(pw);
-                    StringBuilder sb
-                            = new StringBuilder("173generator init exception: ")
-                                    .append("\n").append(sw.toString());
-                    this.getLogger().log(Level.SEVERE, sb.toString());
-                }
-            }
-            if(errors) {
-                throw new B173GenInitException("Generator.init()", "Couldn't initialize 173generator!");
-            }
-        }
     }
 
     private void registerEvents() {

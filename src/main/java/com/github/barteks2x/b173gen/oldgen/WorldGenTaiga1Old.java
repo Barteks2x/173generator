@@ -67,7 +67,7 @@ public class WorldGenTaiga1Old implements WorldGenerator173 {
                                 int dz = z - zBase;
                                 Block block2 = world.getBlockAt(x, y, z);
                                 if((abs(dx) != val1 || abs(dz) != val1 || val1 <= 0)
-                                        && block2.getType().isTransparent()) {
+                                        && block2.isEmpty()) {
                                     block2.setType(LEAVES);
                                     block2.setData((byte)1);
                                 }

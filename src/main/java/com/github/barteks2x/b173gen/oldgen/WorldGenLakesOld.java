@@ -64,8 +64,9 @@ public class WorldGenLakesOld implements WorldGenerator173 {
                         return false;
                     }
                     if(j3 < 4
-                            && !world.getBlockAt(X + j1, Y + j3, Z + j2).getType().isSolid()
-                            && world.getBlockAt(X + j1, Y + j3, Z + j2).getType() != block) {
+                            && !world.getBlockAt(X + j1, Y + j3, Z + j2).isLiquid()
+                            && !world.getBlockAt(X + j1, Y + j3, Z + j2).isEmpty()
+                            && material != block) {
                         return false;
                     }
                 }
@@ -117,7 +118,8 @@ public class WorldGenLakesOld implements WorldGenerator173 {
                                 || i4 > 0
                                 && aflag[(i2 * 16 + i3) * 8 + (i4 - 1)]);
                         if(flag1 && (i4 < 4 || random.nextInt(2) != 0)
-                                && world.getBlockAt(X + i2, Y + i4, Z + i3).getType().isSolid()) {
+                                && (world.getBlockAt(X + i2, Y + i4, Z + i3).isLiquid() ||
+                                world.getBlockAt(X + i2, Y + i4, Z + i3).isEmpty())) {
                             world.getBlockAt(X + i2, Y + i4, Z + i3).setType(STONE);
                         }
                     }

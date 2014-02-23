@@ -4,7 +4,6 @@ description: Beta 1.7.3 world generator for bukkit.
 authors: [Barteks2x]
 main: com.github.barteks2x.b173gen.Generator
 load: startup
-depend: [ProtocolLib]
 commands:
     173generator:
         description: 173generator command

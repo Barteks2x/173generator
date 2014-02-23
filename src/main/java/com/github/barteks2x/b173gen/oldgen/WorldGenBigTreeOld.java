@@ -345,7 +345,7 @@ public class WorldGenBigTreeOld implements WorldGenerator173 {
             ai3[byte1] = MathHelper.floor((double)pos1[byte1] + (double)j * d);
             ai3[byte2] = MathHelper.floor((double)pos1[byte2] + (double)j * d1);
             Material l = worldObj.getBlockAt(ai3[0], ai3[1], ai3[2]).getType();
-            if(l != Material.AIR && l != Material.LEAVES && l != Material.LEAVES_2) {
+            if(l != Material.AIR && l != Material.LEAVES) {
                 break;
             }
             j += byte3;
