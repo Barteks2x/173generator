@@ -1,0 +1,53 @@
+global: 
+    blockPopulator:
+        #If you enable this option all ores, trees, pumpkins etc. will generate at different positions.
+        modifyPopulatorSeed: false
+        #Change it to any random number
+        populatorSeedModConstant: 0
+    experimental: 
+        #biomesExperimental - experimental biome system. Instead of replacing beta biomes with new biomes, for each beta 1.7 biome (4096 biomes) it finds currently abailable biome with nearest temperature and humidity 
+        #distance squared = (betaBiomeTemp - currentBiomeTemp)^2 + (betaBiomeHumidity - currentBiomeHumidity)^2
+        biomesExperimental: false
+        #biome list with temperature and humidity
+        #BUKKIT_BIOME_ENUM_NAME: [temperature * 10, humidity * 10]
+        biomes: 
+            OCEAN: [5, 5]
+            PLAINS: [8, 4]
+            DESERT: [20, 0]
+            EXTREME_HILLS: [2, 3]
+            FOREST: [7, 8]
+            TAIGA: [2.5, 8]
+            SWAMPLAND: [8, 9]
+            RIVER: [5, 5]
+            HELL: [20, 0]
+            SKY: [5, 5]
+            FROZEN_OCEAN: [0, 5]
+            FROZEN_RIVER: [0, 5]
+            ICE_PLAINS: [0, 5]
+            ICE_MOUNTAINS: [0, 5]
+            MUSHROOM_ISLAND: [9, 10]
+            MUSHROOM_SHORE: [9, 10]
+            BEACH: [8, 4]
+            DESERT_HILLS: [20, 0]
+            FOREST_HILLS: [7, 8]
+            TAIGA_HILLS: [2.5, 8]
+            EXTREME_HILLS_EDGE: [2, 3]
+            JUNGLE: [9.5, 9]
+            JUNGLE_HILLS: [9.5, 9]
+            JUNGLE_EDGE: [9.5, 8]
+            DEEP_OCEAN: [5, 5]
+            STONE_BEACH: [2, 3]
+            COLD_BEACH: [0.5, 3]
+            BIRCH_FOREST: [6, 6]
+            BIRCH_FOREST_HILLS: [6, 6]
+            ROOFED_FOREST: [7, 8]
+            COLD_TAIGA: [-5, 4]
+            COLD_TAIGA_HILLS: [-5, 4]
+            MEGA_TAIGA: [3, 8]
+            MEGA_TAIGA_HILLS: [3, 8]
+            EXTREME_HILLS_PLUS: [2, 3]
+            SAVANNA: [12, 0]
+            SAVANNA_PLATEAU: [10, 0]
+            MESA: [20, 0]
+            MESA_PLATEAU_FOREST: [20, 0]
+            MESA_PLATEAU: [20, 0]

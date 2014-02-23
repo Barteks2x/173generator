@@ -1,6 +1,6 @@
 package com.github.barteks2x.b173gen.oldgen;
 
-import com.github.barteks2x.b173gen.biome.BetaBiomeEnum;
+import com.github.barteks2x.b173gen.biome.BetaBiome;
 import com.github.barteks2x.b173gen.biome.BiomeOld;
 import com.github.barteks2x.b173gen.oldnoisegen.NoiseGeneratorOctaves2D;
 import java.util.Random;
@@ -9,7 +9,7 @@ public class WorldChunkManagerOld {
     public double temperatures[];
     public double rain[];
     public double c[];
-    public BetaBiomeEnum dx[];
+    public BetaBiome dx[];
 
     private final NoiseGeneratorOctaves2D noise1;
     private final NoiseGeneratorOctaves2D noise2;
@@ -21,7 +21,7 @@ public class WorldChunkManagerOld {
         noise3 = new NoiseGeneratorOctaves2D(new Random(seed * 0x84a59L), 2);
     }
 
-    public BetaBiomeEnum getBiome(int i, int j) {
+    public BetaBiome getBiome(int i, int j) {
         return getBiomeData(i, j, 1, 1)[0];
     }
 
@@ -55,9 +55,9 @@ public class WorldChunkManagerOld {
         return ad;
     }
 
-    public BetaBiomeEnum[] getBiomeBlock(BetaBiomeEnum biomes[], int x, int z, int xSize, int zSize) {
+    public BetaBiome[] getBiomeBlock(BetaBiome biomes[], int x, int z, int xSize, int zSize) {
         if(biomes == null || biomes.length < xSize * zSize) {
-            biomes = new BetaBiomeEnum[xSize * zSize];
+            biomes = new BetaBiome[xSize * zSize];
         }
         temperatures = noise1.generateNoiseArray(temperatures, x, z, xSize, xSize, 0.025D, 0.025D, 0.25D);
         rain = noise2.generateNoiseArray(rain, x, z, xSize, xSize, 0.05D, 0.050D, 1D / 3D);
@@ -95,10 +95,10 @@ public class WorldChunkManagerOld {
         return biomes;
     }
 
-    public BetaBiomeEnum[] getBiomes(BetaBiomeEnum abiomegenbase[], int x, int z,
+    public BetaBiome[] getBiomes(BetaBiome abiomegenbase[], int x, int z,
             int xSize, int zSize) {
         if(abiomegenbase == null || abiomegenbase.length < xSize * zSize) {
-            abiomegenbase = new BetaBiomeEnum[xSize * zSize];
+            abiomegenbase = new BetaBiome[xSize * zSize];
         }
         temperatures = noise1.generateNoiseArray(temperatures, x, z, xSize, xSize, 0.025D, 0.025D, 0.25D);
         rain = noise2.generateNoiseArray(rain, x, z, xSize, xSize, 0.05D, 0.05D, 1D / 3D);
@@ -135,7 +135,7 @@ public class WorldChunkManagerOld {
         return abiomegenbase;
     }
 
-    private BetaBiomeEnum[] getBiomeData(int i, int j, int k, int l) {
+    private BetaBiome[] getBiomeData(int i, int j, int k, int l) {
         this.dx = getBiomes(this.dx, i, j, k, l);
         return this.dx;
     }

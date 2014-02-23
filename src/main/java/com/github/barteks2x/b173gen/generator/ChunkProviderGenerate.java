@@ -2,8 +2,8 @@ package com.github.barteks2x.b173gen.generator;
 
 import com.github.barteks2x.b173gen.Generator;
 import com.github.barteks2x.b173gen.WorldGenBaseOld;
-import com.github.barteks2x.b173gen.biome.BetaBiomeEnum;
-import static com.github.barteks2x.b173gen.biome.BetaBiomeEnum.*;
+import com.github.barteks2x.b173gen.biome.BetaBiome;
+import static com.github.barteks2x.b173gen.biome.BetaBiome.*;
 import com.github.barteks2x.b173gen.biome.BiomeOld;
 import com.github.barteks2x.b173gen.config.WorldConfig;
 import com.github.barteks2x.b173gen.newgen.*;
@@ -40,7 +40,7 @@ public class ChunkProviderGenerate extends ChunkGenerator {
     private double noise6[];
     private double noise7[];
     private double[] temperatures;
-    private WorldChunkManagerOld wcm;
+    public WorldChunkManagerOld wcm;
     private final List<org.bukkit.generator.BlockPopulator> populatorList;
     private World world;
     private final WorldConfig config;
@@ -214,7 +214,7 @@ public class ChunkProviderGenerate extends ChunkGenerator {
             BiomeGrid biomeGrid) {
         this.rand.setSeed(x * 341873128712L + z * 132897987541L);
         byte terrain[] = new byte[32768];
-        BetaBiomeEnum[] biomes = null;
+        BetaBiome[] biomes = null;
         biomes = wcm.getBiomeBlock(biomes, x * 16, z * 16, 16, 16);
         double temp[] = this.wcm.temperatures;
         generateTerrain(x, z, terrain, temp);
@@ -253,8 +253,8 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         }
         return sections;
     }
-    
-    public void replaceBlocksForBiome(int xPos, int zPos, byte terrain[], BetaBiomeEnum biomes[]) {
+
+    public void replaceBlocksForBiome(int xPos, int zPos, byte terrain[], BetaBiome biomes[]) {
         byte oceanHeight = 64;
         double d = 0.03125D;
         sandNoise = noiseGen4.generateNoiseArray(sandNoise, xPos * 16, zPos * 16, 0.0D,
@@ -266,13 +266,13 @@ public class ChunkProviderGenerate extends ChunkGenerator {
                         d * 2D, d * 2D);
         for(int x = 0; x < 16; x++) {
             for(int z = 0; z < 16; z++) {
-                BetaBiomeEnum biome = biomes[x + z * 16];
+                BetaBiome biome = biomes[x + z * 16];
                 boolean sand = sandNoise[x + z * 16] + rand.nextDouble() * 0.2D > 0.0D;
                 boolean gravel = gravelNoise[x + z * 16] + rand.nextDouble() * 0.2D > 3D;
                 int depth = (int)(stoneNoise[x + z * 16] / 3D + 3D + rand.nextDouble() * 0.25D);
                 int prevDepth = -1;
-                byte topBlock = BiomeOld.top(biome.getBiome());
-                byte fillerBlock = BiomeOld.filler(biome.getBiome());
+                byte topBlock = BiomeOld.top(biome);
+                byte fillerBlock = BiomeOld.filler(biome);
                 for(int y = 127; y >= 0; y--) {
                     int blockIndex = (((z << 4) + x) << 7) + y;
                     if(y <= 0 + rand.nextInt(5)) {
@@ -292,8 +292,8 @@ public class ChunkProviderGenerate extends ChunkGenerator {
                             topBlock = 0;
                             fillerBlock = (byte)STONE.getId();
                         } else if(y >= oceanHeight - 4 && y <= oceanHeight + 1) {
-                            topBlock = BiomeOld.top(biome.getBiome());
-                            fillerBlock = BiomeOld.filler(biome.getBiome());
+                            topBlock = BiomeOld.top(biome);
+                            fillerBlock = BiomeOld.filler(biome);
                             if(gravel) {
                                 topBlock = 0;
                                 fillerBlock = (byte)GRAVEL.getId();
@@ -333,7 +333,7 @@ public class ChunkProviderGenerate extends ChunkGenerator {
     public void populate(int chunkX, int chunkZ) {
         int x = chunkX * 16;
         int z = chunkZ * 16;
-        BetaBiomeEnum biome = this.wcm.getBiome(x + 16, z + 16);
+        BetaBiome biome = this.wcm.getBiome(x + 16, z + 16);
         rand.setSeed(world.getSeed());
         long rand1 = rand.nextLong() / 2L * 2L + 1L;
         long rand2 = rand.nextLong() / 2L * 2L + 1L;
@@ -429,31 +429,31 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         if(rand.nextInt(10) == 0) {
             trees++;
         }
-        if(biome == FOREST) {
+        if(biome.equals(FOREST)) {
             trees += treesRand + 5;
         }
 
-        if(biome == RAINFOREST) {
+        if(biome.equals(RAINFOREST)) {
             trees += treesRand + 5;
         }
 
-        if(biome == SEASONAL_FOREST) {
+        if(biome.equals(SEASONAL_FOREST)) {
             trees += treesRand + 2;
         }
 
-        if(biome == TAIGA) {
+        if(biome.equals(TAIGA)) {
             trees += treesRand + 5;
         }
 
-        if(biome == DESERT) {
+        if(biome.equals(DESERT)) {
             trees -= 20;
         }
 
-        if(biome == TUNDRA) {
+        if(biome.equals(TUNDRA)) {
             trees -= 20;
         }
 
-        if(biome == PLAINS) {
+        if(biome.equals(PLAINS)) {
             trees -= 20;
         }
         for(int i11 = 0; i11 < trees; i11++) {
@@ -465,19 +465,19 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         }
 
         byte flowers = 0;
-        if(biome == FOREST) {
+        if(biome.equals(FOREST)) {
             flowers = 2;
         }
 
-        if(biome == SEASONAL_FOREST) {
+        if(biome.equals(SEASONAL_FOREST)) {
             flowers = 4;
         }
 
-        if(biome == TAIGA) {
+        if(biome.equals(TAIGA)) {
             flowers = 2;
         }
 
-        if(biome == PLAINS) {
+        if(biome.equals(PLAINS)) {
             flowers = 3;
         }
         for(int i14 = 0; i14 < flowers; i14++) {
@@ -488,27 +488,27 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         }
 
         byte byte1 = 0;
-        if(biome == FOREST) {
+        if(biome.equals(FOREST)) {
             byte1 = 2;
         }
 
-        if(biome == RAINFOREST) {
+        if(biome.equals(RAINFOREST)) {
             byte1 = 10;
         }
 
-        if(biome == SEASONAL_FOREST) {
+        if(biome.equals(SEASONAL_FOREST)) {
             byte1 = 2;
         }
 
-        if(biome == TAIGA) {
+        if(biome.equals(TAIGA)) {
             byte1 = 1;
         }
 
-        if(biome == PLAINS) {
+        if(biome.equals(PLAINS)) {
             byte1 = 10;
         }
         for(int l14 = 0; l14 < byte1; l14++) {
-            boolean flag = (biome == RAINFOREST && rand.nextInt(3) != 0);
+            boolean flag = (biome.equals(RAINFOREST) && rand.nextInt(3) != 0);
             int l19 = x + rand.nextInt(16) + 8;
             int k22 = rand.nextInt(128);
             int j24 = z + rand.nextInt(16) + 8;
@@ -520,7 +520,7 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         }
 
         byte1 = 0;
-        if(biome == DESERT) {
+        if(biome.equals(DESERT)) {
             byte1 = 2;
         }
         for(int i15 = 0; i15 < byte1; i15++) {
@@ -562,7 +562,7 @@ public class ChunkProviderGenerate extends ChunkGenerator {
             pumpkinGen.generate(world, rand, j16, j18, j21);
         }
         int k16 = 0;
-        if(biome == DESERT) {
+        if(biome.equals(DESERT)) {
             k16 += 10;
         }
         for(int k18 = 0; k18 < k16; k18++) {
@@ -592,7 +592,7 @@ public class ChunkProviderGenerate extends ChunkGenerator {
                 int i24 = j19 - (x + 8);
                 int j25 = j22 - (z + 8);
                 int y = getHighestSolidOrLiquidBlock(j19, j22);
-                double temp = temperatures[(i24 << 4) | j25] - (double)(y - 64) / 64D * 0.3D;
+                double temp = temperatures[(i24 << 4) | j25] - (y - 64) / 64D * 0.3D;
                 Material m = world.getBlockAt(j19, y - 1, j22).getType();
                 if((temp < 0.5D) && y > 0 && y < 128 && world.getBlockAt(j19, y, j22).isEmpty()
                         && world.getBlockAt(j19, y - 1, j22).getType().isSolid() && m != ICE) {
@@ -645,22 +645,22 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         this.plugin.initWorld(w);
         int y;
 
-        for(y = 63; w.getBlockTypeIdAt(x, y + 1, z) != 0; ++y) {
+        for(y = 63; !w.getBlockAt(x, y + 1, z).isEmpty(); ++y) {
         }
 
-        return w.getBlockTypeIdAt(x, y, z) == Material.SAND.getId();
+        return w.getBlockAt(x, y, z).getType() == Material.SAND;
 
     }
 
     @Override
     public Location getFixedSpawnLocation(World world, Random random) {
         int x = 0;
-        int y = 0;
+        int z = 0;
 
-        for(; !canSpawn(world, x, y); y += random.nextInt(64) - random.nextInt(64)) {
+        for(; !canSpawn(world, x, z); z += random.nextInt(64) - random.nextInt(64)) {
             x += random.nextInt(64) - random.nextInt(64);
         }
-        return new Location(world, x, world.getHighestBlockYAt(x, y), y);
+        return new Location(world, x, world.getHighestBlockYAt(x, z), z);
     }
 
     @Override
@@ -670,94 +670,94 @@ public class ChunkProviderGenerate extends ChunkGenerator {
                 toString();
     }
 
-        private double[] initNoiseField(double array[], int xPos, int yPos, int zPos, int xSize, int ySize, int zSize) {
-            if(array == null) {
-                array = new double[xSize * ySize * zSize];
-            }
-            double d0 = 684.412D;
-            double d1 = 684.412D;
-            double temp[] = this.wcm.temperatures;
-            double rain[] = this.wcm.rain;
-            noise6 = noiseGen6.
-                    generateNoiseArray(noise6, xPos, zPos, xSize, zSize, 1.121D, 1.121D, 0.5D);
-            noise7 = noiseGen7.generateNoiseArray(noise7, xPos, zPos, xSize, zSize, 200D, 200D, 0.5D);
-            noise3 = noiseGen3.generateNoiseArray(noise3, xPos, yPos, zPos, xSize, ySize, zSize,
-                    d0 / 80D, d1 / 160D, d0 / 80D);
-            noise1 = noiseGen1.generateNoiseArray(noise1, xPos, yPos, zPos, xSize, ySize, zSize,
-                    d0, d1, d0);
-            noise2 = noiseGen2.generateNoiseArray(noise2, xPos, yPos, zPos, xSize, ySize, zSize,
-                    d0, d1, d0);
-            int k1 = 0;
-            int l1 = 0;
-            int i2 = 16 / xSize;
-            for(int x = 0; x < xSize; x++) {
-                int k2 = x * i2 + i2 / 2;
-                for(int z = 0; z < zSize; z++) {
-                    int i3 = z * i2 + i2 / 2;
-                    double d2 = temp[k2 * 16 + i3];
-                    double d3 = rain[k2 * 16 + i3] * d2;
-                    double d4 = 1.0D - d3;
-                    d4 *= d4;
-                    d4 *= d4;
-                    d4 = 1.0D - d4;
-                    double d5 = (noise6[l1] + 256D) / 512D;
-                    d5 *= d4;
-                    if(d5 > 1.0D) {
-                        d5 = 1.0D;
+    private double[] initNoiseField(double array[], int xPos, int yPos, int zPos, int xSize, int ySize, int zSize) {
+        if(array == null) {
+            array = new double[xSize * ySize * zSize];
+        }
+        double d0 = 684.412D;
+        double d1 = 684.412D;
+        double temp[] = this.wcm.temperatures;
+        double rain[] = this.wcm.rain;
+        noise6 = noiseGen6.
+                generateNoiseArray(noise6, xPos, zPos, xSize, zSize, 1.121D, 1.121D, 0.5D);
+        noise7 = noiseGen7.generateNoiseArray(noise7, xPos, zPos, xSize, zSize, 200D, 200D, 0.5D);
+        noise3 = noiseGen3.generateNoiseArray(noise3, xPos, yPos, zPos, xSize, ySize, zSize,
+                d0 / 80D, d1 / 160D, d0 / 80D);
+        noise1 = noiseGen1.generateNoiseArray(noise1, xPos, yPos, zPos, xSize, ySize, zSize,
+                d0, d1, d0);
+        noise2 = noiseGen2.generateNoiseArray(noise2, xPos, yPos, zPos, xSize, ySize, zSize,
+                d0, d1, d0);
+        int k1 = 0;
+        int l1 = 0;
+        int i2 = 16 / xSize;
+        for(int x = 0; x < xSize; x++) {
+            int k2 = x * i2 + i2 / 2;
+            for(int z = 0; z < zSize; z++) {
+                int i3 = z * i2 + i2 / 2;
+                double d2 = temp[k2 * 16 + i3];
+                double d3 = rain[k2 * 16 + i3] * d2;
+                double d4 = 1.0D - d3;
+                d4 *= d4;
+                d4 *= d4;
+                d4 = 1.0D - d4;
+                double d5 = (noise6[l1] + 256D) / 512D;
+                d5 *= d4;
+                if(d5 > 1.0D) {
+                    d5 = 1.0D;
+                }
+                double d6 = noise7[l1] / 8000D;
+                if(d6 < 0.0D) {
+                    d6 = -d6 * 0.3D;
+                }
+                d6 = d6 * 3D - 2D;
+                if(d6 < 0.0D) {
+                    d6 /= 2D;
+                    if(d6 < -1D) {
+                        d6 = -1D;
                     }
-                    double d6 = noise7[l1] / 8000D;
-                    if(d6 < 0.0D) {
-                        d6 = -d6 * 0.3D;
+                    d6 /= 1.4D;
+                    d6 /= 2D;
+                    d5 = 0.0D;
+                } else {
+                    if(d6 > 1.0D) {
+                        d6 = 1.0D;
                     }
-                    d6 = d6 * 3D - 2D;
-                    if(d6 < 0.0D) {
-                        d6 /= 2D;
-                        if(d6 < -1D) {
-                            d6 = -1D;
-                        }
-                        d6 /= 1.4D;
-                        d6 /= 2D;
-                        d5 = 0.0D;
+                    d6 /= 8D;
+                }
+                if(d5 < 0.0D) {
+                    d5 = 0.0D;
+                }
+                d5 += 0.5D;
+                d6 = (d6 * (double)ySize) / 16D;
+                double d7 = (double)ySize / 2D + d6 * 4D;
+                l1++;
+                for(int y = 0; y < ySize; y++) {
+                    double d8 = 0.0D;
+                    double d9 = (((double)y - d7) * 12D)
+                            / d5;
+                    if(d9 < 0.0D) {
+                        d9 *= 4D;
+                    }
+                    double d10 = noise1[k1] / 512D;
+                    double d11 = noise2[k1] / 512D;
+                    double d12 = (this.noise3[k1] / 10D + 1.0D) / 2D;
+                    if(d12 < 0.0D) {
+                        d8 = d10;
+                    } else if(d12 > 1.0D) {
+                        d8 = d11;
                     } else {
-                        if(d6 > 1.0D) {
-                            d6 = 1.0D;
-                        }
-                        d6 /= 8D;
+                        d8 = d10 + (d11 - d10) * d12;
                     }
-                    if(d5 < 0.0D) {
-                        d5 = 0.0D;
+                    d8 -= d9;
+                    if(y > ySize - 4) {
+                        double d13 = (double)((float)(y - (ySize - 4)) / 3F);
+                        d8 = d8 * (1.0D - d13) + -10D * d13;
                     }
-                    d5 += 0.5D;
-                    d6 = (d6 * (double)ySize) / 16D;
-                    double d7 = (double)ySize / 2D + d6 * 4D;
-                    l1++;
-                    for(int y = 0; y < ySize; y++) {
-                        double d8 = 0.0D;
-                        double d9 = (((double)y - d7) * 12D)
-                                / d5;
-                        if(d9 < 0.0D) {
-                            d9 *= 4D;
-                        }
-                        double d10 = noise1[k1] / 512D;
-                        double d11 = noise2[k1] / 512D;
-                        double d12 = (this.noise3[k1] / 10D + 1.0D) / 2D;
-                        if(d12 < 0.0D) {
-                            d8 = d10;
-                        } else if(d12 > 1.0D) {
-                            d8 = d11;
-                        } else {
-                            d8 = d10 + (d11 - d10) * d12;
-                        }
-                        d8 -= d9;
-                        if(y > ySize - 4) {
-                            double d13 = (double)((float)(y - (ySize - 4)) / 3F);
-                            d8 = d8 * (1.0D - d13) + -10D * d13;
-                        }
-                        array[k1] = d8;
-                        k1++;
-                    }
+                    array[k1] = d8;
+                    k1++;
                 }
             }
-            return array;
         }
+        return array;
+    }
 }

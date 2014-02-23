@@ -29,7 +29,7 @@ public class Beta173GenListener implements Listener {
     public void onStructureGrow(StructureGrowEvent event) {
         Location loc = event.getLocation();
         World world = loc.getWorld();
-        WorldConfig cfg = null;
+        WorldConfig cfg;
         if((cfg = plugin.getOrCreateWorldConfig(world.getName())) != null) {
             if(cfg.oldTreeGrowing) {
                 if(growTree(event.getSpecies(), loc)) {

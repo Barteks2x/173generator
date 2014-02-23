@@ -41,4 +41,8 @@ public class MathHelper {
     public static float abs(float f) {
         return f < 0.0F ? -f : f;
     }
+
+    public static double clamp(double f, double f1, double f2) {
+        return f < f1 ? f1 : (f > f2 ? f2 : f);
+    }
 }

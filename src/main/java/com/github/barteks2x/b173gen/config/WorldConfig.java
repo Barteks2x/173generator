@@ -24,8 +24,8 @@ public class WorldConfig {
             newDungeonGen = false,
             oldTreeGrowing = true,
             generateEmerald = false;
-    private CustomConfigLoader cfgLoader;
-    private String worldName;
+    private final CustomConfigLoader cfgLoader;
+    private final String worldName;
 
     public WorldConfig(JavaPlugin plug, String worldName) {
         this.plugin = plug;

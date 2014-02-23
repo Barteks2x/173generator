@@ -92,7 +92,7 @@ public class WorldGenLakesOld implements WorldGenerator173 {
                     if(aflag[(l1 * 16 + l2) * 8 + l3]
                             && world.getBlockAt(X + l1, Y + l3 - 1, Z + l2).getType() == DIRT
                             && MinecraftMethods.World_getlightValue(world, X + l1, Y + l3, Z + l2,
-                                    MinecraftMethods.LightType.SKY) > 0) {
+                                    LightType.SKY) > 0) {
                         world.getBlockAt(X + l1, (Y + l3) - 1, Z + l2).setType(GRASS);
                     }
                 }

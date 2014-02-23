@@ -281,17 +281,17 @@ public class WorldGenBigTreeOld implements WorldGenerator173 {
         int l = basePos[2];
         int ai[] = {i, j, l};
         int ai1[] = {i, k, l};
-        a(ai, ai1, Material.WOOD);
+        a(ai, ai1, Material.LOG);
         if(this.l == 2) {
             ai[0]++;
             ai1[0]++;
-            a(ai, ai1, Material.WOOD);
+            a(ai, ai1, Material.LOG);
             ai[2]++;
             ai1[2]++;
-            a(ai, ai1, Material.WOOD);
+            a(ai, ai1, Material.LOG);
             ai[0]--;
             ai1[0]--;
-            a(ai, ai1, Material.WOOD);
+            a(ai, ai1, Material.LOG);
         }
     }
 
@@ -305,7 +305,7 @@ public class WorldGenBigTreeOld implements WorldGenerator173 {
             ai[1] = ai1[3];
             int k = ai[1] - basePos[1];
             if(c(k)) {
-                a(ai, ai2, Material.WOOD);
+                a(ai, ai2, Material.LOG);
             }
         }
 

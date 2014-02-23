@@ -34,7 +34,7 @@ public class WorldGenCactusOld implements WorldGenerator173 {
     public void scale(double d0, double d1, double d2) {}
 
     protected boolean canPlaceCactusAt(World world, int i, int j, int k) {
-        if(world.getBlockAt(i - 1, j, k).getType().isSolid()) {//TODO isSolid --> isBuildable
+        if(world.getBlockAt(i - 1, j, k).getType().isSolid()) {//TODO: isSolid --> isBuildable
             return false;
         } else if(world.getBlockAt(i + 1, j, k).getType().isSolid()) {
             return false;

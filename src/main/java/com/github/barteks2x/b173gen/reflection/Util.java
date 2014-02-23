@@ -5,8 +5,6 @@ import com.github.barteks2x.b173gen.exception.B173GenInitWarning;
 import static com.github.barteks2x.b173gen.reflection.Util.NMSClassHelper.*;
 import java.lang.reflect.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Util {
     public static void init(final List<Exception> errors, final List<B173GenInitWarning> warnings) {

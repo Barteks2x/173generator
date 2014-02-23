@@ -1,5 +1,4 @@
-   <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.barteks2x</groupId>
     <artifactId>b173gen</artifactId>
@@ -10,13 +9,26 @@
         <!--Special git describe version allows for empty prefix & suffix-->
         <gitdescribe-prefix></gitdescribe-prefix>
         <gitdescribe-suffix></gitdescribe-suffix>
+        <protocolLibVersion>3.2.0</protocolLibVersion>
+        <craftbukkitVersion>1.7.2-R0.3</craftbukkitVersion>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit</artifactId><!--CraftBukkit required to run it with netbeans-->
-            <version>1.7.2-R0.2</version>
-            <!--<scope>test</scope>-->
+            <artifactId>craftbukkit</artifactId>
+            <version>${craftbukkitVersion}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.7.2-R0.3</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib</artifactId>
+            <version>${protocolLibVersion}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -35,6 +47,7 @@
                 <includes>
                     <include>plugin.yml</include>
                     <include>world.yml</include>
+                    <include>config.yml</include>
                 </includes>
                 <directory>${basedir}/src/main/resources</directory>
                 <filtering>true</filtering>
@@ -72,6 +85,31 @@
                     <showDeprecation>false</showDeprecation>
                 </configuration>
             </plugin>
+            
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.comphenix.protocol</groupId>
+                                    <artifactId>ProtocolLib</artifactId>
+                                    <version>${protocolLibVersion}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                    <destFileName>protocolLib.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 	
@@ -80,13 +118,19 @@
         <!--Bukkitrepository-->
         <repository>
             <id>Bukkit</id>
+            <name>Bukkit Repository</name>
             <url>http://repo.bukkit.org/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>comphenix-rep</id>
+            <name>Comphenix Repository</name>
+            <url>http://repo.comphenix.net/content/groups/public</url>
         </repository>
     </repositories>
 	
     <!--Plugin repositories-->
     <pluginRepositories>
-        <!--Repository for modified git-describe plugin-->
+        <!--Repository for modified git-describe plugin (allows empty prefix and suffix)-->
         <pluginRepository>
             <id>Github-maven-repo</id>
             <url>https://github.com/Barteks2x/maven-repo/raw/master/snapshots</url>
