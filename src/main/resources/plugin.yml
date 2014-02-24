@@ -1,9 +1,15 @@
-name: 173generator
+name: ${name}
 version: ${describe}
-description: Beta 1.7.3 world generator for bukkit.
+description: ${description}
 authors: [Barteks2x]
-main: com.github.barteks2x.b173gen.Generator
+main: ${groupId}.${artifactId}.Generator
 load: startup
+softdepend: [ProtocolLib]
 commands:
     173generator:
-        description: 173generator command
+        description: 173generator commands
+        usage: |
+            /173generator regenbiomes - regenerate biomes in world you are in
+            /173generator regenbiomes worldname - regenerate biomes in world worldname
+permissions:
+    b173gen.regenbiomes: /173generator regenbiomes command
