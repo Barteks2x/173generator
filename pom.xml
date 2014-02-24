@@ -39,7 +39,6 @@
     </dependencies>
 		
     <build>
-        <finalName>${project.artifactId}-${describe}</finalName>
         <!--Rsource filtering allows to use project propertietes ({$describe}) in plugin.yml-->
         <defaultGoal>compile package</defaultGoal>
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
@@ -54,7 +53,28 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <finalName>${artifactId}-${describe}.jar</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.3.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>install</goal>
+                        </goals>
+                        <phase>install</phase>
+                        <configuration>
+                            <file>${artifactId}-${describe}.jar</file>
+                            <generatePom>false</generatePom>
+                            <pomFile>pom.xml</pomFile>
+                            <version>${describe}</version>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
             <!--git-describe plugin-->
             <plugin>
                 <groupId>org.barteks2x</groupId>
