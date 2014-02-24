@@ -69,7 +69,6 @@
                             <file>${artifactId}-${describe}.jar</file>
                             <generatePom>false</generatePom>
                             <pomFile>pom.xml</pomFile>
-                            <version>${describe}</version>
                         </configuration>
                     </execution>
                 </executions>
