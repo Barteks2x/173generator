@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.barteks2x</groupId>
     <artifactId>b173gen</artifactId>
-    <version>2.2</version>
+    <version>2.3-SNAPSHOT</version>
     <name>173generator</name>
     <description>Beta 1.7.* terrain generator for bukkit</description>
     <properties>
@@ -31,6 +31,12 @@
             <version>${protocolLibVersion}</version>
         </dependency>
         <dependency>
+            <groupId>org.mcstats.bukkit</groupId>
+            <artifactId>metrics</artifactId>
+            <version>R7</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.10</version>
@@ -53,7 +59,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <finalName>${artifactId}-${describe}</finalName>
+        <finalName>${project.artifactId}-${describe}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -66,7 +72,7 @@
                         </goals>
                         <phase>install</phase>
                         <configuration>
-                            <file>${artifactId}-${describe}.jar</file>
+                            <file>${project.artifactId}-${describe}.jar</file>
                             <generatePom>false</generatePom>
                             <pomFile>pom.xml</pomFile>
                         </configuration>
@@ -74,6 +80,33 @@
                 </executions>
             </plugin>
             
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.2</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>org.mcstats.bukkit:metrics</include>
+                                </includes>
+                            </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>org.mcstats</pattern>
+                                    <shadedPattern>${project.groupId}.${project.artifactId}.org.mcstats</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+      
             <!--git-describe plugin-->
             <plugin>
                 <groupId>org.barteks2x</groupId>
@@ -147,6 +180,10 @@
             <id>comphenix-rep</id>
             <name>Comphenix Repository</name>
             <url>http://repo.comphenix.net/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>Plugin Metrics</id>
+            <url>http://repo.mcstats.org/content/repositories/public</url>
         </repository>
     </repositories>
 	

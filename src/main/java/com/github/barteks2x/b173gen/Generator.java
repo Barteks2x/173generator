@@ -1,5 +1,6 @@
 package com.github.barteks2x.b173gen;
 
+import com.comphenix.protocol.metrics.Metrics;
 import com.github.barteks2x.b173gen.biome.BiomeOld;
 import com.github.barteks2x.b173gen.config.VersionTracker;
 import com.github.barteks2x.b173gen.config.WorldConfig;
@@ -10,6 +11,7 @@ import com.github.barteks2x.b173gen.oldgen.WorldChunkManagerOld;
 import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -37,6 +39,12 @@ public class Generator extends JavaPlugin {
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
+        try {
+            Metrics metrics = new Metrics(this);
+            metrics.start();
+        } catch(IOException ex) {
+            this.getLogger().warning("Couldn't enable metrics!");
+        }
         BiomeOld.init(this);
         listener = new Beta173GenListener(this);
         this.registerEvents();

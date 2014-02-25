@@ -12,4 +12,5 @@ commands:
             /173generator regenbiomes - regenerate biomes in world you are in
             /173generator regenbiomes worldname - regenerate biomes in world worldname
 permissions:
-    b173gen.regenbiomes: /173generator regenbiomes command
+    b173gen.regenbiomes: 
+        description: /173generator regenbiomes command
