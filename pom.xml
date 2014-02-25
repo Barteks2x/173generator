@@ -53,7 +53,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <finalName>${artifactId}-${describe}.jar</finalName>
+        <finalName>${artifactId}-${describe}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -110,13 +110,14 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <phase>test</phase>
                         <goals>
                             <goal>copy</goal>
                         </goals>
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
+                                    <!--for testing-->
                                     <groupId>com.comphenix.protocol</groupId>
                                     <artifactId>ProtocolLib</artifactId>
                                     <version>${protocolLibVersion}</version>

@@ -100,5 +100,6 @@ public class WorldGenTaiga1Old implements WorldGenerator173 {
         }
     }
 
-    public void scale(double d0, double d1, double d2) {}
+    public void scale(double d0, double d1, double d2) {
+    }
 }

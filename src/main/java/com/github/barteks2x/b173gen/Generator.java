@@ -3,18 +3,13 @@ package com.github.barteks2x.b173gen;
 import com.github.barteks2x.b173gen.biome.BiomeOld;
 import com.github.barteks2x.b173gen.config.VersionTracker;
 import com.github.barteks2x.b173gen.config.WorldConfig;
-import com.github.barteks2x.b173gen.exception.B173GenInitException;
-import com.github.barteks2x.b173gen.exception.B173GenInitWarning;
 import com.github.barteks2x.b173gen.generator.ChunkProviderGenerate;
 import com.github.barteks2x.b173gen.listener.Beta173GenListener;
 import com.github.barteks2x.b173gen.oldgen.MinecraftMethods;
 import com.github.barteks2x.b173gen.oldgen.WorldChunkManagerOld;
 import java.io.*;
-import java.lang.reflect.Field;
 import java.util.*;
 import java.util.logging.Level;
-import net.minecraft.server.v1_7_R1.Blocks;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -25,15 +20,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Generator extends JavaPlugin {
 
-    private final HashMap<String, WorldConfig> worlds = new HashMap<String, WorldConfig>();
+    private final HashMap<String, WorldConfig> worlds = new HashMap<String, WorldConfig>(2);
     private Beta173GenListener listener;
     private VersionTracker vTracker;
+
     @Override
     public void onDisable() {
     }
-    
+
     @Override
-    public void onLoad(){
+    public void onLoad() {
         VersionChecker.checkServerVersion(this);
         MinecraftMethods.init();
     }
@@ -61,19 +57,18 @@ public class Generator extends JavaPlugin {
         if(!(this.worlds.containsKey(world.getName().trim()))) {
             return;
         }
-        
+
         WorldConfig worldSetting = getOrCreateWorldConfig(world.getName());
         if(worldSetting.isInit) {
             return;
         }
         worldSetting.chunkProvider.init(world, new WorldChunkManagerOld(world.getSeed()));
         worldSetting.isInit = true;
-        
+
         this.getLogger().log(Level.INFO,
                 "{0} enabled for {1}, world seed: {2}", new Object[] {this.getDescription().
-                        getName(), world.getName(), String.valueOf(world.getSeed())});
-        
-        
+                    getName(), world.getName(), String.valueOf(world.getSeed())});
+
     }
 
     public WorldConfig getOrCreateWorldConfig(String name) {
@@ -86,27 +81,27 @@ public class Generator extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(args.length == 0){
+        if(args.length == 0) {
             return false;
         }
-        if("regenbiomes".equalsIgnoreCase(args[0])){
-            if(!sender.hasPermission("b173gen.regenbiomes")){
+        if("regenbiomes".equalsIgnoreCase(args[0])) {
+            if(!sender.hasPermission("b173gen.regenbiomes")) {
                 sender.sendMessage("You don't have permission to use this command");
                 return true;
             }
             World world = null;
-            if(args.length < 2){
-                if(sender instanceof Entity){
+            if(args.length < 2) {
+                if(sender instanceof Entity) {
                     world = ((Entity)sender).getWorld();
                 }
-            }else{
+            } else {
                 world = this.getServer().getWorld(args[1]);
             }
-            if(world == null){
+            if(world == null) {
                 sender.sendMessage("No world specified or specified world doesn't exist! ");
                 return true;
             }
-            if(!this.worlds.containsKey(world.getName().trim())){
+            if(!this.worlds.containsKey(world.getName().trim())) {
                 sender.sendMessage("Specified world isnt 173generator world!");
             }
             File worldFolder = world.getWorldFolder();
@@ -119,13 +114,13 @@ public class Generator extends JavaPlugin {
         PluginManager pm = this.getServer().getPluginManager();
         pm.registerEvents(listener, this);
     }
-    
-        private WorldConfig loadWorldConfig(String name){
-            name = name.trim();
-            WorldConfig config = new WorldConfig(this, name);
-            worlds.put(name, config);
-            config.loadConfig();
-            config.chunkProvider = new ChunkProviderGenerate(config, this);
-            return config;
-        }
+
+    private WorldConfig loadWorldConfig(String name) {
+        name = name.trim();
+        WorldConfig config = new WorldConfig(this, name);
+        worlds.put(name, config);
+        config.loadConfig();
+        config.chunkProvider = new ChunkProviderGenerate(config, this);
+        return config;
+    }
 }

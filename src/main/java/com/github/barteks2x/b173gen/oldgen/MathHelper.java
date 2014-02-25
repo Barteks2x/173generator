@@ -5,6 +5,7 @@ public class MathHelper {
 
     public static final float PI = 3.1415927F;
     private static float SIN_TABLE[];
+
     static {
         SIN_TABLE = new float[0x10000];
         for(int i = 0; i < 0x10000; i++) {

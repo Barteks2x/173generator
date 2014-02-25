@@ -592,7 +592,7 @@ public class ChunkProviderGenerate extends ChunkGenerator {
             if(material != Material.AIR || MinecraftMethods.isLiquid(material)) {
                 return k + 1;
             }
-            
+
         }
 
         return -1;

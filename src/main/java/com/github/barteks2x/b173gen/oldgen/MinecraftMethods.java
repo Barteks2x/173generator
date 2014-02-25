@@ -1,13 +1,8 @@
 package com.github.barteks2x.b173gen.oldgen;
 
 import static com.github.barteks2x.b173gen.oldgen.LightType.*;
-import java.lang.reflect.Field;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import net.minecraft.server.v1_7_R1.Blocks;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import static org.bukkit.Material.*;
 
 public class MinecraftMethods {
@@ -127,7 +122,6 @@ public class MinecraftMethods {
         solidMapping.put(DIODE_BLOCK_OFF, false);
         solidMapping.put(DIODE_BLOCK_ON, false);
         solidMapping.put(LOCKED_CHEST, true);
-        solidMapping.put(STAINED_GLASS, true);
         solidMapping.put(TRAP_DOOR, true);
         solidMapping.put(MONSTER_EGGS, true);
         solidMapping.put(SMOOTH_BRICK, true);
@@ -157,72 +151,26 @@ public class MinecraftMethods {
         solidMapping.put(DRAGON_EGG, true);
         solidMapping.put(REDSTONE_LAMP_OFF, true);
         solidMapping.put(REDSTONE_LAMP_ON, true);
-        solidMapping.put(WOOD_DOUBLE_STEP, true);
-        solidMapping.put(WOOD_STEP, true);
-        solidMapping.put(COCOA, false);
-        solidMapping.put(SANDSTONE_STAIRS, true);
-        solidMapping.put(EMERALD_ORE, true);
-        solidMapping.put(ENDER_CHEST, true);
-        solidMapping.put(TRIPWIRE_HOOK, false);
-        solidMapping.put(TRIPWIRE, false);
-        solidMapping.put(EMERALD_BLOCK, true);
-        solidMapping.put(SPRUCE_WOOD_STAIRS, true);
-        solidMapping.put(BIRCH_WOOD_STAIRS, true);
-        solidMapping.put(JUNGLE_WOOD_STAIRS, true);
-        solidMapping.put(COMMAND, true);
-        solidMapping.put(BEACON, true);
-        solidMapping.put(COBBLE_WALL, true);
-        solidMapping.put(FLOWER_POT, false);
-        solidMapping.put(CARROT, false);
-        solidMapping.put(POTATO, false);
-        solidMapping.put(WOOD_BUTTON, false);
-        solidMapping.put(SKULL, false);
-        solidMapping.put(ANVIL, true);
-        solidMapping.put(TRAPPED_CHEST, true);
-        solidMapping.put(GOLD_PLATE, true);
-        solidMapping.put(IRON_PLATE, true);
-        solidMapping.put(REDSTONE_COMPARATOR_OFF, false);
-        solidMapping.put(REDSTONE_COMPARATOR_ON, false);
-        solidMapping.put(DAYLIGHT_DETECTOR, true);
-        solidMapping.put(REDSTONE_BLOCK, true);
-        solidMapping.put(QUARTZ_ORE, true);
-        solidMapping.put(HOPPER, true);
-        solidMapping.put(QUARTZ_BLOCK, true);
-        solidMapping.put(QUARTZ_STAIRS, true);
-        solidMapping.put(ACTIVATOR_RAIL, false);
-        solidMapping.put(DROPPER, true);
-        solidMapping.put(STAINED_CLAY, true);
-        solidMapping.put(STAINED_GLASS_PANE, true);
-        solidMapping.put(LEAVES_2, true);
-        solidMapping.put(LOG_2, true);
-        solidMapping.put(ACACIA_STAIRS, true);
-        solidMapping.put(DARK_OAK_STAIRS, true);
-        solidMapping.put(HAY_BLOCK, true);
-        solidMapping.put(CARPET, false);
-        solidMapping.put(HARD_CLAY, true);
-        solidMapping.put(COAL_BLOCK, true);
-        solidMapping.put(PACKED_ICE, true);
-        solidMapping.put(DOUBLE_PLANT, false);
 
         //buildable mapping, bukkit doesn't have Material.isBuildable() method
         //automatically generated, code:
         /*
-        StringBuilder sb = new StringBuilder(1000);
-        sb.append("\n");
-        Class<?> clazz = Blocks.class;
-        Field[] fields = clazz.getDeclaredFields();
-        for(Field f : fields){
-            try {
-                net.minecraft.server.v1_7_R1.Block block = (net.minecraft.server.v1_7_R1.Block)f.get(null);
-                 sb.append("buildableMapping.put(").append(Material.getMaterial(net.minecraft.server.v1_7_R1.Block.b(block)).name()).append(", ").append(block.getMaterial().isBuildable()).append(");");
-                 sb.append("\n");
-            } catch(IllegalArgumentException ex) {
-            } catch(IllegalAccessException ex) {
-            }
-           
-        }
-        System.out.println(sb.toString());
-        */
+         StringBuilder sb = new StringBuilder(1000);
+         sb.append("\n");
+         Class<?> clazz = Blocks.class;
+         Field[] fields = clazz.getDeclaredFields();
+         for(Field f : fields){
+         try {
+         net.minecraft.server.v1_7_R1.Block block = (net.minecraft.server.v1_7_R1.Block)f.get(null);
+         sb.append("buildableMapping.put(").append(Material.getMaterial(net.minecraft.server.v1_7_R1.Block.b(block)).name()).append(", ").append(block.getMaterial().isBuildable()).append(");");
+         sb.append("\n");
+         } catch(IllegalArgumentException ex) {
+         } catch(IllegalAccessException ex) {
+         }
+
+         }
+         System.out.println(sb.toString());
+         */
         buildableMapping.put(AIR, false);
         buildableMapping.put(STONE, true);
         buildableMapping.put(GRASS, true);
@@ -241,9 +189,7 @@ public class MinecraftMethods {
         buildableMapping.put(IRON_ORE, true);
         buildableMapping.put(COAL_ORE, true);
         buildableMapping.put(LOG, true);
-        buildableMapping.put(LOG_2, true);
         buildableMapping.put(LEAVES, true);
-        buildableMapping.put(LEAVES_2, true);
         buildableMapping.put(SPONGE, true);
         buildableMapping.put(GLASS, true);
         buildableMapping.put(LAPIS_ORE, true);
@@ -349,51 +295,6 @@ public class MinecraftMethods {
         buildableMapping.put(DRAGON_EGG, true);
         buildableMapping.put(REDSTONE_LAMP_OFF, true);
         buildableMapping.put(REDSTONE_LAMP_ON, true);
-        buildableMapping.put(WOOD_DOUBLE_STEP, true);
-        buildableMapping.put(WOOD_STEP, true);
-        buildableMapping.put(COCOA, false);
-        buildableMapping.put(SANDSTONE_STAIRS, true);
-        buildableMapping.put(EMERALD_ORE, true);
-        buildableMapping.put(ENDER_CHEST, true);
-        buildableMapping.put(TRIPWIRE_HOOK, false);
-        buildableMapping.put(TRIPWIRE, false);
-        buildableMapping.put(EMERALD_BLOCK, true);
-        buildableMapping.put(SPRUCE_WOOD_STAIRS, true);
-        buildableMapping.put(BIRCH_WOOD_STAIRS, true);
-        buildableMapping.put(JUNGLE_WOOD_STAIRS, true);
-        buildableMapping.put(COMMAND, true);
-        buildableMapping.put(BEACON, true);
-        buildableMapping.put(COBBLE_WALL, true);
-        buildableMapping.put(FLOWER_POT, false);
-        buildableMapping.put(CARROT, false);
-        buildableMapping.put(POTATO, false);
-        buildableMapping.put(WOOD_BUTTON, false);
-        buildableMapping.put(SKULL, false);
-        buildableMapping.put(ANVIL, true);
-        buildableMapping.put(TRAPPED_CHEST, true);
-        buildableMapping.put(GOLD_PLATE, true);
-        buildableMapping.put(IRON_PLATE, true);
-        buildableMapping.put(REDSTONE_COMPARATOR_OFF, false);
-        buildableMapping.put(REDSTONE_COMPARATOR_ON, false);
-        buildableMapping.put(DAYLIGHT_DETECTOR, true);
-        buildableMapping.put(REDSTONE_BLOCK, true);
-        buildableMapping.put(QUARTZ_ORE, true);
-        buildableMapping.put(HOPPER, true);
-        buildableMapping.put(QUARTZ_BLOCK, true);
-        buildableMapping.put(QUARTZ_STAIRS, true);
-        buildableMapping.put(ACTIVATOR_RAIL, false);
-        buildableMapping.put(DROPPER, true);
-        buildableMapping.put(STAINED_CLAY, true);
-        buildableMapping.put(HAY_BLOCK, true);
-        buildableMapping.put(CARPET, false);
-        buildableMapping.put(HARD_CLAY, true);
-        buildableMapping.put(COAL_BLOCK, true);
-        buildableMapping.put(PACKED_ICE, true);
-        buildableMapping.put(ACACIA_STAIRS, true);
-        buildableMapping.put(DARK_OAK_STAIRS, true);
-        buildableMapping.put(DOUBLE_PLANT, false);
-        buildableMapping.put(STAINED_GLASS, true);
-        buildableMapping.put(STAINED_GLASS_PANE, true);
     }
 
     public static boolean isLiquid(Material m) {

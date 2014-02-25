@@ -6,7 +6,6 @@ import com.github.barteks2x.b173gen.generator.WorldGenerator173;
 import com.github.barteks2x.b173gen.oldgen.*;
 import java.util.*;
 import java.util.logging.Level;
-import org.bukkit.ChunkSnapshot;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 

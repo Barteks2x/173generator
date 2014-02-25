@@ -29,5 +29,6 @@ public class WorldGenPumpkinOld implements WorldGenerator173 {
         return true;
     }
 
-    public void scale(double d0, double d1, double d2) {}
+    public void scale(double d0, double d1, double d2) {
+    }
 }

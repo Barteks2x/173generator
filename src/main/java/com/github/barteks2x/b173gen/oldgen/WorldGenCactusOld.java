@@ -1,6 +1,5 @@
 package com.github.barteks2x.b173gen.oldgen;
 
-
 import com.github.barteks2x.b173gen.generator.WorldGenerator173;
 import java.util.Random;
 import org.bukkit.Material;
@@ -31,7 +30,8 @@ public class WorldGenCactusOld implements WorldGenerator173 {
         return true;
     }
 
-    public void scale(double d0, double d1, double d2) {}
+    public void scale(double d0, double d1, double d2) {
+    }
 
     protected boolean canPlaceCactusAt(World world, int i, int j, int k) {
         if(MinecraftMethods.Material_isBuildable(world, i - 1, j, k)) {//TODO: isSolid --> isBuildable

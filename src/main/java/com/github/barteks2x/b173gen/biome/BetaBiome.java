@@ -35,16 +35,22 @@ public class BetaBiome {
     public Biome getBiome() {
         return bukkitBiome;
     }
-    
-    public String getName(){
+
+    public String getName() {
         return this.name;
     }
-    
+
     @Override
-    public boolean equals(Object other){
-        if(this == other) return true;
-        if(other == null) return false;
-        if(!(other instanceof BetaBiome)) return false;
+    public boolean equals(Object other) {
+        if(this == other) {
+            return true;
+        }
+        if(other == null) {
+            return false;
+        }
+        if(!(other instanceof BetaBiome)) {
+            return false;
+        }
         return ((BetaBiome)other).getName().equals(this.getName());
     }
 
