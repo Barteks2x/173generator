@@ -7,10 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.bukkit.Server;
 
-/**
- <p>
- @author kuba
- */
 public class VersionChecker {
     private static final String[] KNOWN_VERSIONS = new String[] {
         "1.2.5-R5",
