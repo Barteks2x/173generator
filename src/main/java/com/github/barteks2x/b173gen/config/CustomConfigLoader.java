@@ -22,9 +22,6 @@ public class CustomConfigLoader {
         if(plugin == null) {
             throw new IllegalArgumentException("Plugin cannot be null.");
         }
-        if(!plugin.isInitialized()) {
-            throw new IllegalArgumentException("Plugin must be initialized.");
-        }
         this.plugin = plugin;
         this.filename = filename + ".yml";
         this.defaultConfigFilename = defConfigFilename;

@@ -11,6 +11,7 @@ import com.github.barteks2x.b173gen.oldnoisegen.NoiseGeneratorOctaves3D;
 import java.util.*;
 import org.bukkit.*;
 import static org.bukkit.Material.*;
+import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
 
 public class ChunkProviderGenerate extends ChunkGenerator {
@@ -207,7 +208,11 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         int n = 0;
         for(int x_t = 0; x_t < 16; ++x_t) {
             for(int z_t = 0; z_t < 16; ++z_t) {
-                biomeGrid.setBiome(x_t, z_t, biomes[n].getBiome());
+                Biome biome = biomes[n].getBiome();
+                if(this.config.noswamps && biome == Biome.SWAMPLAND) {
+                    biome = Biome.PLAINS;
+                }
+                biomeGrid.setBiome(x_t, z_t, biome);
                 ++n;
             }
         }

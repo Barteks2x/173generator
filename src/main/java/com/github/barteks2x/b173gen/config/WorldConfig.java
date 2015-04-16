@@ -13,17 +13,10 @@ public class WorldConfig {
     public ChunkProviderGenerate chunkProvider;
     public boolean isInit = false;
     public String eyeOfEnderMsg;
-    public boolean generateCanyons = false,
-            generateStrongholds = false,
-            generateVillages = false,
-            generateTemples = false,
-            generateMineshafts = false,
-            newCaveGen = false,
-            newClayGen = false,
-            newLakeGen = false,
-            newDungeonGen = false,
+    public boolean 
             oldTreeGrowing = true,
-            generateEmerald = false;
+            generateEmerald = false, 
+            noswamps = true;
     private final CustomConfigLoader cfgLoader;
     private final String worldName;
 
@@ -39,18 +32,10 @@ public class WorldConfig {
         try {
             FileConfiguration config = cfgLoader.getConfig();
             cfgLoader.saveDefaultConfig();
-            generateCanyons = config.getBoolean("structures.canyons");
-            generateStrongholds = config.getBoolean("structures.strongholds");
-            generateVillages = config.getBoolean("structures.villages");
-            generateTemples = config.getBoolean("structures.temples");
-            generateMineshafts = config.getBoolean("structures.mineshafts");
-            newCaveGen = config.getBoolean("newFeatures.newCaves");
-            newClayGen = config.getBoolean("newFeatures.newClayGenerator");
-            newLakeGen = config.getBoolean("newFeatures.newLakeGenerator");
             generateEmerald = config.getBoolean("newFeatures.ores.emeralds");
-            newDungeonGen = config.getBoolean("newFeatures.newDungeonGenerator");
             oldTreeGrowing = config.getBoolean("other.oldTreeGrowing");
             eyeOfEnderMsg = config.getString("messages.eyeOfEnderMsg");
+            noswamps = config.getBoolean("biomes.noswamps");
             cfgLoader.saveConfig();
             return true;
         } catch(Exception ex) {

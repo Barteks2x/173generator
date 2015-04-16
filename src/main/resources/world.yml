@@ -1,31 +1,16 @@
-#canyons - generate canyons, default: false
-#strongholds - generate strongholds(UNTESTED!!!), default: false
-#villages - generate villages, default: false
-#temples - generate temples(UNTESTED!!!), default: false
-#mineshafts - generate abandoned mineshafts, default: false
-#
-#newCaves - use new cave generator, default: false
-#newClayGenerator - use new clay generator (faster), default: false
-#newLakeGenerator - use new lake generator, default: false
-#newDungeonGenerator - generate new items in dungeons, default: false
-#
 #emeralds - generate emeralds, default: false
 #
 #oldTreeGrowing - use beta 1.7 tree generator to grow trees, default: true
-structures:
-  canyons: false
-  strongholds: false
-  villages: false
-  temples: false
-  mineshafts: false
+#
+#Eye of ender msg - message you will see when trying to use eye of ender in 173generator world
+#
+#noswamps - replace swampland with plains
 newFeatures:
-  newCaves: false
-  newClayGenerator: false
-  newLakeGenerator: false
-  newDungeonGenerator: false
   ores:
     emeralds: false 
 other:
   oldTreeGrowing: true
 messages:
   eyeOfEnderMsg: "You can't use Eye of Ender in this world!"
+biomes:
+  noswamps: true

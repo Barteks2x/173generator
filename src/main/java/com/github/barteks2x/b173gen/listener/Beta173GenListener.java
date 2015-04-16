@@ -51,10 +51,8 @@ public class Beta173GenListener implements Listener {
             World world = player.getLocation().getWorld();
             WorldConfig cfg;
             if((cfg = plugin.getOrCreateWorldConfig(world.getName())) != null) {
-                if(!cfg.generateStrongholds) {
-                    event.setCancelled(true);
-                    player.sendMessage(cfg.eyeOfEnderMsg);
-                }
+                event.setCancelled(true);
+                player.sendMessage(cfg.eyeOfEnderMsg);
             }
         }
     }

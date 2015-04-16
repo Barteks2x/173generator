@@ -121,7 +121,7 @@ public class MinecraftMethods {
         solidMapping.put(CAKE_BLOCK, true);
         solidMapping.put(DIODE_BLOCK_OFF, false);
         solidMapping.put(DIODE_BLOCK_ON, false);
-        solidMapping.put(LOCKED_CHEST, true);
+        //solidMapping.put(LOCKED_CHEST, true);
         solidMapping.put(TRAP_DOOR, true);
         solidMapping.put(MONSTER_EGGS, true);
         solidMapping.put(SMOOTH_BRICK, true);
