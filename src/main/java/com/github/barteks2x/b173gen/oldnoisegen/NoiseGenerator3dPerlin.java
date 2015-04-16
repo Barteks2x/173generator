@@ -8,12 +8,9 @@ public class NoiseGenerator3dPerlin extends NoiseGenerator {
     public double randomDZ;
 
     private int permutations[];
+    private final boolean nofarlands;
 
-    public NoiseGenerator3dPerlin() {
-        this(new Random());
-    }
-
-    public NoiseGenerator3dPerlin(Random random) {
+    public NoiseGenerator3dPerlin(Random random, boolean nofarlands) {
         permutations = new int[512];
         randomDX = random.nextDouble() * 256D;
         randomDY = random.nextDouble() * 256D;
@@ -29,6 +26,7 @@ public class NoiseGenerator3dPerlin extends NoiseGenerator {
             permutations[k] = l;
             permutations[j + 256] = permutations[j];
         }
+        this.nofarlands = nofarlands;
 
     }
 
@@ -37,6 +35,11 @@ public class NoiseGenerator3dPerlin extends NoiseGenerator {
         double x = xPos + randomDX;
         double y = yPos + randomDY;
         double z = zPos + randomDZ;
+        if(nofarlands) {
+            x = nofarlands(x);
+            y = nofarlands(y);
+            z = nofarlands(z);
+        }
         int intX = (int)x;
         int intY = (int)y;
         int intZ = (int)z;
@@ -101,16 +104,13 @@ public class NoiseGenerator3dPerlin extends NoiseGenerator {
     public void generateNoiseArray(double array[], double xPos, double yPos, double zPos, int xSize,
             int ySize, int zSize, double gridX, double gridY, double gridZ, double a) {
         if(ySize == 1) {
-            //boolean flag = false;
-            //boolean flag1 = false;
-            //boolean flag2 = false;
-            //boolean flag3 = false;
-            //double d8 = 0.0D;
-            //double d10 = 0.0D;
             int index = 0;
             double amplitude = 1.0D / a;
             for(int dx = 0; dx < xSize; dx++) {
                 double x = (xPos + (double)dx) * gridX + randomDX;
+                if(nofarlands) {
+                    x = nofarlands(x);
+                }
                 int intX = (int)x;
                 if(x < (double)intX) {
                     intX--;
@@ -121,6 +121,9 @@ public class NoiseGenerator3dPerlin extends NoiseGenerator {
                 double d17 = x * x * x * (x * (x * 6D - 15D) + 10D);
                 for(int dz = 0; dz < zSize; dz++) {
                     double z = (zPos + (double)dz) * gridZ + randomDZ;
+                    if(nofarlands) {
+                        z = nofarlands(z);
+                    }
                     int intZ = (int)z;
                     if(z < (double)intZ) {
                         intZ--;
@@ -152,18 +155,15 @@ public class NoiseGenerator3dPerlin extends NoiseGenerator {
         int i1 = 0;
         double amplitude = 1.0D / a;
         int i2 = -1;
-        //boolean flag4 = false;
-        //boolean flag5 = false;
-        //boolean flag6 = false;
-        //boolean flag7 = false;
-        //boolean flag8 = false;
-        //boolean flag9 = false;
         double d13 = 0.0D;
         double d15 = 0.0D;
         double d16 = 0.0D;
         double d18 = 0.0D;
         for(int dx = 0; dx < xSize; dx++) {
             double x = (xPos + (double)dx) * gridX + randomDX;
+            if(nofarlands) {
+                x = nofarlands(x);
+            }
             int intX = (int)x;
             if(x < (double)intX) {
                 intX--;
@@ -173,6 +173,9 @@ public class NoiseGenerator3dPerlin extends NoiseGenerator {
             double d22 = x * x * x * (x * (x * 6D - 15D) + 10D);
             for(int dz = 0; dz < zSize; dz++) {
                 double z = (zPos + (double)dz) * gridZ + randomDZ;
+                if(nofarlands) {
+                    z = nofarlands(z);
+                }
                 int k6 = (int)z;
                 if(z < (double)k6) {
                     k6--;
@@ -182,6 +185,7 @@ public class NoiseGenerator3dPerlin extends NoiseGenerator {
                 double d25 = z * z * z * (z * (z * 6D - 15D) + 10D);
                 for(int dy = 0; dy < ySize; dy++) {
                     double y = (yPos + (double)dy) * gridY + randomDY;
+                    //farlands don't exist on y axis
                     int j7 = (int)y;
                     if(y < (double)j7) {
                         j7--;
@@ -228,4 +232,14 @@ public class NoiseGenerator3dPerlin extends NoiseGenerator {
         }
 
     }
+
+  private double nofarlands(double a) {
+      while(a > Integer.MAX_VALUE) {
+        a -= 0xFFFFFFFFL;
+      }
+      while(a < Integer.MIN_VALUE) {
+        a += 0xFFFFFFFFL;
+      }
+      return a;
+  }
 }

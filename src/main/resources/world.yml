@@ -10,6 +10,7 @@ newFeatures:
     emeralds: false 
 other:
   oldTreeGrowing: true
+  noFarlands: false
 messages:
   eyeOfEnderMsg: "You can't use Eye of Ender in this world!"
 biomes:

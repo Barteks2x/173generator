@@ -7,11 +7,11 @@ public class NoiseGeneratorOctaves3D extends NoiseGenerator {
     private final NoiseGenerator3dPerlin generatorCollection[];
     private final int octaves;
 
-    public NoiseGeneratorOctaves3D(Random random, int i) {
+    public NoiseGeneratorOctaves3D(Random random, int i, boolean nofarlands) {
         octaves = i;
         generatorCollection = new NoiseGenerator3dPerlin[i];
         for(int j = 0; j < i; j++) {
-            generatorCollection[j] = new NoiseGenerator3dPerlin(random);
+            generatorCollection[j] = new NoiseGenerator3dPerlin(random, nofarlands);
         }
 
     }

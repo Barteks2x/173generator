@@ -6,6 +6,7 @@ import java.util.Random;
 import org.bukkit.Material;
 import static org.bukkit.Material.*;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 
 public class WorldGenTreeOld implements WorldGenerator173 {
 
@@ -50,7 +51,9 @@ public class WorldGenTreeOld implements WorldGenerator173 {
         if(j1 != GRASS && j1 != DIRT || j >= WorldConfig.heightLimit - l - 1) {
             return false;
         }
-        world.getBlockAt(i, j - 1, k).setType(DIRT);
+        Block block = world.getBlockAt(i, j - 1, k);
+        block.setType(DIRT);
+        block.setData((byte)0);
         for(int k1 = (j - 3) + l; k1 <= j + l; k1++) {
             int j2 = k1 - (j + l);
             int i3 = 1 - j2 / 2;

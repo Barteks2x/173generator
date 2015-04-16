@@ -4,6 +4,7 @@ import com.github.barteks2x.b173gen.generator.WorldGenerator173;
 import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 
 public class WorldGenBigTreeOld implements WorldGenerator173 {
 
@@ -154,7 +155,9 @@ public class WorldGenBigTreeOld implements WorldGenerator173 {
                     if(l1 != Material.AIR && l1 != Material.LEAVES) {
                         ++k1;
                     } else {
-                        this.c.getBlockAt(aint1[0], aint1[1], aint1[2]).setType(l);
+                        Block block = this.c.getBlockAt(aint1[0], aint1[1], aint1[2]);
+                        block.setType(l);
+                        block.setData((byte)0);
                         ++k1;
                     }
                 }
@@ -230,7 +233,9 @@ public class WorldGenBigTreeOld implements WorldGenerator173 {
                 aint3[b1] = MathHelper.floor((double)(aint[b1] + j) + 0.5D);
                 aint3[b2] = MathHelper.floor((double)aint[b2] + (double)j * d0 + 0.5D);
                 aint3[b3] = MathHelper.floor((double)aint[b3] + (double)j * d1 + 0.5D);
-                this.c.getBlockAt(aint3[0], aint3[1], aint3[2]).setType(i);
+                Block block = this.c.getBlockAt(aint3[0], aint3[1], aint3[2]);
+                block.setType(i);
+                block.setData((byte)0);
             }
         }
     }

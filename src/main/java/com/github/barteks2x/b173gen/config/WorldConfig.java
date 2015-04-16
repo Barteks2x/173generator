@@ -16,7 +16,8 @@ public class WorldConfig {
     public boolean 
             oldTreeGrowing = true,
             generateEmerald = false, 
-            noswamps = true;
+            noswamps = true, 
+            nofarlands = false;
     private final CustomConfigLoader cfgLoader;
     private final String worldName;
 
@@ -34,6 +35,7 @@ public class WorldConfig {
             cfgLoader.saveDefaultConfig();
             generateEmerald = config.getBoolean("newFeatures.ores.emeralds");
             oldTreeGrowing = config.getBoolean("other.oldTreeGrowing");
+          nofarlands = config.getBoolean("other.noFarlands");
             eyeOfEnderMsg = config.getString("messages.eyeOfEnderMsg");
             noswamps = config.getBoolean("biomes.noswamps");
             cfgLoader.saveConfig();

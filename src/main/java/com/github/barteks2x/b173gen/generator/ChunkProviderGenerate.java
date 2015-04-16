@@ -90,14 +90,14 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         this.wcm = wcm;
 
         rand = new Random(world.getSeed());
-        noiseGen1 = new NoiseGeneratorOctaves3D(rand, 16);
-        noiseGen2 = new NoiseGeneratorOctaves3D(rand, 16);
-        noiseGen3 = new NoiseGeneratorOctaves3D(rand, 8);
-        noiseGen4 = new NoiseGeneratorOctaves3D(rand, 4);
-        noiseGen5 = new NoiseGeneratorOctaves3D(rand, 4);
-        noiseGen6 = new NoiseGeneratorOctaves3D(rand, 10);
-        noiseGen7 = new NoiseGeneratorOctaves3D(rand, 16);
-        treeNoise = new NoiseGeneratorOctaves3D(rand, 8);
+        noiseGen1 = new NoiseGeneratorOctaves3D(rand, 16, this.config.nofarlands);
+        noiseGen2 = new NoiseGeneratorOctaves3D(rand, 16, this.config.nofarlands);
+        noiseGen3 = new NoiseGeneratorOctaves3D(rand, 8, this.config.nofarlands);
+        noiseGen4 = new NoiseGeneratorOctaves3D(rand, 4, this.config.nofarlands);
+        noiseGen5 = new NoiseGeneratorOctaves3D(rand, 4, this.config.nofarlands);
+        noiseGen6 = new NoiseGeneratorOctaves3D(rand, 10, this.config.nofarlands);
+        noiseGen7 = new NoiseGeneratorOctaves3D(rand, 16, this.config.nofarlands);
+        treeNoise = new NoiseGeneratorOctaves3D(rand, 8, this.config.nofarlands);
 
         clayGen = new WorldGenClayOld(32);
         waterLakeGen = new WorldGenLakesOld(WATER);
