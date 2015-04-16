@@ -112,8 +112,8 @@ public class Generator extends JavaPlugin {
             }
             if(!this.worlds.containsKey(world.getName().trim())) {
                 sender.sendMessage("Specified world isnt 173generator world!");
+                return true;
             }
-            File worldFolder = world.getWorldFolder();
             BiomeRegen.regenBiomes(world, sender, this, this.worlds.get(world.getName().trim()).chunkProvider.wcm);
         }
         return true;

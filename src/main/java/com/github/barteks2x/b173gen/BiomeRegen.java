@@ -36,10 +36,10 @@ public class BiomeRegen {
                 x = Integer.parseInt(s[1]);
                 z = Integer.parseInt(s[2]);
             } catch(NumberFormatException ex) {
-                plugin.getLogger().log(Level.WARNING, "Couldn''t parse region position: {0}", name);
+                plugin.getLogger().log(Level.WARNING, "Couldn't parse region position: {0}", name);
                 continue;
             } catch(NullPointerException ex) {
-                plugin.getLogger().log(Level.WARNING, "Couldn''t parse region position: {0}", name);
+                plugin.getLogger().log(Level.WARNING, "Couldn't parse region position: {0}", name);
                 continue;
             }
             progress.max += regenBiomesInRegion(world, (sender instanceof Player) ? (Player)sender : null, regionFile, x, z, chunks, plugin);
