@@ -9,8 +9,7 @@ commands:
     173generator:
         description: 173generator commands
         usage: |
-            /173generator regenbiomes - regenerate biomes in world you are in
-            /173generator regenbiomes worldname - regenerate biomes in world worldname
+            /173generator regenbiomes [world=worldname] [maxTickMillis=number] - regenerate biomes in world [worldname] with [number] of milliseconds per tick for regenerating biomes. If using from console world must be specified. Default maxTickMillis is 10.
 permissions:
     b173gen.regenbiomes: 
         description: /173generator regenbiomes command
