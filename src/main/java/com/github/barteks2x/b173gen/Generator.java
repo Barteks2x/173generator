@@ -23,7 +23,7 @@ import org.mcstats.Metrics;
 
 public class Generator extends JavaPlugin {
 
-	private final HashMap<String, WorldConfig> worlds = new HashMap<String, WorldConfig>(2);
+	private HashMap<String, WorldConfig> worlds;
 	private Beta173GenListener listener;
 	private VersionTracker vTracker;
 
@@ -40,6 +40,7 @@ public class Generator extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		this.saveDefaultConfig();
+        this.worlds = new HashMap<String, WorldConfig>(2);
 		try {
 			Metrics metrics = new Metrics(this);
 			metrics.start();
@@ -123,7 +124,7 @@ public class Generator extends JavaPlugin {
 				return true;
 			}
             if(this.worlds.get(world.getName().trim()).chunkProvider.wcm == null) {
-                sender.sendMessage("World \""+ world.getName()+"\" is not initialized. It's most likely result of error during initialization.");
+                sender.sendMessage("World \""+ world.getName()+"\" is not initialized. It's most likely result of using /reload command or an error during initialization.");
                 return true;
             }
 			int tickMillisInt;
