@@ -141,7 +141,7 @@ class FindChunksAndRegenBiomesSyncTask extends BukkitRunnable {
         biomeArray = gen.wcm.getBiomes(biomeArray, chunkX << 4, chunkZ << 4, 16, 16);
         for (int x = 0; x < 16; ++x) {
             for (int z = 0; z < 16; ++z) {
-                world.setBiome(chunkX << 4 | x, chunkZ << 4 | z, biomeArray[x << 4 | z].getBiome());
+                world.setBiome(chunkX << 4 | x, chunkZ << 4 | z, biomeArray[x << 4 | z].getBiome(gen.getConfig()));
             }
         }
         if (!loadedBefore) {

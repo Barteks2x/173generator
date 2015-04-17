@@ -208,10 +208,7 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         int n = 0;
         for(int x_t = 0; x_t < 16; ++x_t) {
             for(int z_t = 0; z_t < 16; ++z_t) {
-                Biome biome = biomes[n].getBiome();
-                if(this.config.noswamps && biome == Biome.SWAMPLAND) {
-                    biome = Biome.PLAINS;
-                }
+                Biome biome = biomes[n].getBiome(this.config);
                 biomeGrid.setBiome(x_t, z_t, biome);
                 ++n;
             }
@@ -722,5 +719,9 @@ public class ChunkProviderGenerate extends ChunkGenerator {
             }
         }
         return array;
+    }
+
+    public WorldConfig getConfig() {
+        return this.config;
     }
 }

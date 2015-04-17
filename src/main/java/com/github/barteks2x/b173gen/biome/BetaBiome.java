@@ -1,5 +1,6 @@
 package com.github.barteks2x.b173gen.biome;
 
+import com.github.barteks2x.b173gen.config.WorldConfig;
 import org.bukkit.block.Biome;
 
 public class BetaBiome {
@@ -32,7 +33,10 @@ public class BetaBiome {
         this.bukkitBiome = temp != null ? temp : Biome.PLAINS;
     }
 
-    public Biome getBiome() {
+    public Biome getBiome(WorldConfig cfg) {
+        if(cfg.noswamps && this.bukkitBiome == Biome.SWAMPLAND){
+            return Biome.PLAINS;
+        }
         return bukkitBiome;
     }
 
