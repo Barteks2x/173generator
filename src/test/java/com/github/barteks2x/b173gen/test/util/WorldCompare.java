@@ -16,7 +16,9 @@ public class WorldCompare {
                     "\\." + //dot
                     "-?\\d+" +//number
                     "\\.mcr";//.mcr
-    private static final boolean IGNORE_LIQUID_TYPE_DIFFERENCE = false;
+
+    //these are impossible to get right due to differences in the way MC works
+    private static final boolean IGNORE_LIQUID_TYPE_DIFFERENCE = true;
 
     private IGeneratorChunkSource source;
     private File regionFilesDir;

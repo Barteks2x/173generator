@@ -70,6 +70,17 @@ public class TestCompareToBetaTerrain {
         assertEquals("The generated world must be equal to saved world", expectedRegults, actualResults);
     }
 
+    @Test public void test03Caves() throws IOException, DataFormatException {
+        File regionDir = new File(this.getClass().getResource("/03_CAVES").getFile());
+        IGeneratorChunkSource chunkSource = new ChunkSourceCaves();
+        WorldCompare compare = new WorldCompare(chunkSource, regionDir, chunksFile, MAX_DIFF);
+
+        WorldCompare.CompareResults actualResults = compare.start();
+        WorldCompare.CompareResults expectedRegults = new WorldCompare.CompareResults(MAX_DIFF);
+
+        assertEquals("The generated world must be equal to saved world", expectedRegults, actualResults);
+    }
+
     private class ChunkSourceTerrain implements IGeneratorChunkSource {
         private Map<RegionChunkPosition, ChunkData> map = new HashMap<RegionChunkPosition, ChunkData>();
 
@@ -94,6 +105,15 @@ public class TestCompareToBetaTerrain {
             super.loadChunkData(x, z);
             ChunkData data = getChunkData(x, z);
             generator.replaceBlocksForBiome(x, z, data, wcm.getBiomeBlock(null, x*16, z*16, 16, 16));
+        }
+    }
+
+    private class ChunkSourceCaves extends ChunkSourceBiomes {
+        @Override
+        public void loadChunkData(int x, int z) {
+            super.loadChunkData(x, z);
+            ChunkData data = getChunkData(x, z);
+            generator.generateCaves(x, z, data);
         }
     }
 }

@@ -97,7 +97,7 @@ public class ChunkProviderGenerate extends ChunkGenerator {
 
         generateTerrain(chunkX, chunkZ, terrain);
         replaceBlocksForBiome(chunkX, chunkZ, terrain, biomes);
-        caves.generate(world, chunkX, chunkZ, terrain);
+        generateCaves(chunkX, chunkZ, terrain);
 
         int n = 0;
         for(int localX = 0; localX < 16; ++localX) {
@@ -254,6 +254,9 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         }
     }
 
+    public void generateCaves(int x, int z, ChunkData data) {
+        caves.generate(world, x, z, data);
+    }
     @Override
     public boolean canSpawn(World w, int x, int z) {
         this.plugin.initWorld(w);
