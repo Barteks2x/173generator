@@ -98,7 +98,6 @@ public class BlockPopulator extends org.bukkit.generator.BlockPopulator {
     }
 
     public void populate(int chunkX, int chunkZ) {
-        if(true) return;
         int x = chunkX * 16;
         int z = chunkZ * 16;
         BetaBiome biome = this.wcm.getBiome(x + 16, z + 16);
