@@ -119,7 +119,7 @@ public class BlockPopulator extends org.bukkit.generator.BlockPopulator {
 
         generateCentered(x, z, 1, this.lapisGen, 16);
 
-        generateTrees(x, z, biome, biome.getTreesForBiome(this.rand, (int) ((this.treeNoise.func_806_a(x * 0.5D, z * 0.5D) / 8D + this.rand.nextDouble() * 4D + 4D) / 3D)));
+        generateTrees(x, z, biome, biome.getTreesForBiome(this.rand, (int) ((this.treeNoise.generateNoise(x * 0.5D, z * 0.5D) / 8D + this.rand.nextDouble() * 4D + 4D) / 3D)));
         generate(x, z, biome.getFlowersForBiome(), this.yellowFlowerGen, 128);
         generateTallGrass(x, z, biome, biome.getTallGrassForBiome());
         generate(x, z, biome.getDeadBushForBiome(), this.deadBushGen, 128);
