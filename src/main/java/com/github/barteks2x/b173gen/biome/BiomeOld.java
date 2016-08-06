@@ -89,18 +89,18 @@ public class BiomeOld {
         return (rand.nextInt(10) == 0 ? new WorldGenBigTreeOld() : new WorldGenTreeOld());
     }
 
-    public static byte top(BetaBiome biome) {
+    public static Material top(BetaBiome biome) {
         if(biome.equals(DESERT)) {
-            return (byte)Material.SAND.getId();
+            return Material.SAND;
         }
-        return (byte)Material.GRASS.getId();
+        return Material.GRASS;
     }
 
-    public static byte filler(BetaBiome biome) {
+    public static Material filler(BetaBiome biome) {
         if(biome.equals(DESERT)) {
-            return (byte)Material.SAND.getId();
+            return Material.SAND;
         }
-        return (byte)Material.DIRT.getId();
+        return Material.DIRT;
     }
 
     public static BetaBiome getBiomeFromLookup(double d, double d1) {

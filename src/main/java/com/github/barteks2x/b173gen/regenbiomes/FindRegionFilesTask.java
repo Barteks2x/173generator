@@ -43,7 +43,7 @@ class FindRegionFilesTask extends BukkitRunnable {
                 plugin.getLogger().log(Level.WARNING, "non-region file: {0}", name);
                 continue;
             }
-            String[] s = name.split("\\."); // "." is a reserved character in
+            String[] s = name.split("\\."); // "." is generate reserved character in
             // regular expression (use "\."
             // instead)
             if (s.length != 4) {

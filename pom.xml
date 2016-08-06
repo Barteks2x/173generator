@@ -9,26 +9,19 @@
         <!--Special git describe version allows for empty prefix & suffix-->
         <gitdescribe-prefix></gitdescribe-prefix>
         <gitdescribe-suffix></gitdescribe-suffix>
-        <protocolLibVersion>3.2.0</protocolLibVersion>
-        <craftbukkitVersion>1.7.2-R0.3</craftbukkitVersion>
+        <protocolLibVersion>4.0.2</protocolLibVersion>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.7.2-R0.3</version>
+            <version>1.10.2-R0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
             <version>${protocolLibVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mcstats.bukkit</groupId>
-            <artifactId>metrics</artifactId>
-            <version>R7</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -55,33 +48,6 @@
         </resources>
         <finalName>${project.artifactId}-${describe}</finalName>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.2</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <artifactSet>
-                                <includes>
-                                    <include>org.mcstats.bukkit:metrics</include>
-                                </includes>
-                            </artifactSet>
-                            <relocations>
-                                <relocation>
-                                    <pattern>org.mcstats</pattern>
-                                    <shadedPattern>${project.groupId}.${project.artifactId}.org.mcstats</shadedPattern>
-                                </relocation>
-                            </relocations>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-      
             <!--git-describe plugin-->
             <plugin>
                 <groupId>org.barteks2x</groupId>
@@ -149,16 +115,11 @@
         <repository>
             <id>Bukkit</id>
             <name>Bukkit Repository</name>
-            <url>http://repo.bukkit.org/content/groups/public</url>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
-            <id>comphenix-rep</id>
-            <name>Comphenix Repository</name>
-            <url>http://repo.comphenix.net/content/groups/public</url>
-        </repository>
-        <repository>
-            <id>Plugin Metrics</id>
-            <url>http://repo.mcstats.org/content/repositories/public</url>
+            <id>dmulloy2-repo</id>
+            <url>http://repo.dmulloy2.net/content/groups/public/</url>
         </repository>
     </repositories>
 	

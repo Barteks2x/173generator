@@ -60,9 +60,9 @@ public class WorldGenLiquidsOld implements WorldGenerator173 {
 
             if(l == 3 && i1 == 1) {
                 world.getBlockAt(i, j, k).setType(this.a);
-                //world.a = true; //I have no idea what it is supposed to do
-                //Block.byId[this.a].a(world, i, j, k, random);//Does nothing in beta 1.7.*
-                //world.a = false;
+                //world.generate = true; //I have no idea what it is supposed to do
+                //Block.byId[this.generate].generate(world, i, j, k, random);//Does nothing in beta 1.7.*
+                //world.generate = false;
             }
 
             return true;

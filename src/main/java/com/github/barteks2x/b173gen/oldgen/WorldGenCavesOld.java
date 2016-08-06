@@ -4,204 +4,231 @@ import com.github.barteks2x.b173gen.WorldGenBaseOld;
 import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.generator.ChunkGenerator;
+
+import static com.github.barteks2x.b173gen.oldgen.MathHelper.*;
+import static org.bukkit.Material.*;
+import static org.bukkit.Material.AIR;
+import static org.bukkit.Material.LAVA;
 
 public class WorldGenCavesOld extends WorldGenBaseOld {
 
-    public WorldGenCavesOld() {
+    public static final double MIN_HORIZONTAL_SIZE = 1.5D;
+
+    protected void generate(int generatedChunkX, int generatedChunkZ, ChunkGenerator.ChunkData data, double structureOriginBlockX, double structureOriginBlockY, double structureOriginBlockZ) {
+        generateBranch(
+                generatedChunkX, generatedChunkZ,
+                data,
+                structureOriginBlockX, structureOriginBlockY, structureOriginBlockZ,
+                1.0F + rand.nextFloat() * 6F, 0.0F, 0.0F, -1, -1, 0.5D);
     }
 
-    protected void a(int i, int j, byte abyte0[], double d, double d1, double d2) {
-        a(i, j, abyte0, d, d1, d2, 1.0F + rand.nextFloat() * 6F, 0.0F, 0.0F, -1, -1, 0.5D);
-    }
+    protected void generateBranch(int generatedChunkX, int generatedChunkZ,
+                                  ChunkGenerator.ChunkData data,
+                                  double currentBlockX, double currentBlockY, double currentBlockZ,
+                                  float maxHorizontalSize, float directionAngleHorizontal, float directionAngleVertical,
+                                  int currentCaveSystemRadius, int maxCaveSystemRadius, double verticalCaveSizeMultiplier) {
 
-    @SuppressWarnings("cast")
-    protected void a(int i, int j, byte abyte0[], double d, double d1, double d2, float f,
-            float f1, float f2, int k, int l, double d3) {
-
-        double d4 = i * 16 + 8;
-        double d5 = j * 16 + 8;
-        float f3 = 0.0F;
-        float f4 = 0.0F;
+        double generatedChunkCenterX = generatedChunkX * 16 + 8;
+        double generatedChunkCenterZ = generatedChunkZ * 16 + 8;
+        float directionHorizontalChange = 0.0F;
+        float directionVerticalChange = 0.0F;
         Random random = new Random(rand.nextLong());
-        if(l <= 0) {
-            int i1 = blockShift * 16 - 16;
-            l = i1 - random.nextInt(i1 / 4);
+        //negative means not generated yet
+        if(maxCaveSystemRadius <= 0) {
+            int maxBlockRadius = maxGenerationRadius * 16 - 16;
+            maxCaveSystemRadius = maxBlockRadius - random.nextInt(maxBlockRadius / 4);
         }
-        boolean flag = false;
-        if(k == -1) {
-            k = l / 2;
-            flag = true;
+        boolean noSplitBranch = false;
+        if(currentCaveSystemRadius == -1) {
+            currentCaveSystemRadius = maxCaveSystemRadius / 2;
+            noSplitBranch = true;
         }
-        int j1 = random.nextInt(l / 2) + l / 4;
-        boolean flag1 = random.nextInt(6) == 0;
-        for(; k < l; k++) {
-            double d6 = 1.5D + (double)(MathHelper.sin(((float)k * 3.141593F)
-                    / (float)l)
-                    * f * 1.0F);
-            double d7 = d6 * d3;
-            float f5 = MathHelper.cos(f2);
-            float f6 = MathHelper.sin(f2);
-            d += MathHelper.cos(f1) * f5;
-            d1 += f6;
-            d2 += MathHelper.sin(f1) * f5;
-            if(flag1) {
-                f2 *= 0.92F;
+        int splitDistance = random.nextInt(maxCaveSystemRadius / 2) + maxCaveSystemRadius / 4;
+        boolean allowSteepCave = random.nextInt(6) == 0;
+        for(; currentCaveSystemRadius < maxCaveSystemRadius; currentCaveSystemRadius++) {
+
+            //caveRadius grows as we go out of the center
+            double caveRadiusHorizontal = getCaveRadius(maxHorizontalSize, currentCaveSystemRadius, maxCaveSystemRadius);
+            double caveRadiusVertical = caveRadiusHorizontal * verticalCaveSizeMultiplier;
+
+            //from sin(alpha)=y/r and cos(alpha)=x/r ==> x = r*cos(alpha) and y = r*sin(alpha)
+            //always moves by one block in some direction
+            //x is horizontal radius, y is vertical
+            float horizontalDirectionSize = cos(directionAngleVertical);
+            float directionY = sin(directionAngleVertical);
+            //y is directionZ and is is directionX
+            currentBlockX += cos(directionAngleHorizontal) * horizontalDirectionSize;
+            currentBlockY += directionY;
+            currentBlockZ += sin(directionAngleHorizontal) * horizontalDirectionSize;
+            if(allowSteepCave) {
+                directionAngleVertical *= 0.92F;
             } else {
-                f2 *= 0.7F;
+                directionAngleVertical *= 0.7F;
             }
-            f2 += f4 * 0.1F;
-            f1 += f3 * 0.1F;
-            f4 *= 0.9F;
-            f3 *= 0.75F;
-            f4 += (random.nextFloat() - random.nextFloat())
-                    * random.nextFloat() * 2.0F;
-            f3 += (random.nextFloat() - random.nextFloat())
-                    * random.nextFloat() * 4F;
-            if(!flag && k == j1 && f > 1.0F) {
-                a(i, j, abyte0, d, d1, d2,
-                        random.nextFloat() * 0.5F + 0.5F, f1 - 1.570796F,
-                        f2 / 3F, k, l, 1.0D);
-                a(i, j, abyte0, d, d1, d2,
-                        random.nextFloat() * 0.5F + 0.5F, f1 + 1.570796F,
-                        f2 / 3F, k, l, 1.0D);
+            directionAngleVertical += directionVerticalChange * 0.1F;
+            directionAngleHorizontal += directionHorizontalChange * 0.1F;
+
+            directionVerticalChange *= 0.9F;
+            directionHorizontalChange *= 0.75F;
+            directionVerticalChange += (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 2.0F;
+            directionHorizontalChange += (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 4F;
+
+            if(!noSplitBranch && currentCaveSystemRadius == splitDistance && maxHorizontalSize > 1.0F) {
+                generateBranch(generatedChunkX, generatedChunkZ, data, currentBlockX, currentBlockY, currentBlockZ,
+                        random.nextFloat() * 0.5F + 0.5F, directionAngleHorizontal - 1.570796F,
+                        directionAngleVertical / 3F, currentCaveSystemRadius, maxCaveSystemRadius, 1.0D);
+                generateBranch(generatedChunkX, generatedChunkZ, data, currentBlockX, currentBlockY, currentBlockZ,
+                        random.nextFloat() * 0.5F + 0.5F, directionAngleHorizontal + 1.570796F,
+                        directionAngleVertical / 3F, currentCaveSystemRadius, maxCaveSystemRadius, 1.0D);
                 return;
             }
-            if(!flag && random.nextInt(4) == 0) {
+            if(!noSplitBranch && random.nextInt(4) == 0) {
                 continue;
             }
-            double d8a = d - d4;
-            double d9a = d2 - d5;
-            double d10a = l - k;
-            double d11 = f + 2.0F + 16F;
-            if((d8a * d8a + d9a * d9a) - d10a * d10a > d11 * d11) {
+            double chunkCenterToCurrentX = currentBlockX - generatedChunkCenterX;
+            double chunkCenterToCurrentZ = currentBlockZ - generatedChunkCenterZ;
+
+            if(isCurrentChunkUnreachable(chunkCenterToCurrentX, chunkCenterToCurrentZ, maxCaveSystemRadius, currentCaveSystemRadius, maxHorizontalSize)) {
                 return;
             }
-            if(d < d4 - 16D - d6 * 2D || d2 < d5 - 16D - d6 * 2D
-                    || d > d4 + 16D + d6 * 2D || d2 > d5 + 16D + d6 * 2D) {
+            //is cave out of bounds of current chunk?
+            if(currentBlockX < generatedChunkCenterX - 16D - caveRadiusHorizontal * 2D ||
+                    currentBlockZ < generatedChunkCenterZ - 16D - caveRadiusHorizontal * 2D ||
+                    currentBlockX > generatedChunkCenterX + 16D + caveRadiusHorizontal * 2D ||
+                    currentBlockZ > generatedChunkCenterZ + 16D + caveRadiusHorizontal * 2D) {
                 continue;
             }
-            int d8 = MathHelper.floor(d - d6) - i * 16 - 1;
-            int k1 = (MathHelper.floor(d + d6) - i * 16) + 1;
-            int d9 = MathHelper.floor(d1 - d7) - 1;
-            int l1 = MathHelper.floor(d1 + d7) + 1;
-            int d10 = MathHelper.floor(d2 - d6) - j * 16 - 1;
-            int i2 = (MathHelper.floor(d2 + d6) - j * 16) + 1;
-            if(d8 < 0) {
-                d8 = 0;
+            int startX = floor(currentBlockX - caveRadiusHorizontal) - generatedChunkX * 16 - 1;
+            int endX = (floor(currentBlockX + caveRadiusHorizontal) - generatedChunkX * 16) + 1;
+            int startY = floor(currentBlockY - caveRadiusVertical) - 1;
+            int endY = floor(currentBlockY + caveRadiusVertical) + 1;
+            int startZ = floor(currentBlockZ - caveRadiusHorizontal) - generatedChunkZ * 16 - 1;
+            int endZ = (floor(currentBlockZ + caveRadiusHorizontal) - generatedChunkZ * 16) + 1;
+            if(startX < 0) {
+                startX = 0;
             }
-            if(k1 > 16) {
-                k1 = 16;
+            if(endX > 16) {
+                endX = 16;
             }
-            if(d9 < 1) {
-                d9 = 1;
+            if(startY < 1) {
+                startY = 1;
             }
-            if(l1 > 120) {
-                l1 = 120;
+            if(endY > 120) {
+                endY = 120;
             }
-            if(d10 < 0) {
-                d10 = 0;
+            if(startZ < 0) {
+                startZ = 0;
             }
-            if(i2 > 16) {
-                i2 = 16;
-            }
-            boolean flag2 = false;
-            for(int j2 = d8; !flag2 && j2 < k1; j2++) {
-                for(int l2 = d10; !flag2 && l2 < i2; l2++) {
-                    for(int i3 = l1 + 1; !flag2 && i3 >= d9 - 1; i3--) {
-                        int j3 = (j2 * 16 + l2) * 128 + i3;
-                        if(i3 < 0 || i3 >= 128) {
-                            continue;
-                        }
-                        if(abyte0[j3] == Material.WATER.getId()
-                                || abyte0[j3] == Material.STATIONARY_WATER.getId()) {
-                            flag2 = true;
-                        }
-                        if(i3 != d9 - 1 && j2 != d8 && j2 != k1 - 1
-                                && l2 != d10 && l2 != i2 - 1) {
-                            i3 = d9;
-                        }
-                    }
-
-                }
-
+            if(endZ > 16) {
+                endZ = 16;
             }
 
-            if(flag2) {
+            if(findWater(data, startX, endX, startY, endY, startZ, endZ)) {
                 continue;
             }
-            for(int k2 = d8; k2 < k1; k2++) {
-                double d12 = (((double)(k2 + i * 16) + 0.5D) - d) / d6;
-                label0:
-                for(int k3 = d10; k3 < i2; k3++) {
-                    double d13 = (((double)(k3 + j * 16) + 0.5D) - d2) / d6;
-                    int l3 = (k2 * 16 + k3) * 128 + l1;
-                    boolean flag3 = false;
-                    if(d12 * d12 + d13 * d13 >= 1.0D) {
+            for(int localX = startX; localX < endX; localX++) {
+                double xDistanceScaled = (localX + generatedChunkX * 16.0 + 0.5D - currentBlockX) / caveRadiusHorizontal;
+                for(int localZ = startZ; localZ < endZ; localZ++) {
+                    double zDistanceScaled = (localZ + generatedChunkZ * 16 + 0.5D - currentBlockZ) / caveRadiusHorizontal;
+                    boolean hitGrassSurface = false;
+                    if(xDistanceScaled * xDistanceScaled + zDistanceScaled * zDistanceScaled >= 1.0D) {
                         continue;
                     }
-                    int i4 = l1 - 1;
-                    do {
-                        if(i4 < d9) {
-                            continue label0;
-                        }
-                        double d14 = (((double)i4 + 0.5D) - d1) / d7;
-                        if(d14 > -0.69999999999999996D
-                                && d12 * d12 + d14 * d14 + d13 * d13 < 1.0D) {
-                            byte byte0 = abyte0[l3];
-                            if(byte0 == Material.GRASS.getId()) {
-                                flag3 = true;
+
+                    for(int localY = endY; localY >= startY; localY--) {
+                        double yDistanceScaled = (localY + 0.5D - currentBlockY) / caveRadiusVertical;
+                        //yDistanceScaled > -0.7 ==> flattened floor
+                        if(yDistanceScaled > -0.7D &&
+                                xDistanceScaled * xDistanceScaled + yDistanceScaled * yDistanceScaled + zDistanceScaled * zDistanceScaled < 1.0D) {
+                            Material previousBlock = data.getType(localX, localY, localZ);
+                            if(previousBlock == GRASS) {
+                                hitGrassSurface = true;
                             }
-                            if(byte0 == Material.STONE.getId()
-                                    || byte0 == Material.DIRT.getId()
-                                    || byte0 == Material.GRASS.getId()) {
-                                if(i4 < 10) {
-                                    abyte0[l3]
-                                            = (byte)Material.LAVA.getId();
+                            if(previousBlock == STONE
+                                    || previousBlock == DIRT
+                                    || previousBlock == GRASS) {
+                                if(localY < 10) {
+                                    data.setBlock(localX, localY, localZ, LAVA);
                                 } else {
-                                    abyte0[l3] = 0;
-                                    if(flag3
-                                            && abyte0[l3 - 1]
-                                            == Material.DIRT.getId()) {
-                                        abyte0[l3 - 1]
-                                                = (byte)Material.GRASS.getId();
+                                    data.setBlock(localX, localY, localZ, AIR);
+                                    if(hitGrassSurface && data.getType(localX, localY - 1, localZ) == DIRT) {
+                                        data.setBlock(localX, localY - 1, localZ, GRASS);
                                     }
                                 }
                             }
                         }
-                        l3--;
-                        i4--;
-                    } while(true);
-                }
 
+                    }
+                }
             }
 
-            if(flag) {
+            //why?
+            if(noSplitBranch) {
                 break;
             }
         }
 
     }
 
+    //returns true of this distance can't be reached even after all remaining iterations
+    private static boolean isCurrentChunkUnreachable(double distanceToOriginX, double distanceToOriginZ, int maxCaveSystemRadius, int currentCaveSystemRadius, float maxHorizontalSize) {
+        double blocksLeft = maxCaveSystemRadius - currentCaveSystemRadius;
+        //even if the exact block can't be reached, the chunk may be reachable by center of the cave
+        //and cave size must be also included
+        double bufferDistance = maxHorizontalSize + 2.0F + 16F;
+        return (distanceToOriginX * distanceToOriginX + distanceToOriginZ * distanceToOriginZ) - blocksLeft * blocksLeft > bufferDistance * bufferDistance;
+    }
+
+    //returns radius of the insize of a cave
+    private static double getCaveRadius(float horizontalSizeFactor, int currentCaveSystemRadius, int maxCaveSystemRadius) {
+        float baseSize = sin(currentCaveSystemRadius * 3.141593F / maxCaveSystemRadius);
+        assert baseSize >= 0;
+        return MIN_HORIZONTAL_SIZE + baseSize * horizontalSizeFactor;
+    }
+
+    private boolean findWater(ChunkGenerator.ChunkData data, int startX, int endX, int startY, int endY, int startZ, int endZ) {
+        for(int xPos = startX; xPos < endX; xPos++) {
+            for(int zPos = startZ; zPos < endZ; zPos++) {
+                for(int yPos = endY + 1; yPos >= startY - 1; yPos--) {
+                    if(yPos < 0 || yPos >= 128) {
+                        continue;
+                    }
+                    if(data.getType(xPos, yPos, zPos) == WATER
+                            || data.getType(xPos, yPos, zPos) == STATIONARY_WATER) {
+                        return true;
+                    }
+                    if(yPos != startY - 1 && xPos != startX && xPos != endX - 1
+                            && zPos != startZ && zPos != endZ - 1) {
+                        yPos = startY;
+                    }
+                }
+
+            }
+        }
+        return false;
+    }
+
     @Override
-    protected void generate(World world, int i, int j, int k, int l, byte abyte0[]) {
+    protected void generate(World world, int structureOriginChunkX, int structureOriginChunkZ, int generatedChunkX, int generatedChunkZ, ChunkGenerator.ChunkData data) {
         int i1 = rand.nextInt(rand.nextInt(rand.nextInt(40) + 1) + 1);
         if(rand.nextInt(15) != 0) {
             i1 = 0;
         }
         for(int j1 = 0; j1 < i1; j1++) {
-            double d = i * 16 + rand.nextInt(16);
-            double d1 = rand.nextInt(rand.nextInt(120) + 8);
-            double d2 = j * 16 + rand.nextInt(16);
+            double structureOriginBlockX = structureOriginChunkX * 16 + rand.nextInt(16);
+            double structureOriginBlockY = rand.nextInt(rand.nextInt(120) + 8);
+            double structureOriginBlockZ = structureOriginChunkZ * 16 + rand.nextInt(16);
             int k1 = 1;
             if(rand.nextInt(4) == 0) {
-                a(k, l, abyte0, d, d1, d2);
+                generate(generatedChunkX, generatedChunkZ, data, structureOriginBlockX, structureOriginBlockY, structureOriginBlockZ);
                 k1 += rand.nextInt(4);
             }
             for(int l1 = 0; l1 < k1; l1++) {
                 float f = rand.nextFloat() * 3.141593F * 2.0F;
                 float f1 = ((rand.nextFloat() - 0.5F) * 2.0F) / 8F;
                 float f2 = rand.nextFloat() * 2.0F + rand.nextFloat();
-                a(k, l, abyte0, d, d1, d2, f2, f, f1, 0, 0, 1.0D);
+                generateBranch(generatedChunkX, generatedChunkZ, data, structureOriginBlockX, structureOriginBlockY, structureOriginBlockZ, f2, f, f1, 0, 0, 1.0D);
             }
         }
     }
