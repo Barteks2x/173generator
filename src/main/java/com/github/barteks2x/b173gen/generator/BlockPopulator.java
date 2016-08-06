@@ -53,6 +53,8 @@ public class BlockPopulator extends org.bukkit.generator.BlockPopulator {
 
     private NoiseGeneratorOctaves3D treeNoise;
 
+    private int lastX = Integer.MIN_VALUE, lastZ = Integer.MIN_VALUE;
+
     public BlockPopulator(World world, WorldChunkManagerOld wcm, WorldConfig config) {
 
         this.world = world;
@@ -98,6 +100,11 @@ public class BlockPopulator extends org.bukkit.generator.BlockPopulator {
     }
 
     public void populate(int chunkX, int chunkZ) {
+        if(chunkX == lastX && chunkZ == lastZ) {
+            return;
+        }
+        lastX = chunkX;
+        lastZ = chunkZ;
         int x = chunkX * 16;
         int z = chunkZ * 16;
         BetaBiome biome = this.wcm.getBiome(x + 16, z + 16);
@@ -108,27 +115,27 @@ public class BlockPopulator extends org.bukkit.generator.BlockPopulator {
         generateLavaLakes(x, z);
         generate(x, z, this.dungeonGen, 8, 128);
 
-        generate(x, z, 10, this.clayGen, 128);
-        generate(x, z, 20, this.dirtGen, 128);
-        generate(x, z, 10, this.gravelGen, 128);
-        generate(x, z, 20, this.coalGen, 128);
-        generate(x, z, 20, this.ironGen, 64);
-        generate(x, z, 2, this.goldGen, 32);
-        generate(x, z, 8, this.redstoneGen, 16);
-        generate(x, z, 1, this.diamondGen, 16);
+        generateMineral(x, z, this.clayGen, 10, 128);
+        generateMineral(x, z, this.dirtGen, 20, 128);
+        generateMineral(x, z, this.gravelGen, 10, 128);
+        generateMineral(x, z, this.coalGen, 20, 128);
+        generateMineral(x, z, this.ironGen, 20, 64);
+        generateMineral(x, z, this.goldGen, 2, 32);
+        generateMineral(x, z, this.redstoneGen, 8, 16);
+        generateMineral(x, z, this.diamondGen, 1, 16);
 
         generateCentered(x, z, 1, this.lapisGen, 16);
 
         generateTrees(x, z, biome, biome.getTreesForBiome(this.rand, (int) ((this.treeNoise.generateNoise(x * 0.5D, z * 0.5D) / 8D + this.rand.nextDouble() * 4D + 4D) / 3D)));
-        generate(x, z, biome.getFlowersForBiome(), this.yellowFlowerGen, 128);
+        generate(x, z, this.yellowFlowerGen, biome.getFlowersForBiome(), 128);
         generateTallGrass(x, z, biome, biome.getTallGrassForBiome());
-        generate(x, z, biome.getDeadBushForBiome(), this.deadBushGen, 128);
+        generate(x, z, this.deadBushGen, biome.getDeadBushForBiome(), 128);
         generateRare(x, z, this.redFlowerGen, 2, 128);
         generateRare(x, z, this.brownMushroomGen, 4, 128);
         generateRare(x, z, this.redMushroomGen, 8, 128);
         generate(x, z, this.reedGen, 10, 128);
         generateRare(x, z, this.pumpkinGen, 32, 128);
-        generate(x, z, biome.getCactusForBiome(), this.cactusGen, 128);
+        generate(x, z, this.cactusGen, biome.getCactusForBiome(), 128);
 
         generateLiquidWater(x, z);
         generateLiquidLava(x, z);
@@ -155,7 +162,7 @@ public class BlockPopulator extends org.bukkit.generator.BlockPopulator {
                 int blockY = this.getHighestSolidOrLiquidBlock(blockX, blockZ);
                 double temp = this.temperatures[(localX << 4) | localZ] - (blockY - 64) / 64D * 0.3D;
                 Material blockBelow = this.world.getBlockAt(blockX, blockY - 1, blockZ).getType();
-                if ((temp < 0.5D) &&
+                if ((temp < 0.8D) &&
                         blockY > 0 && blockY < 128 &&
                         this.world.getBlockAt(blockX, blockY, blockZ).isEmpty() &&
                         blockBelow.isSolid() && blockBelow != ICE) {
@@ -235,7 +242,7 @@ public class BlockPopulator extends org.bukkit.generator.BlockPopulator {
         }
     }
 
-    private void generate(int x, int z, int attempts, WorldGenerator173 generator, int maxHeight) {
+    private void generateMineral(int x, int z, WorldGenerator173 generator, int attempts, int maxHeight) {
         for (int j = 0; j < attempts; j++) {
             int X = x + this.rand.nextInt(16);
             int Y = this.rand.nextInt(maxHeight);
