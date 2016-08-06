@@ -48,16 +48,16 @@ class FindChunksAndRegenBiomesSyncTask extends BukkitRunnable {
     }
 
     public void run() {
-        this.plugin.getLogger().finest("FindChunksAndRegenBiomesSyncTask tick");
+        Generator.logger().finest("FindChunksAndRegenBiomesSyncTask tick");
         if (this.chunks.isEmpty()) {
             if (regionIndex == this.regionFiles.size()) {
-                plugin.getLogger().info("Finished regenerating biomes.");
+                Generator.logger().info("Finished regenerating biomes.");
                 status.finished = true;
                 return;
             }
             this.progress.increment();
             this.sender.sendMessage(this.progress.getMessage());
-            this.plugin.getLogger().finest("FindChunksAndRegenBiomesSyncTask - next region");
+            Generator.logger().finest("FindChunksAndRegenBiomesSyncTask - next region");
             RegionInfo region = this.regionFiles.get(regionIndex);
             regionIndex++;
             this.getChunksInRegion(region, chunks);
@@ -69,14 +69,14 @@ class FindChunksAndRegenBiomesSyncTask extends BukkitRunnable {
     }
 
     private Queue<ChunkCoords> getChunksInRegion(RegionInfo region, Queue<ChunkCoords> chunks) {
-        plugin.getLogger().log(Level.FINE, "Reading region: {0}", region.getFile().getName());
+        Generator.logger().log(Level.FINE, "Reading region: {0}", region.getFile().getName());
         BufferedInputStream bis = null;
         try {
             bis = new BufferedInputStream(new FileInputStream(region.getFile()));
             byte[] data = new byte[4096];
             int read = bis.read(data);
             if (read != 4096) {
-                plugin.getLogger().log(Level.WARNING, "Corrupted region file: {0}", region.getFile().getName());
+                Generator.logger().log(Level.WARNING, "Corrupted region file: {0}", region.getFile().getName());
                 return chunks;
             }
             int chunkXBase = region.getX() << 5;
@@ -85,21 +85,21 @@ class FindChunksAndRegenBiomesSyncTask extends BukkitRunnable {
                 for (int z = 0; z < 32; ++z) {
                     int index = 4 * ((x & 31) + (z & 31) * 32);
                     if (data[index] != 0 || data[index + 1] != 0 || data[index + 2] != 0 || data[index + 3] != 0) {
-                        plugin.getLogger().log(Level.FINER, "Found chunk at {0}, {1}", new Object[]{chunkXBase | x, chunkZBase | z});
+                        Generator.logger().log(Level.FINER, "Found chunk at {0}, {1}", new Object[]{chunkXBase | x, chunkZBase | z});
                         chunks.add(new ChunkCoords(chunkXBase | x, chunkZBase | z));
                     }
                 }
             }
         } catch (FileNotFoundException ex) {
-            plugin.getLogger().log(Level.WARNING, "Couldn''t open region file: {0} - {1}", new Object[]{region.getFile().getName(), ex.getClass().getName()});
+            Generator.logger().log(Level.WARNING, "Couldn''t open region file: {0} - {1}", new Object[]{region.getFile().getName(), ex.getClass().getName()});
         } catch (IOException ex) {
-            plugin.getLogger().log(Level.WARNING, "Couldn''t open region file: {0} - {1}", new Object[]{region.getFile().getName(), ex.getClass().getName()});
+            Generator.logger().log(Level.WARNING, "Couldn''t open region file: {0} - {1}", new Object[]{region.getFile().getName(), ex.getClass().getName()});
         } finally {
             if (bis != null) {
                 try {
                     bis.close();
                 } catch (IOException ex) {
-                    plugin.getLogger().log(Level.SEVERE, "Error occurred when closing input stream, continuing: ", ex);
+                    Generator.logger().log(Level.SEVERE, "Error occurred when closing input stream, continuing: ", ex);
                     // ignore?
                 }
             }
@@ -110,14 +110,14 @@ class FindChunksAndRegenBiomesSyncTask extends BukkitRunnable {
     private void regenBiomes() {
         long time = System.currentTimeMillis();
         do {
-            plugin.getLogger().log(Level.FINER, "FindChunksAndRegenBiomesSyncTask - nextChunk");
+            Generator.logger().log(Level.FINER, "FindChunksAndRegenBiomesSyncTask - nextChunk");
             ChunkCoords coords = this.chunks.poll();
             if (coords == null) {
-                plugin.getLogger().log(Level.FINER, "FindChunksAndRegenBiomesSyncTask - queue is empty");
+                Generator.logger().log(Level.FINER, "FindChunksAndRegenBiomesSyncTask - queue is empty");
                 break;
             }
             if (!this.regenBiomesInChunk(coords)) {
-                plugin.getLogger().log(Level.WARNING, "FindChunksAndRegenBiomesSyncTask - regenBiomesInChunk failed");
+                Generator.logger().log(Level.WARNING, "FindChunksAndRegenBiomesSyncTask - regenBiomesInChunk failed");
                 break;
             }
         } while (System.currentTimeMillis() - time < this.maxMillis);
@@ -126,7 +126,7 @@ class FindChunksAndRegenBiomesSyncTask extends BukkitRunnable {
     private boolean regenBiomesInChunk(ChunkCoords c) {
         World world = Bukkit.getServer().getWorld(worldUuid);
         if (world == null) {
-            plugin.getLogger().log(Level.WARNING, "World with UUID: {0} doesn''t exist. Did you unload the world?", worldUuid.toString());
+            Generator.logger().log(Level.WARNING, "World with UUID: {0} doesn''t exist. Did you unload the world?", worldUuid.toString());
             this.status.successful = false;
             this.cancelTask();
             return false;

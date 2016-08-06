@@ -31,23 +31,23 @@ class FindRegionFilesTask extends BukkitRunnable {
         }
         File[] files = regionFolder.listFiles();
         this.findRegions(files);
-        this.plugin.getLogger().log(Level.FINE, "Finished finding region files. {0} region files found.", this.regionFiles.size());
+        Generator.logger().log(Level.FINE, "Finished finding region files. {0} region files found.", this.regionFiles.size());
         this.status.finished = true;
     }
 
     void findRegions(File[] files) {
         for (File regionFile : files) {
-            plugin.getLogger().log(Level.FINE, "Found file: {0}", regionFile.getName());
+            Generator.logger().log(Level.FINE, "Found file: {0}", regionFile.getName());
             String name = regionFile.getName();
             if (!name.startsWith("r.") || !name.endsWith(".mca")) {
-                plugin.getLogger().log(Level.WARNING, "non-region file: {0}", name);
+                Generator.logger().log(Level.WARNING, "non-region file: {0}", name);
                 continue;
             }
             String[] s = name.split("\\."); // "." is generate reserved character in
             // regular expression (use "\."
             // instead)
             if (s.length != 4) {
-                plugin.getLogger().log(Level.WARNING, "incorrect region file name: {0} length: {1}", new Object[]{name, s.length});
+                Generator.logger().log(Level.WARNING, "incorrect region file name: {0} length: {1}", new Object[]{name, s.length});
                 continue;
             }
             int x;
@@ -56,13 +56,13 @@ class FindRegionFilesTask extends BukkitRunnable {
                 x = Integer.parseInt(s[1]);
                 z = Integer.parseInt(s[2]);
             } catch (NumberFormatException ex) {
-                plugin.getLogger().log(Level.WARNING, "Couldn't parse region position: {0}", name);
+                Generator.logger().log(Level.WARNING, "Couldn't parse region position: {0}", name);
                 continue;
             } catch (NullPointerException ex) {
-                plugin.getLogger().log(Level.WARNING, "Couldn't parse region position: {0}", name);
+                Generator.logger().log(Level.WARNING, "Couldn't parse region position: {0}", name);
                 continue;
             }
-            plugin.getLogger().log(Level.FINE, "Region position: {0}, {1}", new Object[]{x + "", z + ""});
+            Generator.logger().log(Level.FINE, "Region position: {0}, {1}", new Object[]{x + "", z + ""});
             this.regionFiles.add(new RegionInfo(regionFile, x, z));
         }
     }

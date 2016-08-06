@@ -11,7 +11,7 @@ public class BiomeRegen {
 	public static void regenBiomes(final World world, final CommandSender sender, final Generator plugin, int maxMillis) {
 		BukkitRunnable runnable = 
                 new RegenBiomeControllerSyncTask(sender, world.getWorldFolder(), world.getUID(), plugin, maxMillis);
-        plugin.getLogger().fine("Sheduling task for biome regen.");
+		Generator.logger().fine("Sheduling task for biome regen.");
 		runnable.runTaskLater(plugin, 1);
 	}
 }

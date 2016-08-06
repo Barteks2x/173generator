@@ -1,0 +1,3 @@
+[submodule "src/test/resources"]
+	path = src/test/resources
+	url = https://github.com/Barteks2x/173generator-test-resources

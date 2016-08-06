@@ -2,7 +2,7 @@ package com.github.barteks2x.b173gen.oldnoisegen;
 
 import java.util.Random;
 
-public class NoiseGeneratorOctaves3D extends NoiseGenerator {
+public class NoiseGeneratorOctaves3D {
 
     private final NoiseGenerator3dPerlin generatorCollection[];
     private final int octaves;

@@ -3,6 +3,8 @@ package com.github.barteks2x.b173gen.biome;
 import com.github.barteks2x.b173gen.config.WorldConfig;
 import org.bukkit.block.Biome;
 
+import java.util.Random;
+
 public class BetaBiome {
 
     public static final BetaBiome RAINFOREST = new BetaBiome("Rainforest", "RAINFOREST", "JUNGLE"),
@@ -44,22 +46,98 @@ public class BetaBiome {
         return this.name;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if(this == other) {
-            return true;
+    public int getTreesForBiome(Random random, int treesRand) {
+        int trees = 0;
+        if(random.nextInt(10) == 0) {
+            trees++;
         }
-        if(other == null) {
-            return false;
+        if(this == FOREST) {
+            trees += treesRand + 5;
         }
-        if(!(other instanceof BetaBiome)) {
-            return false;
+
+        if(this == RAINFOREST) {
+            trees += treesRand + 5;
         }
-        return ((BetaBiome)other).getName().equals(this.getName());
+
+        if(this == SEASONAL_FOREST) {
+            trees += treesRand + 2;
+        }
+
+        if(this == TAIGA) {
+            trees += treesRand + 5;
+        }
+
+        if(this == DESERT) {
+            trees -= 20;
+        }
+
+        if(this == TUNDRA) {
+            trees -= 20;
+        }
+
+        if(this == PLAINS) {
+            trees -= 20;
+        }
+        return trees;
     }
 
-    @Override
-    public int hashCode() {
-        return this.name.hashCode();
+    public int getCactusForBiome() {
+        int k16 = 0;
+        if(equals(DESERT)) {
+            k16 += 10;
+        }
+        return k16;
+    }
+
+    public int getDeadBushForBiome() {
+        int byte1 = 0;
+        if(equals(DESERT)) {
+            byte1 = 2;
+        }
+        return byte1;
+    }
+
+    public int getTallGrassForBiome() {
+        int byte1 = 0;
+        if(equals(FOREST)) {
+            byte1 = 2;
+        }
+
+        if(equals(RAINFOREST)) {
+            byte1 = 10;
+        }
+
+        if(equals(SEASONAL_FOREST)) {
+            byte1 = 2;
+        }
+
+        if(equals(TAIGA)) {
+            byte1 = 1;
+        }
+
+        if(equals(PLAINS)) {
+            byte1 = 10;
+        }
+        return byte1;
+    }
+
+    public int getFlowersForBiome() {
+        int flowers = 0;
+        if(equals(FOREST)) {
+            flowers = 2;
+        }
+
+        if(equals(SEASONAL_FOREST)) {
+            flowers = 4;
+        }
+
+        if(equals(TAIGA)) {
+            flowers = 2;
+        }
+
+        if(equals(PLAINS)) {
+            flowers = 3;
+        }
+        return flowers;
     }
 }

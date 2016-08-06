@@ -41,7 +41,7 @@ public class VersionChecker {
                 return;
             }
         }
-        plugin.getLogger().log(Level.WARNING, "Unknown server version: {0}, plugin may work incorrectly or crash!", plugin.getServer().getVersion());
+        Generator.logger().log(Level.WARNING, "Unknown server version: {0}, plugin may work incorrectly or crash!", plugin.getServer().getVersion());
     }
 
     private VersionChecker() {

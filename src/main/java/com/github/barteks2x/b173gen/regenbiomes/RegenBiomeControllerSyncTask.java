@@ -37,9 +37,9 @@ class RegenBiomeControllerSyncTask extends BukkitRunnable {
 
 	@Override
 	public void run() {
-        this.plugin.getLogger().finest("RegenBiomeControllerSyncTask tick");
+        Generator.logger().finest("RegenBiomeControllerSyncTask tick");
 		if (currentTaskStatus != null && !currentTaskStatus.finished) {
-            this.plugin.getLogger().finest("RegenBiomeControllerSyncTask - current task not finished yet");
+            Generator.logger().finest("RegenBiomeControllerSyncTask - current task not finished yet");
             this.scheduleItself(stage);
 			return;
 		}
@@ -49,14 +49,14 @@ class RegenBiomeControllerSyncTask extends BukkitRunnable {
 		}
 		switch (stage) {
 		case 0:
-            this.plugin.getLogger().finest("RegenBiomeControllerSyncTask - stage 0");
+            Generator.logger().finest("RegenBiomeControllerSyncTask - stage 0");
             this.currentTaskStatus = new TaskStatus();
 			FindRegionFilesTask findRegions = new FindRegionFilesTask(this.plugin, this.worldDir, this.regionFiles, this.currentTaskStatus);
 			findRegions.runTaskAsynchronously(plugin);
 			sender.sendMessage("Stage 1/2. Reading world region data...");
 			break;
 		case 1:
-            this.plugin.getLogger().finest("RegenBiomeControllerSyncTask - stage 1");
+            Generator.logger().finest("RegenBiomeControllerSyncTask - stage 1");
 			sender.sendMessage("Stage 2/2. Regenerating biomes...");
             this.currentTaskStatus = new TaskStatus();
 			FindChunksAndRegenBiomesSyncTask findChunks = 
@@ -66,7 +66,7 @@ class RegenBiomeControllerSyncTask extends BukkitRunnable {
 			findChunks.runTaskLater(plugin, 1);
 			break;
 		default:
-            this.plugin.getLogger().finest("RegenBiomeControllerSyncTask - finished");
+            Generator.logger().finest("RegenBiomeControllerSyncTask - finished");
 			sender.sendMessage("Biomes regenerated successfully.");
 			return;
 		}

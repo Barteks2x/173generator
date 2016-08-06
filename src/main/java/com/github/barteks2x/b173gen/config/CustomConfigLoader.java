@@ -3,6 +3,8 @@ package com.github.barteks2x.b173gen.config;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.github.barteks2x.b173gen.Generator;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -88,7 +90,7 @@ public class CustomConfigLoader {
         try {
             getConfig().save(file);
         } catch(IOException ex) {
-            plugin.getLogger().log(Level.SEVERE, "Could not save config to " + file, ex);
+            Generator.logger().log(Level.SEVERE, "Could not save config to " + file, ex);
         }
     }
 

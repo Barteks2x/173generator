@@ -13,7 +13,6 @@ public abstract class WorldGenBaseOld {
         rand = new Random();
     }
 
-    @SuppressWarnings("cast")
     public void generate(World world, int generatedChunkX, int generatedChunkZ, ChunkGenerator.ChunkData data) {
         int radius = maxGenerationRadius;
         rand.setSeed(world.getSeed());

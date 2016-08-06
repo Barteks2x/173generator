@@ -4,9 +4,6 @@
 *.jar
 *.war
 *.ear
-/.project
-/.classpath
-/.settings
 
 # maven
 /target
@@ -16,9 +13,15 @@
 /bin
 /dist
 /manifest.mf
-/nbactions.xml
-/.idea
-*.iml
 
 #Linux files
 /.directory
+
+#IDE-generated files
+/nbactions.xml
+/.idea
+*.iml
+/.project
+/.classpath
+/.settings
+dependency-reduced-pom.xml

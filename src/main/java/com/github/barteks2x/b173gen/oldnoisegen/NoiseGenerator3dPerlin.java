@@ -2,7 +2,7 @@ package com.github.barteks2x.b173gen.oldnoisegen;
 
 import java.util.Random;
 
-public class NoiseGenerator3dPerlin extends NoiseGenerator {
+public class NoiseGenerator3dPerlin {
     public double randomDX;
     public double randomDY;
     public double randomDZ;

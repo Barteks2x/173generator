@@ -12,6 +12,8 @@ import com.github.barteks2x.b173gen.oldgen.WorldChunkManagerOld;
 import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -20,6 +22,8 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Generator extends JavaPlugin {
+
+	public static Logger log;
 
 	private HashMap<String, WorldConfig> worlds;
 	private Beta173GenListener listener;
@@ -31,6 +35,7 @@ public class Generator extends JavaPlugin {
 
 	@Override
 	public void onLoad() {
+		this.log = this.getLogger();
 		VersionChecker.checkServerVersion(this);
 		MinecraftMethods.init();
 	}
@@ -43,11 +48,11 @@ public class Generator extends JavaPlugin {
 			Metrics metrics = new Metrics(this);
 			metrics.start();
 		} catch (IOException ex) {
-			this.getLogger().log(Level.WARNING, "Couldn't enable metrics!", ex);
+			logger().log(Level.WARNING, "Couldn't enable metrics!", ex);
 		}
 		File folder = new File(this.getDataFolder().getParent());
 		System.out.println(folder.getAbsolutePath());
-		BiomeOld.init(this);
+		BiomeOld.init(this.getConfig());
 		listener = new Beta173GenListener(this);
 		this.registerEvents();
 		this.getCommand("173generator").setExecutor(this);
@@ -75,7 +80,7 @@ public class Generator extends JavaPlugin {
 		worldSetting.chunkProvider.init(world, new WorldChunkManagerOld(world.getSeed()));
 		worldSetting.isInit = true;
 
-		this.getLogger().log(Level.INFO, "{0} enabled for {1}, world seed: {2}",
+		logger().log(Level.INFO, "{0} enabled for {1}, world seed: {2}",
 				new Object[] { this.getDescription().getName(), world.getName(), world.getSeed() });
 
 	}
@@ -154,5 +159,9 @@ public class Generator extends JavaPlugin {
 		config.loadConfig();
 		config.chunkProvider = new ChunkProviderGenerate(config, this);
 		return config;
+	}
+
+	public static final Logger logger() {
+		return log;
 	}
 }

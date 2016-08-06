@@ -13,8 +13,9 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
-import org.bukkit.material.MaterialData;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -89,14 +90,15 @@ public class ChunkProviderGenerate extends ChunkGenerator {
 
     @Override
     public ChunkData generateChunkData(World world, Random random, int chunkX, int chunkZ, BiomeGrid biomeGrid) {
-        this.rand.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L);
+        initRand(chunkX, chunkZ);
 
         ChunkData terrain = this.createChunkData(world);
-        BetaBiome[] biomes = wcm.getBiomeBlock(null, chunkX * 16, chunkZ * 16, 16, 16);;
+        BetaBiome[] biomes = wcm.getBiomeBlock(null, chunkX * 16, chunkZ * 16, 16, 16);
 
         generateTerrain(chunkX, chunkZ, terrain);
         replaceBlocksForBiome(chunkX, chunkZ, terrain, biomes);
         caves.generate(world, chunkX, chunkZ, terrain);
+
         int n = 0;
         for(int localX = 0; localX < 16; ++localX) {
             for(int localZ = 0; localZ < 16; ++localZ) {
@@ -108,8 +110,11 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         return terrain;
     }
 
+    public void initRand(int chunkX, int chunkZ) {
+        this.rand.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L);
+    }
 
-    private void generateTerrain(int x, int z, ChunkData terrain) {
+    public void generateTerrain(int x, int z, ChunkData terrain) {
         double temperatures[] = this.wcm.temperatures;
         byte byte0 = 4;
         byte oceanHeight = 64;
@@ -177,7 +182,8 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         }
     }
 
-    private void replaceBlocksForBiome(int xPos, int zPos, ChunkData terrain, BetaBiome biomes[]) {
+    public void replaceBlocksForBiome(int xPos, int zPos, ChunkData terrain, BetaBiome biomes[]) {
+        //NOTE: in get/set block X and Z coordinates are swapped, THIS IS CORRECT
         byte oceanHeight = 64;
         double d = 0.03125D;
         sandNoise = noiseGen4.generateNoiseArray(sandNoise, xPos * 16, zPos * 16, 0.0D, 16, 16, 1, d, d, 1.0D);
@@ -194,10 +200,10 @@ public class ChunkProviderGenerate extends ChunkGenerator {
                 Material fillerBlock = BiomeOld.filler(biome);
                 for(int y = 127; y >= 0; y--) {
                     if(y <= 0 + rand.nextInt(5)) {
-                        terrain.setBlock(x, y, z, BEDROCK);
+                        terrain.setBlock(z, y, x, BEDROCK);
                         continue;
                     }
-                    Material block = terrain.getType(x, y, z);
+                    Material block = terrain.getType(z, y, x);
                     if(block == AIR) {
                         prevDepth = -1;
                         continue;
@@ -226,9 +232,9 @@ public class ChunkProviderGenerate extends ChunkGenerator {
                         }
                         prevDepth = depth;
                         if(y >= oceanHeight - 1) {
-                            terrain.setBlock(x, y, z, topBlock);
+                            terrain.setBlock(z, y, x, topBlock);
                         } else {
-                            terrain.setBlock(x, y, z, fillerBlock);
+                            terrain.setBlock(z, y, x, fillerBlock);
                         }
                         continue;
                     }
@@ -236,7 +242,7 @@ public class ChunkProviderGenerate extends ChunkGenerator {
                         continue;
                     }
                     prevDepth--;
-                    terrain.setBlock(x, y, z, fillerBlock);
+                    terrain.setBlock(z, y, x, fillerBlock);
                     if(prevDepth == 0 && fillerBlock == SAND) {
                         prevDepth = rand.nextInt(4);
                         fillerBlock = SANDSTONE;
@@ -265,8 +271,9 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         int x = 0;
         int z = 0;
 
-        for(; !canSpawn(world, x, z); z += random.nextInt(64) - random.nextInt(64)) {
+        while (!canSpawn(world, x, z)) {
             x += random.nextInt(64) - random.nextInt(64);
+            z += random.nextInt(64) - random.nextInt(64);
         }
         return new Location(world, x, world.getHighestBlockYAt(x, z), z);
     }
@@ -286,8 +293,7 @@ public class ChunkProviderGenerate extends ChunkGenerator {
         double d1 = 684.412D;
         double temp[] = this.wcm.temperatures;
         double rain[] = this.wcm.rain;
-        noise6 = noiseGen6.
-                generateNoiseArray(noise6, xPos, zPos, xSize, zSize, 1.121D, 1.121D, 0.5D);
+        noise6 = noiseGen6.generateNoiseArray(noise6, xPos, zPos, xSize, zSize, 1.121D, 1.121D, 0.5D);
         noise7 = noiseGen7.generateNoiseArray(noise7, xPos, zPos, xSize, zSize, 200D, 200D, 0.5D);
         noise3 = noiseGen3.generateNoiseArray(noise3, xPos, yPos, zPos, xSize, ySize, zSize,
                 d0 / 80D, d1 / 160D, d0 / 80D);

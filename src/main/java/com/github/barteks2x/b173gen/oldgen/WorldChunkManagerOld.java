@@ -59,8 +59,8 @@ public class WorldChunkManagerOld {
         if(biomes == null || biomes.length < xSize * zSize) {
             biomes = new BetaBiome[xSize * zSize];
         }
-        temperatures = noise1.generateNoiseArray(temperatures, x, z, xSize, xSize, 0.025D, 0.025D, 0.25D);
-        rain = noise2.generateNoiseArray(rain, x, z, xSize, xSize, 0.05D, 0.050D, 1D / 3D);
+        temperatures = noise1.generateNoiseArray(temperatures, x, z, xSize, xSize, 0.02500000037252903D, 0.02500000037252903D, 0.25D);
+        rain = noise2.generateNoiseArray(rain, x, z, xSize, xSize, 0.05000000074505806D, 0.05000000074505806D, 0.33333333333333331D);
         c = noise3.generateNoiseArray(c, x, z, xSize, xSize, 0.25D, 0.25D, 0.58823529411764708D);
         int index = 0;
         for(int blockX = 0; blockX < xSize; blockX++) {
@@ -95,44 +95,44 @@ public class WorldChunkManagerOld {
         return biomes;
     }
 
-    public BetaBiome[] getBiomes(BetaBiome abiomegenbase[], int x, int z,
-            int xSize, int zSize) {
-        if(abiomegenbase == null || abiomegenbase.length < xSize * zSize) {
-            abiomegenbase = new BetaBiome[xSize * zSize];
+    public BetaBiome[] getBiomes(BetaBiome biomes[], int x, int z, int xSize, int zSize) {
+        if(biomes == null || biomes.length < xSize * zSize) {
+            biomes = new BetaBiome[xSize * zSize];
         }
         temperatures = noise1.generateNoiseArray(temperatures, x, z, xSize, xSize, 0.025D, 0.025D, 0.25D);
         rain = noise2.generateNoiseArray(rain, x, z, xSize, xSize, 0.05D, 0.05D, 1D / 3D);
         c = noise3.generateNoiseArray(c, x, z, xSize, xSize, 0.25D, 0.25D, 0.58823529411764708D);
-        int i1 = 0;
-        for(int j1 = 0; j1 < xSize; j1++) {
-            for(int k1 = 0; k1 < zSize; k1++) {
-                double d = c[i1] * 1.1D + 0.5D;
+        int index = 0;
+        for(int blockX = 0; blockX < xSize; blockX++) {
+            for(int blockZ = 0; blockZ < zSize; blockZ++) {
+                double d = c[index] * 1.1D + 0.5D;
                 double d1 = 0.01D;
                 double d2 = 1.0D - d1;
-                double d3 = (temperatures[i1] * 0.15D + 0.7D) * d2 + d * d1;
+                double temp = (temperatures[index] * 0.15D + 0.7D) * d2 + d * d1;
                 d1 = 0.002D;
                 d2 = 1.0D - d1;
-                double d4 = (rain[i1] * 0.15D + 0.5D) * d2 + d * d1;
-                d3 = 1.0D - (1.0D - d3) * (1.0D - d3);
-                if(d3 < 0.0D) {
-                    d3 = 0.0D;
+                double humid = (rain[index] * 0.15D + 0.5D) * d2 + d * d1;
+                temp = 1.0D - (1.0D - temp) * (1.0D - temp);
+                if(temp < 0.0D) {
+                    temp = 0.0D;
                 }
-                if(d4 < 0.0D) {
-                    d4 = 0.0D;
+                if(humid < 0.0D) {
+                    humid = 0.0D;
                 }
-                if(d3 > 1.0D) {
-                    d3 = 1.0D;
+                if(temp > 1.0D) {
+                    temp = 1.0D;
                 }
-                if(d4 > 1.0D) {
-                    d4 = 1.0D;
+                if(humid > 1.0D) {
+                    humid = 1.0D;
                 }
-                temperatures[i1] = d3;
-                rain[i1] = d4;
-                abiomegenbase[i1++] = BiomeOld.getBiomeFromLookup(d3, d4);
+                temperatures[index] = temp;
+                rain[index] = humid;
+                biomes[index++] = BiomeOld.getBiomeFromLookup(temp, humid);
             }
 
         }
-        return abiomegenbase;
+
+        return biomes;
     }
 
     private BetaBiome[] getBiomeData(int i, int j, int k, int l) {

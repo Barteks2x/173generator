@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.logging.Level;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
+import org.bukkit.configuration.Configuration;
 
 public class BiomeOld {
 
@@ -21,27 +22,26 @@ public class BiomeOld {
         }
     }
 
-    public static void init(Generator plugin) {
-        if(plugin.getConfig().getBoolean("global.experimental.biomesExperimental", true)) {
+    public static void init(Configuration config) {
+        if(config.getBoolean("global.experimental.biomesExperimental", true)) {
             HashMap<Biome, Float> temp = new HashMap<Biome, Float>(128);
             HashMap<Biome, Float> humid = new HashMap<Biome, Float>(128);
             Biome[] array = Biome.values();
             int a = 0;
             for(Biome b: array) {
-                //System.out.println("biome: " + b.name());
-                if(!plugin.getConfig().contains("global.experimental.biomes." + b.name())) {
+                if(!config.contains("global.experimental.biomes." + b.name())) {
                     continue;
                 }
-                List<Double> values = plugin.getConfig().getDoubleList("global.experimental.biomes." + b.name());
+                List<Double> values = config.getDoubleList("global.experimental.biomes." + b.name());
                 ++a;
                 Iterator<Double> it = values.iterator();
                 if(!it.hasNext()) {
-                    plugin.getLogger().log(Level.WARNING, "Incorrect biome data format: {0}", b.name());
+                    Generator.logger().log(Level.WARNING, "Incorrect biome data format: {0}", b.name());
                     continue;
                 }
                 double temperature = it.next();
                 if(!it.hasNext()) {
-                    plugin.getLogger().log(Level.WARNING, "Incorrect biome data format: {0}", b.name());
+                    Generator.logger().log(Level.WARNING, "Incorrect biome data format: {0}", b.name());
                     continue;
                 }
                 double humidity = it.next();
