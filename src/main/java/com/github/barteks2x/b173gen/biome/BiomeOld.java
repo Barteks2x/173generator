@@ -2,6 +2,8 @@ package com.github.barteks2x.b173gen.biome;
 
 import com.github.barteks2x.b173gen.Generator;
 import static com.github.barteks2x.b173gen.biome.BetaBiome.*;
+import static org.bukkit.Material.LONG_GRASS;
+
 import com.github.barteks2x.b173gen.generator.WorldGenerator173;
 import com.github.barteks2x.b173gen.oldgen.*;
 import java.util.*;
@@ -75,7 +77,7 @@ public class BiomeOld {
         }
     }
 
-    public static WorldGenerator173 getRandomTreeGen(Random rand, BetaBiome biome) {
+    public static WorldGenerator173 getBiomeTreeGenerator(Random rand, BetaBiome biome) {
         if(FOREST.equals(biome)) {
             return rand.nextInt(5) == 0 ? new WorldGenForestOld() : (rand.nextInt(3) == 0
                     ? new WorldGenBigTreeOld() : new WorldGenTreeOld());
@@ -87,6 +89,16 @@ public class BiomeOld {
             return rand.nextInt(3) == 0 ? new WorldGenTaiga1Old() : new WorldGenTaiga2Old();
         }
         return (rand.nextInt(10) == 0 ? new WorldGenBigTreeOld() : new WorldGenTreeOld());
+    }
+
+    public static WorldGenerator173 getRandomGrassGenerator(Random rand, BetaBiome biome) {
+        if (biome.equals(RAINFOREST) && rand.nextInt(3) != 0) {
+            //rainforest
+            return new WorldGenGrassOld(LONG_GRASS, (byte) 2);
+        } else {
+            //mormal
+            return new WorldGenGrassOld(LONG_GRASS, (byte) 1);
+        }
     }
 
     public static Material top(BetaBiome biome) {

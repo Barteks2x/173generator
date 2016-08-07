@@ -19,10 +19,10 @@ public class WorldGenMinableOld implements WorldGenerator173 {
 
     public boolean generate(World world, Random rand, int xBase, int yBase, int zBase) {
         float randAngle = rand.nextFloat() * PI;
-        double xPlus = (double)((xBase + 8) + sin(randAngle) * this.size / 8.0F);
-        double xMinus = (double)((xBase + 8) - sin(randAngle) * this.size / 8.0F);
-        double zPlus = (double)((zBase + 8) + cos(randAngle) * this.size / 8.0F);
-        double zMinus = (double)((zBase + 8) - cos(randAngle) * this.size / 8.0F);
+        double xPlus = (double)(xBase + sin(randAngle) * this.size / 8.0F);
+        double xMinus = (double)(xBase - sin(randAngle) * this.size / 8.0F);
+        double zPlus = (double)(zBase + cos(randAngle) * this.size / 8.0F);
+        double zMinus = (double)(zBase - cos(randAngle) * this.size / 8.0F);
         double yPlus = (double)(yBase + rand.nextInt(3) + 2);
         double yMinus = (double)(yBase + rand.nextInt(3) + 2);
 

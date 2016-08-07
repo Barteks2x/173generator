@@ -16,18 +16,18 @@ public class WorldGenClayOld implements WorldGenerator173 {
     }
 
     @Override
-    public boolean generate(World world, Random random, int i, int j, int k) {
-        if(world.getBlockAt(i, j, k).getType() != Material.WATER && world.
-                getBlockAt(i, j, k).getType() != Material.STATIONARY_WATER) {
+    public boolean generate(World world, Random random, int blockX, int blockY, int blockZ) {
+        if(world.getBlockAt(blockX, blockY, blockZ).getType() != Material.WATER && world.
+                getBlockAt(blockX, blockY, blockZ).getType() != Material.STATIONARY_WATER) {
             return false;
         }
         float f = random.nextFloat() * 3.141593F;
-        double d = (i + 8) + (MathHelper.sin(f) * numberOfBlocks) / 8F;
-        double d1 = (i + 8) - (MathHelper.sin(f) * numberOfBlocks) / 8F;
-        double d2 = (k + 8) + (MathHelper.cos(f) * numberOfBlocks) / 8F;
-        double d3 = (k + 8) - (MathHelper.cos(f) * numberOfBlocks) / 8F;
-        double d4 = j + random.nextInt(3) + 2;
-        double d5 = j + random.nextInt(3) + 2;
+        double d = blockX + (MathHelper.sin(f) * numberOfBlocks) / 8F;
+        double d1 = blockX - (MathHelper.sin(f) * numberOfBlocks) / 8F;
+        double d2 = blockZ + (MathHelper.cos(f) * numberOfBlocks) / 8F;
+        double d3 = blockZ - (MathHelper.cos(f) * numberOfBlocks) / 8F;
+        double d4 = blockY + random.nextInt(3) + 2;
+        double d5 = blockY + random.nextInt(3) + 2;
         for(int l = 0; l <= numberOfBlocks; l++) {
             double d6 = d + ((d1 - d) * l) / numberOfBlocks;
             double d7 = d4 + ((d5 - d4) * l) / numberOfBlocks;

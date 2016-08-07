@@ -14,8 +14,6 @@ import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.ChunkGenerator;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,17 +44,16 @@ public class ChunkProviderGenerate extends ChunkGenerator {
     private double noise7[];
 
     public WorldChunkManagerOld wcm;
-    private final List<org.bukkit.generator.BlockPopulator> populatorList;
+    private List<org.bukkit.generator.BlockPopulator> populatorList;
     private World world;
     private final WorldConfig config;
-    private BlockPopulator populator;
+    private PopulatorManager populatorManager;
     private final Generator plugin;
 
 
     public ChunkProviderGenerate(WorldConfig config, Generator plugin) {
         this.plugin = plugin;
         this.config = config;
-        this.populatorList = new ArrayList<org.bukkit.generator.BlockPopulator>();
     }
 
     @Override
@@ -82,10 +79,10 @@ public class ChunkProviderGenerate extends ChunkGenerator {
 
         caves = new WorldGenCavesOld();
 
-        this.populator = new BlockPopulator(world, wcm, config);
-        this.populatorList.add(this.populator);
+        this.populatorManager = new PopulatorManager(world, wcm, config);
+        this.populatorList = populatorManager.getPopulators();
 
-        populator.setTreeNoise(treeNoise);
+        populatorManager.setTreeNoise(treeNoise);
     }
 
     @Override

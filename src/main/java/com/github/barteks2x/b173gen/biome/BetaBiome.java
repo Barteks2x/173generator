@@ -1,6 +1,7 @@
 package com.github.barteks2x.b173gen.biome;
 
 import com.github.barteks2x.b173gen.config.WorldConfig;
+import com.github.barteks2x.b173gen.oldnoisegen.NoiseGeneratorOctaves3D;
 import org.bukkit.block.Biome;
 
 import java.util.Random;
@@ -25,18 +26,18 @@ public class BetaBiome {
     BetaBiome(String name, String... bukkitNames) {
         this.name = name;
         Biome temp = null;
-        for(String n: bukkitNames) {
+        for (String n : bukkitNames) {
             try {
                 temp = Biome.valueOf(n);
                 break;//break if no exception (value exists)
-            } catch(Exception ex) {
+            } catch (Exception ex) {
             }
         }
         this.bukkitBiome = temp != null ? temp : Biome.PLAINS;
     }
 
     public Biome getBiome(WorldConfig cfg) {
-        if(cfg.noswamps && this.bukkitBiome == Biome.SWAMPLAND){
+        if (cfg.noswamps && this.bukkitBiome == Biome.SWAMPLAND) {
             return Biome.PLAINS;
         }
         return bukkitBiome;
@@ -46,36 +47,40 @@ public class BetaBiome {
         return this.name;
     }
 
-    public int getTreesForBiome(Random random, int treesRand) {
+    public int getTreesPerChunk(Random random, NoiseGeneratorOctaves3D noiseGen, int chunkX, int chunkZ) {
+        int x = chunkX * 16 + 8;
+        int z = chunkZ * 16 + 8;
+        int treesRand = (int) ((noiseGen.generateNoise(x * 0.5D, z * 0.5D) / 8D + random.nextDouble() * 4D + 4D) / 3D);
+
         int trees = 0;
-        if(random.nextInt(10) == 0) {
+        if (random.nextInt(10) == 0) {
             trees++;
         }
-        if(this == FOREST) {
+        if (this == FOREST) {
             trees += treesRand + 5;
         }
 
-        if(this == RAINFOREST) {
+        if (this == RAINFOREST) {
             trees += treesRand + 5;
         }
 
-        if(this == SEASONAL_FOREST) {
+        if (this == SEASONAL_FOREST) {
             trees += treesRand + 2;
         }
 
-        if(this == TAIGA) {
+        if (this == TAIGA) {
             trees += treesRand + 5;
         }
 
-        if(this == DESERT) {
+        if (this == DESERT) {
             trees -= 20;
         }
 
-        if(this == TUNDRA) {
+        if (this == TUNDRA) {
             trees -= 20;
         }
 
-        if(this == PLAINS) {
+        if (this == PLAINS) {
             trees -= 20;
         }
         return trees;
@@ -83,59 +88,59 @@ public class BetaBiome {
 
     public int getCactusForBiome() {
         int k16 = 0;
-        if(equals(DESERT)) {
+        if (equals(DESERT)) {
             k16 += 10;
         }
         return k16;
     }
 
-    public int getDeadBushForBiome() {
+    public int getDeadBushPerChunk() {
         int byte1 = 0;
-        if(equals(DESERT)) {
+        if (equals(DESERT)) {
             byte1 = 2;
         }
         return byte1;
     }
 
-    public int getTallGrassForBiome() {
+    public int getGrassPerChunk() {
         int byte1 = 0;
-        if(equals(FOREST)) {
+        if (equals(FOREST)) {
             byte1 = 2;
         }
 
-        if(equals(RAINFOREST)) {
+        if (equals(RAINFOREST)) {
             byte1 = 10;
         }
 
-        if(equals(SEASONAL_FOREST)) {
+        if (equals(SEASONAL_FOREST)) {
             byte1 = 2;
         }
 
-        if(equals(TAIGA)) {
+        if (equals(TAIGA)) {
             byte1 = 1;
         }
 
-        if(equals(PLAINS)) {
+        if (equals(PLAINS)) {
             byte1 = 10;
         }
         return byte1;
     }
 
-    public int getFlowersForBiome() {
+    public int getFlowersPerChunk() {
         int flowers = 0;
-        if(equals(FOREST)) {
+        if (equals(FOREST)) {
             flowers = 2;
         }
 
-        if(equals(SEASONAL_FOREST)) {
+        if (equals(SEASONAL_FOREST)) {
             flowers = 4;
         }
 
-        if(equals(TAIGA)) {
+        if (equals(TAIGA)) {
             flowers = 2;
         }
 
-        if(equals(PLAINS)) {
+        if (equals(PLAINS)) {
             flowers = 3;
         }
         return flowers;
