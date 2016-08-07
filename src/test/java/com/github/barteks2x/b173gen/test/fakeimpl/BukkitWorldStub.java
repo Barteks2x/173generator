@@ -1,5 +1,7 @@
 package com.github.barteks2x.b173gen.test.fakeimpl;
 
+import com.github.barteks2x.b173gen.test.util.ChunkData;
+import com.github.barteks2x.b173gen.test.util.IGeneratorChunkSource;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -21,6 +23,7 @@ public class BukkitWorldStub implements World{
 
     private long seed;
     private String name;
+    private IGeneratorChunkSource chunkSource;
 
     public void setSeed(long seed) {
         this.seed = seed;
@@ -28,6 +31,10 @@ public class BukkitWorldStub implements World{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setChunkSource(IGeneratorChunkSource chunkSource) {
+        this.chunkSource = chunkSource;
     }
 
     @Override public long getSeed() {
@@ -38,13 +45,27 @@ public class BukkitWorldStub implements World{
         return this.name;
     }
 
+    //Simple world implementation:
+    @Override public Block getBlockAt(int x, int y, int z) {
+        ChunkData chunk = chunkSource.getChunkData(x >> 4, z >> 4);
+        if(chunk == null || y >= 128 || y < 0) {
+            return new BukkitBlockStub(this, x, y, z, Material.AIR);
+        }
+        return new BukkitBlockStub(this, x, y, z, chunk.getBlock(x&0xF, y, z&0xF));
+    }
+
+    public void setTypeDirectly(int x, int y, int z, Material type) {
+        ChunkData chunk = chunkSource.getChunkData(x >> 4, z >> 4);
+        if(chunk == null || y >= 128 || y < 0) {
+            return;
+        }
+        chunk.setBlock(x&0xF, y, z&0xF, type);
+    }
+
     //--------------------------------
     //         UNIMPLEMENTED
     //--------------------------------
 
-    @Override public Block getBlockAt(int x, int y, int z) {
-        return null;
-    }
 
     @Override public Block getBlockAt(Location location) {
         return null;

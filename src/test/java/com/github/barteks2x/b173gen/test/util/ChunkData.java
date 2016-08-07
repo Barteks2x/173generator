@@ -8,6 +8,7 @@ public class ChunkData implements ChunkGenerator.ChunkData{
     private final RegionChunkPosition position;
     private final byte[] blockIds;
     private final byte[] metadata;
+    private boolean populated;
 
     private ChunkData(Builder builder) {
         this.blockIds = builder.blockIds;
@@ -114,6 +115,14 @@ public class ChunkData implements ChunkGenerator.ChunkData{
 
     public byte[] getIdrray() {
         return this.blockIds;
+    }
+
+    public boolean isPopulated() {
+        return populated;
+    }
+
+    public void setPopulated(boolean populated) {
+        this.populated = populated;
     }
 
     public static class Builder {

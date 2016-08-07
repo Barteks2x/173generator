@@ -263,18 +263,11 @@ public class BlockPopulator extends org.bukkit.generator.BlockPopulator {
     }
 
     public int getHighestSolidOrLiquidBlock(int i, int j) {
-        Chunk chunk = world.getChunkAt(i >> 4, j >> 4);
-        int k = 127;
-
-        i &= 15;
-
-        for (j &= 15; k > 0; --k) {
-            Material material = chunk.getBlock(i, k, j).getType();
-
+        for (int k = 127; k > 0; --k) {
+            Material material = world.getBlockAt(i, k, j).getType();
             if (material != Material.AIR || MinecraftMethods.isLiquid(material)) {
                 return k + 1;
             }
-
         }
 
         return -1;
