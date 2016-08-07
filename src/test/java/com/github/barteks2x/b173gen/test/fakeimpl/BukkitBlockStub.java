@@ -1,5 +1,6 @@
 package com.github.barteks2x.b173gen.test.fakeimpl;
 
+import com.github.barteks2x.b173gen.test.util.BlockUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -38,228 +39,238 @@ public class BukkitBlockStub implements Block {
         this.world.setTypeDirectly(x, y, z, type);
     }
 
+    @Override
+    public boolean isLiquid() {
+        return type == Material.WATER || type == Material.STATIONARY_WATER || type == Material.LAVA || type == Material.STATIONARY_LAVA;
+    }
+
+    //approximate value, heightmap only. Causes some differences
+    @Override
+    public byte getLightFromSky() {
+        int light = 15;
+        for(int y = 127; y >= this.y; y--) {
+            int opacity = BlockUtils.getOpacity(world.getBlockAt(x, y, z).getType());
+            light -= opacity;
+            if(opacity < 0) {
+                light = 0;
+                break;
+            }
+        }
+
+        return (byte) light;
+    }
     //----------------------------
     //    UNIMPLEMENTED
     //----------------------------
 
     @Override
     public byte getData() {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Block getRelative(int i, int i1, int i2) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Block getRelative(BlockFace blockFace) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Block getRelative(BlockFace blockFace, int i) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public int getTypeId() {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public byte getLightLevel() {
-        return 0;
-    }
-
-    @Override
-    public byte getLightFromSky() {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public byte getLightFromBlocks() {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public World getWorld() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public int getX() {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public int getY() {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public int getZ() {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Location getLocation() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Location getLocation(Location location) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Chunk getChunk() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void setData(byte b) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void setData(byte b, boolean b1) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void setType(Material material, boolean b) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean setTypeId(int i) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean setTypeId(int i, boolean b) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean setTypeIdAndData(int i, byte b, boolean b1) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public BlockFace getFace(Block block) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public BlockState getState() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Biome getBiome() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void setBiome(Biome biome) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean isBlockPowered() {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean isBlockIndirectlyPowered() {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean isBlockFacePowered(BlockFace blockFace) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean isBlockFaceIndirectlyPowered(BlockFace blockFace) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public int getBlockPower(BlockFace blockFace) {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public int getBlockPower() {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public boolean isLiquid() {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public double getTemperature() {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public double getHumidity() {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public PistonMoveReaction getPistonMoveReaction() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean breakNaturally() {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean breakNaturally(ItemStack itemStack) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Collection<ItemStack> getDrops() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Collection<ItemStack> getDrops(ItemStack itemStack) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void setMetadata(String s, MetadataValue metadataValue) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public List<MetadataValue> getMetadata(String s) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean hasMetadata(String s) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void removeMetadata(String s, Plugin plugin) {
-
+        throw new UnsupportedOperationException();
     }
 
 }

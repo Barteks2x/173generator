@@ -7,7 +7,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 
 public class WorldGenLakesOld implements WorldGenerator173 {
-
     private Material liquidBlock;
 
     public WorldGenLakesOld(Material i) {
@@ -116,5 +115,5 @@ public class WorldGenLakesOld implements WorldGenerator173 {
     }
 
     public void scale(double d0, double d1, double d2) {
-    }
+    }//*/
 }
