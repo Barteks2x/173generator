@@ -45,7 +45,7 @@ public class PopulatorManager {
         add(new PopulatorStateInit(this));
 
         add("WaterLakes", new RareResource(new WorldGenLakesOld(STATIONARY_WATER), HeightDistrubution.DEFAULT, 4));
-        add("LavaLakes", new RareUndergroundResource(new WorldGenLakesOld(STATIONARY_LAVA), new DepthPackedHeightDistribution(0, 8, 126), 4, 64, 10));
+        add("LavaLakes", new RareUndergroundResource(new WorldGenLakesOld(STATIONARY_LAVA), new DepthPackedHeightDistribution(0, 8, 126), 8, 64, 10));
         add("Dungeons", new CommonResource(new WorldGenDungeonOld(), HeightDistrubution.DEFAULT, 8));
 
         add("Clay", new CommonResource(new WorldGenClayOld(32), HeightDistrubution.DEFAULT, 10));

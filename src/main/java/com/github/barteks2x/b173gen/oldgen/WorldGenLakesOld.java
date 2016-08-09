@@ -98,12 +98,12 @@ public class WorldGenLakesOld implements WorldGenerator173 {
             }
         }
 
-        if(this.liquidBlock == Material.LAVA) {
+        if(this.liquidBlock == Material.LAVA || this.liquidBlock == Material.STATIONARY_LAVA) {
             for(int i1 = 0; i1 < 16; ++i1) {
                 for(int i2 = 0; i2 < 16; ++i2) {
                     for(int j2 = 0; j2 < 8; ++j2) {
                         boolean flag = !emptyOrLiquid[(i1 * 16 + i2) * 8 + j2] && (i1 < 15 && emptyOrLiquid[((i1 + 1) * 16 + i2) * 8 + j2] || i1 > 0 && emptyOrLiquid[((i1 - 1) * 16 + i2) * 8 + j2] || i2 < 15 && emptyOrLiquid[(i1 * 16 + i2 + 1) * 8 + j2] || i2 > 0 && emptyOrLiquid[(i1 * 16 + (i2 - 1)) * 8 + j2] || j2 < 7 && emptyOrLiquid[(i1 * 16 + i2) * 8 + j2 + 1] || j2 > 0 && emptyOrLiquid[(i1 * 16 + i2) * 8 + (j2 - 1)]);
-                        if(flag && (j2 < 4 || random.nextInt(2) != 0) && MinecraftMethods.Material_isBuildable(world, blockX + i1, blockY + j2, blockZ + i2)) {
+                        if(flag && (j2 < 4 || random.nextInt(2) != 0) && world.getBlockAt(blockX + i1, blockY + j2, blockZ + i2).getType().isSolid()) {
                             world.getBlockAt(blockX + i1, blockY + j2, blockZ + i2).setType(Material.STONE);
                         }
                     }

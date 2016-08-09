@@ -1,7 +1,7 @@
 package com.github.barteks2x.b173gen.test.fakeimpl;
 
 import com.github.barteks2x.b173gen.test.util.ChunkData;
-import com.github.barteks2x.b173gen.test.util.IGeneratorChunkSource;
+import com.github.barteks2x.b173gen.test.util.IChunkSource;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -23,7 +23,7 @@ public class BukkitWorldStub implements World {
 
     private long seed;
     private String name;
-    private IGeneratorChunkSource chunkSource;
+    private IChunkSource chunkSource;
 
     public void setSeed(long seed) {
         this.seed = seed;
@@ -33,7 +33,7 @@ public class BukkitWorldStub implements World {
         this.name = name;
     }
 
-    public void setChunkSource(IGeneratorChunkSource chunkSource) {
+    public void setChunkSource(IChunkSource chunkSource) {
         this.chunkSource = chunkSource;
     }
 
@@ -63,6 +63,10 @@ public class BukkitWorldStub implements World {
             return;
         }
         chunk.setBlock(x & 0xF, y, z & 0xF, type);
+    }
+
+    public ChunkData getChunkDataAt(int x, int z) {
+        return chunkSource.getChunkData(x, z);
     }
 
     //--------------------------------
