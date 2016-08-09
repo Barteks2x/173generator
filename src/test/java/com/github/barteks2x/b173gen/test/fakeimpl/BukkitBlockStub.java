@@ -59,6 +59,26 @@ public class BukkitBlockStub implements Block {
 
         return (byte) light;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return type == Material.AIR;
+    }
+
+    @Override
+    public BlockState getState() {
+        //TODO: Add more cases as needed
+        switch(type) {
+            case MOB_SPAWNER:
+                return new BukkitCreatureSpawnerStub();
+            case CHEST:
+                return new BukkitChestStub();
+            default:
+                throw new UnsupportedOperationException();
+        }
+    }
+
+
     //----------------------------
     //    UNIMPLEMENTED
     //----------------------------
@@ -169,11 +189,6 @@ public class BukkitBlockStub implements Block {
     }
 
     @Override
-    public BlockState getState() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Biome getBiome() {
         throw new UnsupportedOperationException();
     }
@@ -210,11 +225,6 @@ public class BukkitBlockStub implements Block {
 
     @Override
     public int getBlockPower() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean isEmpty() {
         throw new UnsupportedOperationException();
     }
 

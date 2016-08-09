@@ -79,6 +79,11 @@ public class TestCompareToBetaTerrain {
         doTest(new ChunkSourcePopulation(getPopulatorsFor(populators, "LavaLakes")), "05_population_lava_lakes", "03_caves");
     }
 
+    @Test
+    public void test06PupulationDungeons() throws IOException, DataFormatException {
+        doTest(new ChunkSourcePopulation(getPopulatorsFor(populators, "Dungeons")), "06_population_dungeons", "03_caves");
+    }
+
     private void doTest(IChunkModifier chunkModifier, String name, String dependency) throws IOException, DataFormatException {
         IChunkModifier chunkSource = chunkModifier;
         ChunkModifierTester compare = ChunkModifierTester.create(chunkSource, dependency == null ? null : res(dependency), res(name), chunksFile, expectedDiffFile(name), MAX_DIFF);

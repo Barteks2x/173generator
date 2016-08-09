@@ -38,8 +38,7 @@ public class WorldGenDungeonOld implements WorldGenerator173 {
                         return false;
                     }
 
-                    if ((x == xPos - rx - 1 || x == xPos + rx + 1 || z == zPos - rz - 1 || z == zPos + rz + 1) &&
-                            y == yPos &&
+                    if ((x == xPos - rx - 1 || x == xPos + rx + 1 || z == zPos - rz - 1 || z == zPos + rz + 1) && y == yPos &&
                             w.getBlockAt(x, y, z).isEmpty() && w.getBlockAt(x, y + 1, z).isEmpty()) {
                         ++j1;
                     }
@@ -146,9 +145,17 @@ public class WorldGenDungeonOld implements WorldGenerator173 {
             case 6:
                 return new ItemStack(Material.BUCKET);
             case 7:
-                if (random.nextInt(100) == 0) return new ItemStack(Material.GOLDEN_APPLE);
+                if (random.nextInt(100) == 0) {
+                    return new ItemStack(Material.GOLDEN_APPLE);
+                } else {
+                    return null;
+                }
             case 8:
-                if (random.nextInt(2) == 0) return new ItemStack(Material.REDSTONE, random.nextInt(4) + 1);
+                if (random.nextInt(2) == 0) {
+                    return new ItemStack(Material.REDSTONE, random.nextInt(4) + 1);
+                } else {
+                    return null;
+                }
             case 9:
                 if (random.nextInt(10) == 0) {
                     if(random.nextInt(2) == 0) {
@@ -156,11 +163,13 @@ public class WorldGenDungeonOld implements WorldGenerator173 {
                     } else {
                         return new ItemStack(Material.GREEN_RECORD);
                     }
+                } else {
+                    return null;
                 }
             case 10:
                 return new Dye(DyeColor.BLACK).toItemStack();
             default:
-                return null;
+                throw new AssertionError();
         }
     }
 
