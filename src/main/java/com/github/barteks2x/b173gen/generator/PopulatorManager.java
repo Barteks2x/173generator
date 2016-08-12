@@ -161,7 +161,7 @@ public class PopulatorManager {
         }
         for (PopulatorState state : allStates) {
             if (state.isChunk(chunkX, chunkZ)) {
-                return primaryState;
+                return state;
             }
         }
         throw new IllegalStateException("No populator state for chunk " + chunkX + ", " + chunkZ);

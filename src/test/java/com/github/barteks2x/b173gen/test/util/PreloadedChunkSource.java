@@ -17,6 +17,7 @@ public class PreloadedChunkSource implements IChunkSource {
                     "\\.mcr";//.mcr
 
     private Map<RegionChunkPosition, ChunkData> chunks = new HashMap<>();
+    private Set<RegionChunkPosition> loadedPositions = new HashSet<>();
 
     private PreloadedChunkSource(Set<ChunkData> loadedChunks) {
         for(ChunkData data : loadedChunks) {
@@ -55,14 +56,21 @@ public class PreloadedChunkSource implements IChunkSource {
 
     @Override
     public void loadChunkData(int x, int z) {
-        ChunkData data = getChunkData(x, z);
+        RegionChunkPosition pos = RegionChunkPosition.fromChunkPos(x, z);
+        ChunkData data = chunks.get(pos);
         if(data == null) {
-            this.chunks.put(RegionChunkPosition.fromChunkPos(x, z), ChunkData.empty(x, z));
+            this.chunks.put(pos, ChunkData.empty(x, z));
+            System.err.println("Getting empty chunk at " + x + ", " + z);
         }
+        this.loadedPositions.add(pos);
     }
 
     @Override
     public ChunkData getChunkData(int x, int z) {
-        return chunks.get(RegionChunkPosition.fromChunkPos(x, z));
+        RegionChunkPosition pos = RegionChunkPosition.fromChunkPos(x, z);
+        if(!loadedPositions.contains(pos)) {
+            return null;
+        }
+        return chunks.get(pos);
     }
 }

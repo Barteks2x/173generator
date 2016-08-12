@@ -80,8 +80,18 @@ public class TestCompareToBetaTerrain {
     }
 
     @Test
-    public void test06PupulationDungeons() throws IOException, DataFormatException {
+    public void test06PopulationDungeons() throws IOException, DataFormatException {
         doTest(new ChunkSourcePopulation(getPopulatorsFor(populators, "Dungeons")), "06_population_dungeons", "03_caves");
+    }
+
+    @Test
+    public void test07PopulationClay() throws IOException, DataFormatException {
+        doTest(new ChunkSourcePopulation(getPopulatorsFor(populators, "Clay")), "07_population_clay", "03_caves");
+    }
+
+    @Test
+    public void test08PopulationMinables() throws IOException, DataFormatException {
+        doTest(new ChunkSourcePopulation(getPopulatorsFor(populators, "Lapis")), "08_population_minables", "03_caves");
     }
 
     private void doTest(IChunkModifier chunkModifier, String name, String dependency) throws IOException, DataFormatException {
@@ -173,20 +183,22 @@ public class TestCompareToBetaTerrain {
                         dz = 0;
                         break;
                     case 2:
-                        dx = -1;
+                        dx = 0;
                         dz = -1;
                         break;
                     case 3:
-                        dx = 0;
+                        dx = -1;
                         dz = -1;
                         break;
                     default:
                         throw new AssertionError();
                 }
+                //if the checked position would be (x, z), check (x+dx, z+dz), MC beta bug
+                ChunkData chunk01 = (dx == 0 && dz == -1) ? getChunkData(x + dx, z + dz) : getChunkData(x + dx, z + dz + 1);
+                ChunkData chunk10 = (dx == -1 && dz == 0) ? getChunkData(x + dx, z + dz) : getChunkData(x + dx + 1, z + dz);
+                ChunkData chunk11 = (dx == -1 && dz == -1) ? getChunkData(x + dx, z + dz) : getChunkData(x + dx + 1, z + dz + 1);
                 if (getChunkData(x + dx, z + dz) != null && !getChunkData(x + dx, z + dz).isPopulated() &&
-                        getChunkData(x + dx, z + dz + 1) != null &&
-                        getChunkData(x + dx + 1, z + dz + 1) != null &&
-                        getChunkData(x + dx + 1, z + dz) != null) {
+                         chunk01 != null && chunk10 != null && chunk11 != null) {
 
                     Chunk fakeChunk = mock(Chunk.class);
                     when(fakeChunk.getX()).thenReturn(x + dx);

@@ -4,6 +4,7 @@ import com.github.barteks2x.b173gen.generator.WorldGenerator173;
 import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 
 public class WorldGenClayOld implements WorldGenerator173 {
 
@@ -17,8 +18,8 @@ public class WorldGenClayOld implements WorldGenerator173 {
 
     @Override
     public boolean generate(World world, Random random, int blockX, int blockY, int blockZ) {
-        if(world.getBlockAt(blockX, blockY, blockZ).getType() != Material.WATER && world.
-                getBlockAt(blockX, blockY, blockZ).getType() != Material.STATIONARY_WATER) {
+        if(world.getBlockAt(blockX - 8, blockY, blockZ - 8).getType() != Material.WATER &&
+                world.getBlockAt(blockX - 8, blockY, blockZ - 8).getType() != Material.STATIONARY_WATER) {
             return false;
         }
         float f = random.nextFloat() * 3.141593F;

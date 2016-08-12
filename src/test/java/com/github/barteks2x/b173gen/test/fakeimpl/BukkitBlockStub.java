@@ -35,6 +35,9 @@ public class BukkitBlockStub implements Block {
 
     @Override
     public void setType(Material material) {
+        if(y < 50 && material == Material.GRASS) {
+            new Exception().printStackTrace();
+        }
         this.type = material;
         this.world.setTypeDirectly(x, y, z, type);
     }
@@ -51,7 +54,7 @@ public class BukkitBlockStub implements Block {
         for(int y = 127; y >= this.y; y--) {
             int opacity = BlockUtils.getOpacity(world.getBlockAt(x, y, z).getType());
             light -= opacity;
-            if(opacity < 0) {
+            if(light < 0) {
                 light = 0;
                 break;
             }
