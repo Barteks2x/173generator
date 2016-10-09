@@ -1,16 +1,16 @@
 package com.github.barteks2x.b173gen.oldgen;
 
+import com.github.barteks2x.b173gen.ISimpleWorld;
 import com.github.barteks2x.b173gen.generator.WorldGenerator173;
-import java.util.Random;
 import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
+
+import java.util.Random;
 
 public class WorldGenBigTreeOld implements WorldGenerator173 {
 
     static final byte[] a = new byte[] {(byte)2, (byte)0, (byte)0, (byte)1, (byte)2, (byte)1};
     Random b = new Random();
-    World c;
+    ISimpleWorld c;
     int[] d = new int[] {0, 0, 0};
     int e = 0;
     int f;
@@ -37,7 +37,7 @@ public class WorldGenBigTreeOld implements WorldGenerator173 {
         this.k = d2;
     }
 
-    public boolean generate(World world, Random random, int i, int j, int k) {
+    public boolean generate(ISimpleWorld world, Random random, int i, int j, int k) {
         this.c = world;
         long l = random.nextLong();
 
@@ -150,14 +150,12 @@ public class WorldGenBigTreeOld implements WorldGenerator173 {
                     ++k1;
                 } else {
                     aint1[b2] = aint[b2] + k1;
-                    Material l1 = this.c.getBlockAt(aint1[0], aint1[1], aint1[2]).getType();
+                    Material l1 = this.c.getType(aint1[0], aint1[1], aint1[2]);
 
                     if(l1 != Material.AIR && l1 != Material.LEAVES) {
                         ++k1;
                     } else {
-                        Block block = this.c.getBlockAt(aint1[0], aint1[1], aint1[2]);
-                        block.setType(l);
-                        block.setData((byte)0);
+                        this.c.setType(aint1[0], aint1[1], aint1[2], l);
                         ++k1;
                     }
                 }
@@ -233,9 +231,7 @@ public class WorldGenBigTreeOld implements WorldGenerator173 {
                 aint3[b1] = MathHelper.floor((double)(aint[b1] + j) + 0.5D);
                 aint3[b2] = MathHelper.floor((double)aint[b2] + (double)j * d0 + 0.5D);
                 aint3[b3] = MathHelper.floor((double)aint[b3] + (double)j * d1 + 0.5D);
-                Block block = this.c.getBlockAt(aint3[0], aint3[1], aint3[2]);
-                block.setType(i);
-                block.setData((byte)0);
+                this.c.setType(aint3[0], aint3[1], aint3[2], i);
             }
         }
     }
@@ -332,7 +328,7 @@ public class WorldGenBigTreeOld implements WorldGenerator173 {
                 aint3[b1] = aint[b1] + i;
                 aint3[b2] = MathHelper.floor((double)aint[b2] + (double)i * d0);
                 aint3[b3] = MathHelper.floor((double)aint[b3] + (double)i * d1);
-                Material k = this.c.getBlockAt(aint3[0], aint3[1], aint3[2]).getType();
+                Material k = this.c.getType(aint3[0], aint3[1], aint3[2]);
 
                 if(k != Material.AIR && k != Material.LEAVES) {
                     break;
@@ -346,7 +342,7 @@ public class WorldGenBigTreeOld implements WorldGenerator173 {
     boolean e() {
         int[] aint = new int[] {this.d[0], this.d[1], this.d[2]};
         int[] aint1 = new int[] {this.d[0], this.d[1] + this.e - 1, this.d[2]};
-        Material i = this.c.getBlockAt(this.d[0], this.d[1] - 1, this.d[2]).getType();
+        Material i = this.c.getType(this.d[0], this.d[1] - 1, this.d[2]);
 
         if(i != Material.DIRT && i != Material.GRASS) {
             return false;

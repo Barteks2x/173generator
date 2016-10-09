@@ -1,7 +1,7 @@
 package com.github.barteks2x.b173gen.generator;
 
-import org.bukkit.World;
+import com.github.barteks2x.b173gen.ISimpleWorld;
 
 public interface IPopulator {
-    void populate(World world, PopulatorState state);
+    void populate(ISimpleWorld world, PopulatorState state);
 }

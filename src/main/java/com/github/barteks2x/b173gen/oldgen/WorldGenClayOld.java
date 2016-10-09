@@ -1,10 +1,10 @@
 package com.github.barteks2x.b173gen.oldgen;
 
+import com.github.barteks2x.b173gen.ISimpleWorld;
 import com.github.barteks2x.b173gen.generator.WorldGenerator173;
-import java.util.Random;
 import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
+
+import java.util.Random;
 
 public class WorldGenClayOld implements WorldGenerator173 {
 
@@ -17,9 +17,9 @@ public class WorldGenClayOld implements WorldGenerator173 {
     }
 
     @Override
-    public boolean generate(World world, Random random, int blockX, int blockY, int blockZ) {
-        if(world.getBlockAt(blockX - 8, blockY, blockZ - 8).getType() != Material.WATER &&
-                world.getBlockAt(blockX - 8, blockY, blockZ - 8).getType() != Material.STATIONARY_WATER) {
+    public boolean generate(ISimpleWorld world, Random random, int blockX, int blockY, int blockZ) {
+        if(world.getType(blockX - 8, blockY, blockZ - 8) != Material.WATER &&
+                world.getType(blockX - 8, blockY, blockZ - 8) != Material.STATIONARY_WATER) {
             return false;
         }
         float f = random.nextFloat() * 3.141593F;
@@ -51,9 +51,9 @@ public class WorldGenClayOld implements WorldGenerator173 {
                         if(d12 * d12 + d13 * d13 + d14 * d14 >= 1.0D) {
                             continue;
                         }
-                        Material j3 = world.getBlockAt(k2, l2, i3).getType();
+                        Material j3 = world.getType(k2, l2, i3);
                         if(j3 == Material.SAND) {
-                            world.getBlockAt(k2, l2, i3).setType(clayBlock);
+                            world.setType(k2, l2, i3, clayBlock);
                         }
                     }
 

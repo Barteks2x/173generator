@@ -1,8 +1,10 @@
 package com.github.barteks2x.b173gen.generator.populator;
 
-import com.github.barteks2x.b173gen.generator.*;
+import com.github.barteks2x.b173gen.ISimpleWorld;
+import com.github.barteks2x.b173gen.generator.IPopulator;
+import com.github.barteks2x.b173gen.generator.PopulatorState;
+import com.github.barteks2x.b173gen.generator.WorldGenerator173;
 import com.github.barteks2x.b173gen.util.HeightDistrubution;
-import org.bukkit.World;
 
 import java.util.Random;
 
@@ -18,7 +20,7 @@ public class RareResource  implements IPopulator {
     }
 
     @Override
-    public void populate(World world, PopulatorState state) {
+    public void populate(ISimpleWorld world, PopulatorState state) {
         Random rand = state.getRng();
         if (rand.nextInt(rarity) == 0) {
             int blockX = state.getBlockX() + rand.nextInt(16);

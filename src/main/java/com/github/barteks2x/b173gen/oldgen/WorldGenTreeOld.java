@@ -1,12 +1,17 @@
 package com.github.barteks2x.b173gen.oldgen;
 
+import com.github.barteks2x.b173gen.ISimpleWorld;
 import com.github.barteks2x.b173gen.config.WorldConfig;
 import com.github.barteks2x.b173gen.generator.WorldGenerator173;
-import java.util.Random;
 import org.bukkit.Material;
-import static org.bukkit.Material.*;
-import org.bukkit.World;
-import org.bukkit.block.Block;
+
+import java.util.Random;
+
+import static org.bukkit.Material.AIR;
+import static org.bukkit.Material.DIRT;
+import static org.bukkit.Material.GRASS;
+import static org.bukkit.Material.LEAVES;
+import static org.bukkit.Material.LOG;
 
 public class WorldGenTreeOld implements WorldGenerator173 {
 
@@ -14,7 +19,7 @@ public class WorldGenTreeOld implements WorldGenerator173 {
     }
 
     @Override
-    public boolean generate(World world, Random random, int i, int j, int k) {
+    public boolean generate(ISimpleWorld world, Random random, int i, int j, int k) {
         int l = random.nextInt(3) + 4;
         boolean flag = true;
         if(j < 1 || j + l + 1 > WorldConfig.heightLimit) {
@@ -31,7 +36,7 @@ public class WorldGenTreeOld implements WorldGenerator173 {
             for(int i2 = i - byte0; i2 <= i + byte0 && flag; i2++) {
                 for(int l2 = k - byte0; l2 <= k + byte0 && flag; l2++) {
                     if(i1 >= 0 && i1 < WorldConfig.heightLimit) {
-                        Material j3 = world.getBlockAt(i2, i1, l2).getType();
+                        Material j3 = world.getType(i2, i1, l2);
                         if(j3 != AIR && j3 != LEAVES) {
                             flag = false;
                         }
@@ -47,13 +52,11 @@ public class WorldGenTreeOld implements WorldGenerator173 {
         if(!flag) {
             return false;
         }
-        Material j1 = world.getBlockAt(i, j - 1, k).getType();
+        Material j1 = world.getType(i, j - 1, k);
         if(j1 != GRASS && j1 != DIRT || j >= WorldConfig.heightLimit - l - 1) {
             return false;
         }
-        Block block = world.getBlockAt(i, j - 1, k);
-        block.setType(DIRT);
-        block.setData((byte)0);
+        world.setType(i, j - 1, k, DIRT);
         for(int k1 = (j - 3) + l; k1 <= j + l; k1++) {
             int j2 = k1 - (j + l);
             int i3 = 1 - j2 / 2;
@@ -63,7 +66,7 @@ public class WorldGenTreeOld implements WorldGenerator173 {
                     int j4 = i4 - k;
                     if((Math.abs(l3) != i3 || Math.abs(j4) != i3 || random.
                             nextInt(2) != 0 && j2 != 0)) {
-                        world.getBlockAt(k3, k1, i4).setType(LEAVES);
+                        world.setType(k3, k1, i4, LEAVES);
                     }
                 }
 
@@ -72,9 +75,9 @@ public class WorldGenTreeOld implements WorldGenerator173 {
         }
 
         for(int l1 = 0; l1 < l; l1++) {
-            Material k2 = world.getBlockAt(i, j + l1, k).getType();
+            Material k2 = world.getType(i, j + l1, k);
             if(k2 == AIR || k2 == LEAVES) {
-                world.getBlockAt(i, j + l1, k).setType(LOG);
+                world.setType(i, j + l1, k, LOG);
             }
         }
 

@@ -1,11 +1,16 @@
 package com.github.barteks2x.b173gen.oldgen;
 
+import com.github.barteks2x.b173gen.ISimpleWorld;
 import com.github.barteks2x.b173gen.generator.WorldGenerator173;
-import static com.github.barteks2x.b173gen.oldgen.MathHelper.*;
-import java.util.Random;
 import org.bukkit.Material;
-import static org.bukkit.Material.*;
-import org.bukkit.World;
+
+import java.util.Random;
+
+import static com.github.barteks2x.b173gen.oldgen.MathHelper.PI;
+import static com.github.barteks2x.b173gen.oldgen.MathHelper.cos;
+import static com.github.barteks2x.b173gen.oldgen.MathHelper.floor;
+import static com.github.barteks2x.b173gen.oldgen.MathHelper.sin;
+import static org.bukkit.Material.STONE;
 
 public class WorldGenMinableOld implements WorldGenerator173 {
 
@@ -17,7 +22,7 @@ public class WorldGenMinableOld implements WorldGenerator173 {
         this.size = j;
     }
 
-    public boolean generate(World world, Random rand, int xBase, int yBase, int zBase) {
+    public boolean generate(ISimpleWorld world, Random rand, int xBase, int yBase, int zBase) {
         float randAngle = rand.nextFloat() * PI;
         double xPlus = (double)(xBase + sin(randAngle) * this.size / 8.0F);
         double xMinus = (double)(xBase - sin(randAngle) * this.size / 8.0F);
@@ -58,8 +63,8 @@ public class WorldGenMinableOld implements WorldGenerator173 {
                         distZ = ((double)z + 0.5D - dz) / (xz2R / 2.0D);
                         distSquared3d = distX * distX + distY * distY + distZ * distZ;
 
-                        if(distSquared3d < 1.0D && world.getBlockAt(x, y, z).getType() == STONE) {
-                            world.getBlockAt(x, y, z).setType(this.block);
+                        if(distSquared3d < 1.0D && world.getType(x, y, z) == STONE) {
+                            world.setType(x, y, z, this.block);
                         }
                     }
 

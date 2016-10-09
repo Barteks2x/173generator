@@ -1,9 +1,135 @@
 package com.github.barteks2x.b173gen.oldgen;
 
-import static com.github.barteks2x.b173gen.oldgen.LightType.*;
+import com.github.barteks2x.b173gen.ISimpleWorld;
+import org.bukkit.Material;
+
 import java.util.HashMap;
-import org.bukkit.*;
-import static org.bukkit.Material.*;
+
+import static com.github.barteks2x.b173gen.oldgen.LightType.BLOCK;
+import static org.bukkit.Material.AIR;
+import static org.bukkit.Material.BEDROCK;
+import static org.bukkit.Material.BED_BLOCK;
+import static org.bukkit.Material.BOOKSHELF;
+import static org.bukkit.Material.BREWING_STAND;
+import static org.bukkit.Material.BRICK;
+import static org.bukkit.Material.BRICK_STAIRS;
+import static org.bukkit.Material.BROWN_MUSHROOM;
+import static org.bukkit.Material.BURNING_FURNACE;
+import static org.bukkit.Material.CACTUS;
+import static org.bukkit.Material.CAKE_BLOCK;
+import static org.bukkit.Material.CAULDRON;
+import static org.bukkit.Material.CHEST;
+import static org.bukkit.Material.CLAY;
+import static org.bukkit.Material.COAL_ORE;
+import static org.bukkit.Material.COBBLESTONE;
+import static org.bukkit.Material.COBBLESTONE_STAIRS;
+import static org.bukkit.Material.CROPS;
+import static org.bukkit.Material.DEAD_BUSH;
+import static org.bukkit.Material.DETECTOR_RAIL;
+import static org.bukkit.Material.DIAMOND_BLOCK;
+import static org.bukkit.Material.DIAMOND_ORE;
+import static org.bukkit.Material.DIODE_BLOCK_OFF;
+import static org.bukkit.Material.DIODE_BLOCK_ON;
+import static org.bukkit.Material.DIRT;
+import static org.bukkit.Material.DISPENSER;
+import static org.bukkit.Material.DOUBLE_STEP;
+import static org.bukkit.Material.DRAGON_EGG;
+import static org.bukkit.Material.ENCHANTMENT_TABLE;
+import static org.bukkit.Material.ENDER_PORTAL;
+import static org.bukkit.Material.ENDER_PORTAL_FRAME;
+import static org.bukkit.Material.ENDER_STONE;
+import static org.bukkit.Material.FENCE;
+import static org.bukkit.Material.FENCE_GATE;
+import static org.bukkit.Material.FIRE;
+import static org.bukkit.Material.FURNACE;
+import static org.bukkit.Material.GLASS;
+import static org.bukkit.Material.GLOWING_REDSTONE_ORE;
+import static org.bukkit.Material.GLOWSTONE;
+import static org.bukkit.Material.GOLD_BLOCK;
+import static org.bukkit.Material.GOLD_ORE;
+import static org.bukkit.Material.GRASS;
+import static org.bukkit.Material.GRAVEL;
+import static org.bukkit.Material.HUGE_MUSHROOM_1;
+import static org.bukkit.Material.HUGE_MUSHROOM_2;
+import static org.bukkit.Material.ICE;
+import static org.bukkit.Material.IRON_BLOCK;
+import static org.bukkit.Material.IRON_DOOR_BLOCK;
+import static org.bukkit.Material.IRON_FENCE;
+import static org.bukkit.Material.IRON_ORE;
+import static org.bukkit.Material.JACK_O_LANTERN;
+import static org.bukkit.Material.JUKEBOX;
+import static org.bukkit.Material.LADDER;
+import static org.bukkit.Material.LAPIS_BLOCK;
+import static org.bukkit.Material.LAPIS_ORE;
+import static org.bukkit.Material.LAVA;
+import static org.bukkit.Material.LEAVES;
+import static org.bukkit.Material.LEVER;
+import static org.bukkit.Material.LOG;
+import static org.bukkit.Material.LONG_GRASS;
+import static org.bukkit.Material.MELON_BLOCK;
+import static org.bukkit.Material.MELON_STEM;
+import static org.bukkit.Material.MOB_SPAWNER;
+import static org.bukkit.Material.MONSTER_EGGS;
+import static org.bukkit.Material.MOSSY_COBBLESTONE;
+import static org.bukkit.Material.MYCEL;
+import static org.bukkit.Material.NETHERRACK;
+import static org.bukkit.Material.NETHER_BRICK;
+import static org.bukkit.Material.NETHER_BRICK_STAIRS;
+import static org.bukkit.Material.NETHER_FENCE;
+import static org.bukkit.Material.NETHER_WARTS;
+import static org.bukkit.Material.NOTE_BLOCK;
+import static org.bukkit.Material.OBSIDIAN;
+import static org.bukkit.Material.PISTON_BASE;
+import static org.bukkit.Material.PISTON_EXTENSION;
+import static org.bukkit.Material.PISTON_MOVING_PIECE;
+import static org.bukkit.Material.PISTON_STICKY_BASE;
+import static org.bukkit.Material.PORTAL;
+import static org.bukkit.Material.POWERED_RAIL;
+import static org.bukkit.Material.PUMPKIN;
+import static org.bukkit.Material.PUMPKIN_STEM;
+import static org.bukkit.Material.RAILS;
+import static org.bukkit.Material.REDSTONE_LAMP_OFF;
+import static org.bukkit.Material.REDSTONE_LAMP_ON;
+import static org.bukkit.Material.REDSTONE_ORE;
+import static org.bukkit.Material.REDSTONE_TORCH_OFF;
+import static org.bukkit.Material.REDSTONE_TORCH_ON;
+import static org.bukkit.Material.REDSTONE_WIRE;
+import static org.bukkit.Material.RED_MUSHROOM;
+import static org.bukkit.Material.RED_ROSE;
+import static org.bukkit.Material.SAND;
+import static org.bukkit.Material.SANDSTONE;
+import static org.bukkit.Material.SAPLING;
+import static org.bukkit.Material.SIGN_POST;
+import static org.bukkit.Material.SMOOTH_BRICK;
+import static org.bukkit.Material.SMOOTH_STAIRS;
+import static org.bukkit.Material.SNOW;
+import static org.bukkit.Material.SNOW_BLOCK;
+import static org.bukkit.Material.SOIL;
+import static org.bukkit.Material.SOUL_SAND;
+import static org.bukkit.Material.SPONGE;
+import static org.bukkit.Material.STATIONARY_LAVA;
+import static org.bukkit.Material.STATIONARY_WATER;
+import static org.bukkit.Material.STEP;
+import static org.bukkit.Material.STONE;
+import static org.bukkit.Material.STONE_BUTTON;
+import static org.bukkit.Material.STONE_PLATE;
+import static org.bukkit.Material.SUGAR_CANE_BLOCK;
+import static org.bukkit.Material.THIN_GLASS;
+import static org.bukkit.Material.TNT;
+import static org.bukkit.Material.TORCH;
+import static org.bukkit.Material.TRAP_DOOR;
+import static org.bukkit.Material.VINE;
+import static org.bukkit.Material.WALL_SIGN;
+import static org.bukkit.Material.WATER;
+import static org.bukkit.Material.WATER_LILY;
+import static org.bukkit.Material.WEB;
+import static org.bukkit.Material.WOOD;
+import static org.bukkit.Material.WOODEN_DOOR;
+import static org.bukkit.Material.WOOD_PLATE;
+import static org.bukkit.Material.WOOD_STAIRS;
+import static org.bukkit.Material.WOOL;
+import static org.bukkit.Material.WORKBENCH;
+import static org.bukkit.Material.YELLOW_FLOWER;
 
 public class MinecraftMethods {
     private static final HashMap<Material, Boolean> buildableMapping = new HashMap<Material, Boolean>(256);
@@ -158,17 +284,17 @@ public class MinecraftMethods {
         return m.toString().toLowerCase().contains("water") || m.toString().toLowerCase().contains("lava");
     }
 
-    public static int World_getlightValue(World w, int x, int y, int z, LightType type) {
+    public static int World_getlightValue(ISimpleWorld w, int x, int y, int z, LightType type) {
         return type == BLOCK ?
-                w.getBlockAt(x, y, z).getLightFromBlocks() :
-                w.getBlockAt(x, y, z).getLightFromSky();
+                w.getBlockLight(x, y, z) :
+                w.getSkyLight(x, y, z);
     }
 
-    public static boolean Block_canPlace(Material block, World w, int x, int y, int z) {
-        if(!w.getBlockAt(x, y, z).isEmpty()) {
+    public static boolean Block_canPlace(Material block, ISimpleWorld w, int x, int y, int z) {
+        if(!w.isEmpty(x, y, z)) {
             return false;
         }
-        Material below = w.getBlockAt(x, y - 1, z).getType();
+        Material below = w.getType(x, y - 1, z);
         if(block == YELLOW_FLOWER
                 || block == RED_ROSE) {
             return below == DIRT || below == GRASS || below == SOIL;
@@ -183,15 +309,14 @@ public class MinecraftMethods {
             return below == DIRT || below == GRASS;
         }
         if(block == BROWN_MUSHROOM || block == RED_MUSHROOM) {
-            ChunkSnapshot s = w.getChunkAt(x >> 4, z >> 4).getChunkSnapshot();
-            int light = Math.max(s.getBlockEmittedLight(x & 0xF, y & 0xFF, z & 0xF), s.getBlockSkyLight(x & 0xF, y & 0xFF, z & 0xF));
+            int light = Math.max(w.getBlockLight(x, y, z), w.getSkyLight(x, y, z));
             return (below == DIRT || below == GRASS) && light < 13;
         }
         if(block == SUGAR_CANE_BLOCK) {
-            Material x0z1 = w.getBlockAt(x, y - 1, z + 1).getType();
-            Material x0z_1 = w.getBlockAt(x, y - 1, z - 1).getType();
-            Material x1z0 = w.getBlockAt(x + 1, y - 1, z).getType();
-            Material x_1z0 = w.getBlockAt(x - 1, y - 1, z).getType();
+            Material x0z1 = w.getType(x, y - 1, z + 1);
+            Material x0z_1 = w.getType(x, y - 1, z - 1);
+            Material x1z0 = w.getType(x + 1, y - 1, z);
+            Material x_1z0 = w.getType(x - 1, y - 1, z);
             return below == SUGAR_CANE_BLOCK
                     || ((below == DIRT || below == GRASS || below == SAND)
                     && (isLiquid(x1z0) || isLiquid(x_1z0) || isLiquid(x0z1) || isLiquid(x0z_1)));
@@ -199,8 +324,8 @@ public class MinecraftMethods {
         throw new IllegalArgumentException(block.name());
     }
 
-    public static boolean Material_isBuildable(World w, int x, int y, int z) {
-        Boolean s = buildableMapping.get(w.getBlockAt(x, y, z).getType());
+    public static boolean Material_isBuildable(ISimpleWorld w, int x, int y, int z) {
+        Boolean s = buildableMapping.get(w.getType(x, y, z));
         return s == null ? false : s;
     }
 

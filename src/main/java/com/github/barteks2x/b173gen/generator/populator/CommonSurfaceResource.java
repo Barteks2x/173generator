@@ -1,7 +1,11 @@
 package com.github.barteks2x.b173gen.generator.populator;
 
-import com.github.barteks2x.b173gen.generator.*;
-import org.bukkit.World;
+import com.github.barteks2x.b173gen.ISimpleWorld;
+import com.github.barteks2x.b173gen.generator.FeatureDensityGenerator;
+import com.github.barteks2x.b173gen.generator.GeneratorSelector;
+import com.github.barteks2x.b173gen.generator.IPopulator;
+import com.github.barteks2x.b173gen.generator.PopulatorState;
+import com.github.barteks2x.b173gen.generator.WorldGenerator173;
 
 import java.util.Random;
 
@@ -23,7 +27,7 @@ public class CommonSurfaceResource implements IPopulator  {
     }
 
     @Override
-    public void populate(World world, PopulatorState state) {
+    public void populate(ISimpleWorld world, PopulatorState state) {
         Random rand = state.getRng();
         int attempts = attemptsPerChunk.get(rand, state.getBiome(), state.getChunkX(), state.getChunkZ());
         for (int i = 0; i < attempts; i++) {

@@ -1,6 +1,8 @@
 package com.github.barteks2x.b173gen.generator;
 
+import com.github.barteks2x.b173gen.BukkitSimpleWorldImpl;
 import com.github.barteks2x.b173gen.Generator;
+import com.github.barteks2x.b173gen.ISimpleWorld;
 import com.github.barteks2x.b173gen.biome.BiomeOld;
 import com.github.barteks2x.b173gen.config.WorldConfig;
 import com.github.barteks2x.b173gen.generator.populator.*;
@@ -31,6 +33,7 @@ public class PopulatorManager {
 
     private final World world;
     private final WorldChunkManagerOld wcm;
+    private final ISimpleWorld simpleWorld;
 
     private NoiseGeneratorOctaves3D treeNoise;
 
@@ -39,6 +42,7 @@ public class PopulatorManager {
     public PopulatorManager(World world, WorldChunkManagerOld wcm, WorldConfig config) {
 
         this.world = world;
+        this.simpleWorld = new BukkitSimpleWorldImpl(world);
         this.wcm = wcm;
 
         //hack, init is the first populator
@@ -165,5 +169,9 @@ public class PopulatorManager {
             }
         }
         throw new IllegalStateException("No populator state for chunk " + chunkX + ", " + chunkZ);
+    }
+
+    ISimpleWorld getWorld() {
+        return this.simpleWorld;
     }
 }

@@ -1,10 +1,10 @@
 package com.github.barteks2x.b173gen.oldgen;
 
+import com.github.barteks2x.b173gen.ISimpleWorld;
 import com.github.barteks2x.b173gen.generator.WorldGenerator173;
-import java.util.Random;
 import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
+
+import java.util.Random;
 
 public class WorldGenLakesOld implements WorldGenerator173 {
     private Material liquidBlock;
@@ -13,11 +13,11 @@ public class WorldGenLakesOld implements WorldGenerator173 {
         this.liquidBlock = i;
     }
 
-    public boolean generate(World world, Random random, int blockX, int blockY, int blockZ) {
+    public boolean generate(ISimpleWorld world, Random random, int blockX, int blockY, int blockZ) {
         blockX -= 8;
         blockZ -= 8;
 
-        while(blockY > 0 && world.getBlockAt(blockX, blockY, blockZ).getType() == Material.AIR)
+        while(blockY > 0 && world.isEmpty(blockX, blockY, blockZ))
             --blockY;
 
         blockY -= 4;
@@ -62,14 +62,15 @@ public class WorldGenLakesOld implements WorldGenerator173 {
                     if (!isNewlyExposed) {
                         continue;
                     }
-                    Block block = world.getBlockAt(blockX + localX, blockY + localY, blockZ + localZ);
+                    Material block = world.getType(blockX + localX, blockY + localY, blockZ + localZ);
                     //if above liquid surface and is liquid
-                    if(localY >= 4 && block.isLiquid()) {
+                    if(localY >= 4 && (block == Material.WATER || block == Material.STATIONARY_WATER ||
+                            block == Material.LAVA || block == Material.STATIONARY_LAVA)) {
                         return false;
                     }
 
                     //if below liquid surface and is non-solid block different then generated liquid
-                    if(localY < 4 && !block.getType().isSolid() && block.getType() != this.liquidBlock) {
+                    if(localY < 4 && !block.isSolid() && block != this.liquidBlock) {
                         return false;
                     }
                 }
@@ -80,7 +81,7 @@ public class WorldGenLakesOld implements WorldGenerator173 {
             for(int localZ = 0; localZ < 16; ++localZ) {
                 for(int localY = 0; localY < 8; ++localY) {
                     if(emptyOrLiquid[(localX * 16 + localZ) * 8 + localY]) {
-                        world.getBlockAt(blockX + localX, blockY + localY, blockZ + localZ).setType(localY >= 4 ? Material.AIR : this.liquidBlock);
+                        world.setType(blockX + localX, blockY + localY, blockZ + localZ, localY >= 4 ? Material.AIR : this.liquidBlock);
                     }
                 }
             }
@@ -90,9 +91,9 @@ public class WorldGenLakesOld implements WorldGenerator173 {
             for(int i2 = 0; i2 < 16; ++i2) {
                 for(int j2 = 4; j2 < 8; ++j2) {
                     if(emptyOrLiquid[(i1 * 16 + i2) * 8 + j2]
-                            && world.getBlockAt(blockX + i1, blockY + j2 - 1, blockZ + i2).getType() == Material.DIRT
-                            && MinecraftMethods.World_getlightValue(world, blockX + i1, blockY + j2, blockZ + i2, LightType.SKY) > 0) {
-                        world.getBlockAt(blockX + i1, blockY + j2 - 1, blockZ + i2).setType(Material.GRASS);
+                            && world.getType(blockX + i1, blockY + j2 - 1, blockZ + i2) == Material.DIRT
+                            && world.getSkyLight(blockX + i1, blockY + j2, blockZ + i2) > 0) {
+                        world.setType(blockX + i1, blockY + j2 - 1, blockZ + i2, Material.GRASS);
                     }
                 }
             }
@@ -103,8 +104,8 @@ public class WorldGenLakesOld implements WorldGenerator173 {
                 for(int i2 = 0; i2 < 16; ++i2) {
                     for(int j2 = 0; j2 < 8; ++j2) {
                         boolean flag = !emptyOrLiquid[(i1 * 16 + i2) * 8 + j2] && (i1 < 15 && emptyOrLiquid[((i1 + 1) * 16 + i2) * 8 + j2] || i1 > 0 && emptyOrLiquid[((i1 - 1) * 16 + i2) * 8 + j2] || i2 < 15 && emptyOrLiquid[(i1 * 16 + i2 + 1) * 8 + j2] || i2 > 0 && emptyOrLiquid[(i1 * 16 + (i2 - 1)) * 8 + j2] || j2 < 7 && emptyOrLiquid[(i1 * 16 + i2) * 8 + j2 + 1] || j2 > 0 && emptyOrLiquid[(i1 * 16 + i2) * 8 + (j2 - 1)]);
-                        if(flag && (j2 < 4 || random.nextInt(2) != 0) && world.getBlockAt(blockX + i1, blockY + j2, blockZ + i2).getType().isSolid()) {
-                            world.getBlockAt(blockX + i1, blockY + j2, blockZ + i2).setType(Material.STONE);
+                        if(flag && (j2 < 4 || random.nextInt(2) != 0) && world.getType(blockX + i1, blockY + j2, blockZ + i2).isSolid()) {
+                            world.setType(blockX + i1, blockY + j2, blockZ + i2, Material.STONE);
                         }
                     }
                 }

@@ -27,7 +27,7 @@ public class PopulatorProxy extends BlockPopulator {
         }
         lastKnownX = chunk.getX();
         lastKnownZ = chunk.getZ();
-        populator.populate(world, stateManager.getStateFor(chunk.getX(), chunk.getZ()));
+        populator.populate(stateManager.getWorld(), stateManager.getStateFor(chunk.getX(), chunk.getZ()));
     }
 
     @Override

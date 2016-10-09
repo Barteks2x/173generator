@@ -1,19 +1,27 @@
 package com.github.barteks2x.b173gen.oldgen;
 
+import com.github.barteks2x.b173gen.ISimpleWorld;
 import com.github.barteks2x.b173gen.config.WorldConfig;
 import com.github.barteks2x.b173gen.generator.WorldGenerator173;
-import java.util.Random;
 import org.bukkit.Material;
-import static org.bukkit.Material.*;
-import org.bukkit.World;
-import org.bukkit.block.Block;
+import org.bukkit.TreeSpecies;
+import org.bukkit.material.Leaves;
+import org.bukkit.material.Tree;
+
+import java.util.Random;
+
+import static org.bukkit.Material.AIR;
+import static org.bukkit.Material.DIRT;
+import static org.bukkit.Material.GRASS;
+import static org.bukkit.Material.LEAVES;
+import static org.bukkit.Material.LOG;
 
 public class WorldGenTaiga2Old implements WorldGenerator173 {
 
     public WorldGenTaiga2Old() {
     }
 
-    public boolean generate(World world, Random random, int i, int j, int k) {
+    public boolean generate(ISimpleWorld world, Random random, int i, int j, int k) {
         int l = random.nextInt(4) + 6;
         int i1 = 1 + random.nextInt(2);
         int j1 = l - i1;
@@ -38,7 +46,7 @@ public class WorldGenTaiga2Old implements WorldGenerator173 {
                 for(i2 = i - k2; i2 <= i + k2 && flag; ++i2) {
                     for(int l2 = k - k2; l2 <= k + k2 && flag; ++l2) {
                         if(l1 >= 0 && l1 < WorldConfig.heightLimit) {
-                            block = world.getBlockAt(i2, l1, l2).getType();
+                            block = world.getType(i2, l1, l2);
                             if(block != AIR && block != LEAVES) {
                                 flag = false;
                             }
@@ -52,9 +60,9 @@ public class WorldGenTaiga2Old implements WorldGenerator173 {
             if(!flag) {
                 return false;
             } else {
-                block = world.getBlockAt(i, j - 1, k).getType();
+                block = world.getType(i, j - 1, k);
                 if((block == GRASS || block == DIRT) && j < WorldConfig.heightLimit - l - 1) {
-                    world.getBlockAt(i, j - 1, k).setType(DIRT);
+                    world.setType(i, j - 1, k, DIRT);
                     k2 = random.nextInt(2);
                     i2 = 1;
                     byte b0 = 0;
@@ -72,10 +80,8 @@ public class WorldGenTaiga2Old implements WorldGenerator173 {
                                 int i4 = l3 - k;
 
                                 if((Math.abs(k3) != k2 || Math.abs(i4) != k2 || k2 <= 0)
-                                        && world.getBlockAt(i3, j3, l3).isEmpty()) {
-                                    Block b = world.getBlockAt(i3, j3, l3);
-                                    b.setType(LEAVES);
-                                    b.setData((byte)1);
+                                        && world.isEmpty(i3, j3, l3)) {
+                                    world.setType(i3, j3, l3, LEAVES, new Leaves(TreeSpecies.REDWOOD));
                                 }
                             }
                         }
@@ -95,11 +101,9 @@ public class WorldGenTaiga2Old implements WorldGenerator173 {
                     int a = random.nextInt(3);
 
                     for(j3 = 0; j3 < l - a; ++j3) {
-                        Material mat = world.getBlockAt(i, j + j3, k).getType();
+                        Material mat = world.getType(i, j + j3, k);
                         if(mat == AIR || mat == LEAVES) {
-                            Block b = world.getBlockAt(i, j + j3, k);
-                            b.setType(LOG);
-                            b.setData((byte)1);
+                            world.setType(i, j + j3, k, LOG, new Tree(TreeSpecies.REDWOOD));
                         }
                     }
 

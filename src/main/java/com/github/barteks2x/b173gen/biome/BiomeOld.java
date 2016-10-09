@@ -1,16 +1,37 @@
 package com.github.barteks2x.b173gen.biome;
 
 import com.github.barteks2x.b173gen.Generator;
-import static com.github.barteks2x.b173gen.biome.BetaBiome.*;
-import static org.bukkit.Material.LONG_GRASS;
-
 import com.github.barteks2x.b173gen.generator.WorldGenerator173;
-import com.github.barteks2x.b173gen.oldgen.*;
-import java.util.*;
-import java.util.logging.Level;
+import com.github.barteks2x.b173gen.oldgen.MathHelper;
+import com.github.barteks2x.b173gen.oldgen.WorldGenBigTreeOld;
+import com.github.barteks2x.b173gen.oldgen.WorldGenBirchTreeOld;
+import com.github.barteks2x.b173gen.oldgen.WorldGenGrassOld;
+import com.github.barteks2x.b173gen.oldgen.WorldGenTaiga1Old;
+import com.github.barteks2x.b173gen.oldgen.WorldGenTaiga2Old;
+import com.github.barteks2x.b173gen.oldgen.WorldGenTreeOld;
+import org.bukkit.GrassSpecies;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.material.LongGrass;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+import java.util.logging.Level;
+
+import static com.github.barteks2x.b173gen.biome.BetaBiome.DESERT;
+import static com.github.barteks2x.b173gen.biome.BetaBiome.FOREST;
+import static com.github.barteks2x.b173gen.biome.BetaBiome.PLAINS;
+import static com.github.barteks2x.b173gen.biome.BetaBiome.RAINFOREST;
+import static com.github.barteks2x.b173gen.biome.BetaBiome.SAVANNA;
+import static com.github.barteks2x.b173gen.biome.BetaBiome.SEASONAL_FOREST;
+import static com.github.barteks2x.b173gen.biome.BetaBiome.SHRUBLAND;
+import static com.github.barteks2x.b173gen.biome.BetaBiome.SWAMPLAND;
+import static com.github.barteks2x.b173gen.biome.BetaBiome.TAIGA;
+import static com.github.barteks2x.b173gen.biome.BetaBiome.TUNDRA;
+import static org.bukkit.Material.LONG_GRASS;
 
 public class BiomeOld {
 
@@ -79,7 +100,7 @@ public class BiomeOld {
 
     public static WorldGenerator173 getBiomeTreeGenerator(Random rand, BetaBiome biome) {
         if(FOREST.equals(biome)) {
-            return rand.nextInt(5) == 0 ? new WorldGenForestOld() : (rand.nextInt(3) == 0
+            return rand.nextInt(5) == 0 ? new WorldGenBirchTreeOld() : (rand.nextInt(3) == 0
                     ? new WorldGenBigTreeOld() : new WorldGenTreeOld());
         }
         if(RAINFOREST.equals(biome)) {
@@ -93,11 +114,9 @@ public class BiomeOld {
 
     public static WorldGenerator173 getRandomGrassGenerator(Random rand, BetaBiome biome) {
         if (biome.equals(RAINFOREST) && rand.nextInt(3) != 0) {
-            //rainforest
-            return new WorldGenGrassOld(LONG_GRASS, (byte) 2);
+            return new WorldGenGrassOld(LONG_GRASS, new LongGrass(GrassSpecies.FERN_LIKE));
         } else {
-            //mormal
-            return new WorldGenGrassOld(LONG_GRASS, (byte) 1);
+            return new WorldGenGrassOld(LONG_GRASS, new LongGrass(GrassSpecies.NORMAL));
         }
     }
 

@@ -1,9 +1,10 @@
 package com.github.barteks2x.b173gen.oldgen;
 
+import com.github.barteks2x.b173gen.ISimpleWorld;
 import com.github.barteks2x.b173gen.generator.WorldGenerator173;
-import java.util.Random;
 import org.bukkit.Material;
-import org.bukkit.World;
+
+import java.util.Random;
 
 public class WorldGenDeadBushOld implements WorldGenerator173 {
 
@@ -13,10 +14,10 @@ public class WorldGenDeadBushOld implements WorldGenerator173 {
         this.block = block;
     }
 
-    public boolean generate(World world, Random random, int i, int j, int k) {
+    public boolean generate(ISimpleWorld world, Random random, int i, int j, int k) {
 
         for(Material l;
-                ((l = world.getBlockAt(i, j, k).getType()) == Material.AIR
+                ((l = world.getType(i, j, k)) == Material.AIR
                 || l == Material.LEAVES) && j > 0; --j) {
         }
 
@@ -25,8 +26,8 @@ public class WorldGenDeadBushOld implements WorldGenerator173 {
             int k1 = j + random.nextInt(4) - random.nextInt(4);
             int l1 = k + random.nextInt(8) - random.nextInt(8);
 
-            if(world.getBlockAt(j1, k1, l1).isEmpty() && MinecraftMethods.Block_canPlace(this.block, world, i1, k1, l1)) {
-                world.getBlockAt(j1, k1, l1).setType(this.block);
+            if(world.isEmpty(j1, k1, l1) && MinecraftMethods.Block_canPlace(this.block, world, i1, k1, l1)) {
+                world.setType(j1, k1, l1, this.block);
             }
         }
 

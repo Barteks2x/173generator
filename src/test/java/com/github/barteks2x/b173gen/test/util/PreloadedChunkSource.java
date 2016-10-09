@@ -60,7 +60,7 @@ public class PreloadedChunkSource implements IChunkSource {
         ChunkData data = chunks.get(pos);
         if(data == null) {
             this.chunks.put(pos, ChunkData.empty(x, z));
-            System.err.println("Getting empty chunk at " + x + ", " + z);
+            //System.err.println("Getting empty chunk at " + x + ", " + z);
         }
         this.loadedPositions.add(pos);
     }

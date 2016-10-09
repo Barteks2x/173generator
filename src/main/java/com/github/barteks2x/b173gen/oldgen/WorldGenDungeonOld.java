@@ -1,9 +1,9 @@
 package com.github.barteks2x.b173gen.oldgen;
 
+import com.github.barteks2x.b173gen.ISimpleWorld;
 import com.github.barteks2x.b173gen.generator.WorldGenerator173;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Chest;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.inventory.Inventory;
@@ -15,7 +15,7 @@ import java.util.Random;
 public class WorldGenDungeonOld implements WorldGenerator173 {
 
     @Override
-    public boolean generate(World w, Random random, int xPos, int yPos, int zPos) {
+    public boolean generate(ISimpleWorld w, Random random, int xPos, int yPos, int zPos) {
         byte ry = 3;
         int rx = random.nextInt(2) + 2;
         int rz = random.nextInt(2) + 2;
@@ -29,7 +29,7 @@ public class WorldGenDungeonOld implements WorldGenerator173 {
             for (y = yPos - 1; y <= yPos + ry + 1; ++y) {
                 for (z = zPos - rz - 1; z <= zPos + rz + 1; ++z) {
 
-                    Material block = w.getBlockAt(x, y, z).getType();
+                    Material block = w.getType(x, y, z);
                     if (y == yPos - 1 && !block.isSolid()) {
                         return false;
                     }
@@ -39,7 +39,7 @@ public class WorldGenDungeonOld implements WorldGenerator173 {
                     }
 
                     if ((x == xPos - rx - 1 || x == xPos + rx + 1 || z == zPos - rz - 1 || z == zPos + rz + 1) && y == yPos &&
-                            w.getBlockAt(x, y, z).isEmpty() && w.getBlockAt(x, y + 1, z).isEmpty()) {
+                            w.isEmpty(x, y, z) && w.isEmpty(x, y + 1, z)) {
                         ++j1;
                     }
                 }
@@ -54,20 +54,20 @@ public class WorldGenDungeonOld implements WorldGenerator173 {
                 for (z = zPos - rz - 1; z <= zPos + rz + 1; ++z) {
                     if (x == xPos - rx - 1 || y == yPos - 1 || z == zPos - rz - 1 ||
                             x == xPos + rx + 1 || y == yPos + ry + 1 || z == zPos + rz + 1) {
-                        if (y >= 0 && !w.getBlockAt(x, y - 1, z).getType().isSolid()) {
-                            w.getBlockAt(x, y, z).setType(Material.AIR);
+                        if (y >= 0 && !w.getType(x, y - 1, z).isSolid()) {
+                            w.setType(x, y, z, Material.AIR);
                             continue;
                         }
-                        if (!w.getBlockAt(x, y, z).getType().isSolid()) {
+                        if (!w.getType(x, y, z).isSolid()) {
                             continue;
                         }
                         if (y == yPos - 1 && random.nextInt(4) != 0) {
-                            w.getBlockAt(x, y, z).setType(Material.MOSSY_COBBLESTONE);
+                            w.setType(x, y, z, Material.MOSSY_COBBLESTONE);
                         } else {
-                            w.getBlockAt(x, y, z).setType(Material.COBBLESTONE);
+                            w.setType(x, y, z, Material.COBBLESTONE);
                         }
                     } else {
-                        w.getBlockAt(x, y, z).setType(Material.AIR);
+                        w.setType(x, y, z, Material.AIR);
                     }
                 }
             }
@@ -79,32 +79,32 @@ public class WorldGenDungeonOld implements WorldGenerator173 {
                 int blockZ = zPos + random.nextInt(rz * 2 + 1) - rz;
 
                 //search for empty block to place chest in, that is next to a wall
-                if (!w.getBlockAt(blockX, yPos, blockZ).isEmpty()) {
+                if (!w.isEmpty(blockX, yPos, blockZ)) {
                     continue;
                 }
                 int k2 = 0;
 
-                if (w.getBlockAt(blockX - 1, yPos, blockZ).getType().isSolid()) {
+                if (w.getType(blockX - 1, yPos, blockZ).isSolid()) {
                     ++k2;
                 }
 
-                if (w.getBlockAt(blockX + 1, yPos, blockZ).getType().isSolid()) {
+                if (w.getType(blockX + 1, yPos, blockZ).isSolid()) {
                     ++k2;
                 }
 
-                if (w.getBlockAt(blockX, yPos, blockZ - 1).getType().isSolid()) {
+                if (w.getType(blockX, yPos, blockZ - 1).isSolid()) {
                     ++k2;
                 }
 
-                if (w.getBlockAt(blockX, yPos, blockZ + 1).getType().isSolid()) {
+                if (w.getType(blockX, yPos, blockZ + 1).isSolid()) {
                     ++k2;
                 }
 
                 if (k2 != 1) {
                     continue;
                 }
-                w.getBlockAt(blockX, yPos, blockZ).setType(Material.CHEST);
-                Chest chest = (Chest) w.getBlockAt(blockX, yPos, blockZ).getState();
+                w.setType(blockX, yPos, blockZ, Material.CHEST);
+                Chest chest = (Chest) w.getBlockState(blockX, yPos, blockZ);
                 Inventory inventory = chest.getInventory();
                 for (int l2 = 0; l2 < 8; ++l2) {
                     ItemStack itemstack = this.getRandomItem(random);
@@ -118,8 +118,8 @@ public class WorldGenDungeonOld implements WorldGenerator173 {
             }
         }
 
-        w.getBlockAt(xPos, yPos, zPos).setType(Material.MOB_SPAWNER);
-        CreatureSpawner tileentitymobspawner = (CreatureSpawner) w.getBlockAt(xPos, yPos, zPos).getState();
+        w.setType(xPos, yPos, zPos, Material.MOB_SPAWNER);
+        CreatureSpawner tileentitymobspawner = (CreatureSpawner) w.getBlockState(xPos, yPos, zPos);
 
         tileentitymobspawner.setCreatureTypeByName(this.getRandomMob(random));
         return true;

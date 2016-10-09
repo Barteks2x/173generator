@@ -1,5 +1,6 @@
 package com.github.barteks2x.b173gen.generator.populator;
 
+import com.github.barteks2x.b173gen.ISimpleWorld;
 import com.github.barteks2x.b173gen.generator.*;
 import com.github.barteks2x.b173gen.util.HeightDistrubution;
 import org.bukkit.World;
@@ -22,7 +23,7 @@ public class RareUndergroundResource implements IPopulator {
     }
 
     @Override
-    public void populate(World world, PopulatorState state) {
+    public void populate(ISimpleWorld world, PopulatorState state) {
         Random rand = state.getRng();
         if (rand.nextInt(rarity) == 0) {
             int blockX = state.getBlockX() + rand.nextInt(16);
