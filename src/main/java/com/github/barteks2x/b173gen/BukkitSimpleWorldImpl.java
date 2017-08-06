@@ -1,6 +1,7 @@
 package com.github.barteks2x.b173gen;
 
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.World;
 import org.bukkit.block.BlockState;
 import org.bukkit.material.MaterialData;
@@ -17,7 +18,9 @@ public class BukkitSimpleWorldImpl implements ISimpleWorld {
 	}
 
 	@Override public void setType(int x, int y, int z, Material material) {
-		world.getBlockAt(x, y, z).setType(material);
+	    Block block = world.getBlockAt(x, y, z);
+	    block.setType(material);
+	    block.setData((byte)0);
 	}
 
 	@Override public boolean isEmpty(int x, int y, int z) {

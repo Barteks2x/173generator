@@ -9,7 +9,7 @@
         <!--Special git describe version allows for empty prefix & suffix-->
         <gitdescribe-prefix></gitdescribe-prefix>
         <gitdescribe-suffix></gitdescribe-suffix>
-        <protocolLibVersion>4.0.2</protocolLibVersion>
+        <protocolLibVersion>4.2.1</protocolLibVersion>
     </properties>
     <dependencies>
         <dependency>
