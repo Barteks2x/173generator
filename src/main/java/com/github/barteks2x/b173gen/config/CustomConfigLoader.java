@@ -49,7 +49,7 @@ public class CustomConfigLoader {
         configFile.options().copyDefaults(true);
         configFile.options().copyHeader(true);
         configFile.options().header(getHeader());
-        InputStream defaultcfg = plugin.getResource(defaultConfigFilename);
+        Reader defaultcfg = new InputStreamReader(plugin.getResource(defaultConfigFilename));
         if(defaultcfg != null) {
             YamlConfiguration defConfig = YamlConfiguration.
                     loadConfiguration(defaultcfg);
@@ -67,7 +67,7 @@ public class CustomConfigLoader {
             }
             try {
                 configFile.options().copyHeader(true);
-                configFile.load(plugin.getResource(defaultConfigFilename));
+                configFile.load(new InputStreamReader(plugin.getResource(defaultConfigFilename)));
                 //plugin.getLogger().log(Level.INFO, configFile.options().header());
                 configFile.save(file);
             } catch(FileNotFoundException ex) {
