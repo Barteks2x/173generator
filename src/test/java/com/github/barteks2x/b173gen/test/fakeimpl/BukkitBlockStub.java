@@ -81,6 +81,10 @@ public class BukkitBlockStub implements Block {
         }
     }
 
+    @Override
+    public void setData(byte b) {
+    	//Should there be something here?
+    }
 
     //----------------------------
     //    UNIMPLEMENTED
@@ -153,11 +157,6 @@ public class BukkitBlockStub implements Block {
 
     @Override
     public Chunk getChunk() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setData(byte b) {
         throw new UnsupportedOperationException();
     }
 

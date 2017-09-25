@@ -103,6 +103,8 @@ public class TestCompareToBetaTerrain {
         ChunkModifierTester.TestResults expectedRegults = new ChunkModifierTester.TestResults(MAX_DIFF);
 
         assertEquals("The generated world must be equal to saved world", expectedRegults, actualResults);
+        compare=null;
+        System.gc();
     }
 
     private static File expectedDiffFile(String testName) {

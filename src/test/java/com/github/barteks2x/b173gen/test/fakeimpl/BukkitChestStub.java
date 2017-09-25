@@ -155,4 +155,34 @@ class BukkitChestStub implements Chest {
         throw new UnsupportedOperationException();
     }
 
+	@Override
+	public Inventory getSnapshotInventory() {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String getLock() {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean isLocked() {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setLock(String arg0) {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String getCustomName() {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setCustomName(String arg0) {
+        throw new UnsupportedOperationException();
+	}
+
 }

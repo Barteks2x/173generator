@@ -9,8 +9,10 @@ import org.bukkit.entity.*;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.util.Consumer;
 import org.bukkit.util.Vector;
 
 import java.io.File;
@@ -721,4 +723,24 @@ public class BukkitWorldStub implements World {
     public Set<String> getListeningPluginChannels() {
         throw new UnsupportedOperationException();
     }
+
+	@Override
+	public void playSound(Location arg0, Sound arg1, SoundCategory arg2, float arg3, float arg4) {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void playSound(Location arg0, String arg1, SoundCategory arg2, float arg3, float arg4) {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public <T extends Entity> T spawn(Location arg0, Class<T> arg1, Consumer<T> arg2) throws IllegalArgumentException {
+        throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public FallingBlock spawnFallingBlock(Location arg0, MaterialData arg1) throws IllegalArgumentException {
+        throw new UnsupportedOperationException();
+	}
 }
