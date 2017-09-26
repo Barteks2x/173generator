@@ -29,6 +29,7 @@ public class RegionChunk {
             raf.seek(offsetBytes);
             byte[] data = new byte[sizeBytes];
             raf.read(data);
+            raf.close();
             int dataLength =
                     ((data[0] & 0xFF) << 24) |
                             ((data[1] & 0xFF) << 16) |
@@ -39,6 +40,7 @@ public class RegionChunk {
             byte[] uncompressed = decompress(compressedData);
             NBTInputStream nbtIn = new NBTInputStream(new ByteArrayInputStream(uncompressed), false);
             CompoundTag tag = (CompoundTag) nbtIn.readTag();
+            nbtIn.close();
             CompoundTag level = (CompoundTag) tag.getValue().get("Level");
 
             ChunkData.Builder builder = ChunkData.builder();
