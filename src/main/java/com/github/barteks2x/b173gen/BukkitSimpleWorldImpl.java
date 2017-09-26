@@ -20,7 +20,6 @@ public class BukkitSimpleWorldImpl implements ISimpleWorld {
 	@Override public void setType(int x, int y, int z, Material material) {
 	    Block block = world.getBlockAt(x, y, z);
 	    block.setType(material);
-	    block.setData((byte)0);
 	}
 
 	@Override public boolean isEmpty(int x, int y, int z) {
