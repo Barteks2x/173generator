@@ -6,6 +6,7 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.block.CreatureSpawner;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Dye;
@@ -121,7 +122,7 @@ public class WorldGenDungeonOld implements WorldGenerator173 {
         w.setType(xPos, yPos, zPos, Material.MOB_SPAWNER);
         CreatureSpawner tileentitymobspawner = (CreatureSpawner) w.getBlockState(xPos, yPos, zPos);
 
-        tileentitymobspawner.setCreatureTypeByName(this.getRandomMob(random));
+        tileentitymobspawner.setSpawnedType(this.getRandomMob(random));
         return true;
     }
 
@@ -167,24 +168,23 @@ public class WorldGenDungeonOld implements WorldGenerator173 {
                     return null;
                 }
             case 10:
-                return new Dye(DyeColor.BLACK).toItemStack();
+                return new Dye(DyeColor.BLACK).toItemStack(1);
             default:
                 throw new AssertionError();
         }
     }
 
-    private String getRandomMob(Random random) {
+    private EntityType getRandomMob(Random random) {
         switch (random.nextInt(4)) {
             case 0:
-                return "Skeleton";
+                return EntityType.SKELETON;
             case 1:
-                return "Zombie";
             case 2:
-                return "Zombie";
+                return EntityType.ZOMBIE;
             case 3:
-                return "Spider";
+                return EntityType.SPIDER;
             default:
-                return "";
+                throw new AssertionError();
         }
     }
 }

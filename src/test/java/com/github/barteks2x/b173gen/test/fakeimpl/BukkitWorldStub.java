@@ -2,10 +2,30 @@ package com.github.barteks2x.b173gen.test.fakeimpl;
 
 import com.github.barteks2x.b173gen.test.util.ChunkData;
 import com.github.barteks2x.b173gen.test.util.IChunkSource;
-import org.bukkit.*;
+import org.bukkit.BlockChangeDelegate;
+import org.bukkit.Chunk;
+import org.bukkit.ChunkSnapshot;
+import org.bukkit.Difficulty;
+import org.bukkit.Effect;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
+import org.bukkit.TreeType;
+import org.bukkit.World;
+import org.bukkit.WorldBorder;
+import org.bukkit.WorldType;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.LightningStrike;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.ItemStack;
@@ -286,6 +306,11 @@ public class BukkitWorldStub implements World {
 
     @Override
     public Location getSpawnLocation() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean setSpawnLocation(Location location) {
         throw new UnsupportedOperationException();
     }
 

@@ -21,15 +21,14 @@ class BukkitCreatureSpawnerStub implements CreatureSpawner {
         this.creatureType = EntityType.fromName(s);
     }
 
-    //UNIMPLEMENTED:
     @Override
     public EntityType getSpawnedType() {
-        throw new UnsupportedOperationException();
+        return this.creatureType;
     }
 
     @Override
     public void setSpawnedType(EntityType entityType) {
-        throw new UnsupportedOperationException();
+        this.creatureType = entityType;
     }
 
     @Override
@@ -44,6 +43,66 @@ class BukkitCreatureSpawnerStub implements CreatureSpawner {
 
     @Override
     public void setDelay(int i) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getMinSpawnDelay() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setMinSpawnDelay(int i) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getMaxSpawnDelay() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setMaxSpawnDelay(int i) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getSpawnCount() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setSpawnCount(int i) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getMaxNearbyEntities() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setMaxNearbyEntities(int i) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getRequiredPlayerRange() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setRequiredPlayerRange(int i) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getSpawnRange() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setSpawnRange(int i) {
         throw new UnsupportedOperationException();
     }
 

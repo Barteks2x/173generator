@@ -94,6 +94,12 @@ public class TestCompareToBetaTerrain {
         doTest(new ChunkSourcePopulation(getPopulatorsFor(populators, "Lapis")), "08_population_minables", "03_caves");
     }
 
+    // currently fails, getting this to pass would be too much work (requires light propagation)
+    // @Test
+    // public void testXXPopulation() throws IOException, DataFormatException {
+    //     doTest(new ChunkSourcePopulation(getPopulatorsFor(populators, "B173GenPopulatorChainEnd")), "XX_population", "03_caves");
+    // }
+
     private void doTest(IChunkModifier chunkModifier, String name, String dependency) throws IOException, DataFormatException {
         IChunkModifier chunkSource = chunkModifier;
         ChunkModifierTester compare = ChunkModifierTester.create(chunkSource, dependency == null ? null : res(dependency), res(name), chunksFile, expectedDiffFile(name), MAX_DIFF);
